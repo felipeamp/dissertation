@@ -1,0 +1,30 @@
+\newpage
+
+\chapter{Conclusions}
+\label{chap:conclusions}
+
+
+%TODO: PODEMOS FIXAR UM NUMERO MAXIMO DE ITERACOES E QUANDO n e pequeno podemos rodar a %versao exata.
+
+In this paper we proposed a framework for
+designing splitting criteria for handling 
+multi-valued nominal attributes.
+Criteria derived from our framework 
+can be implemented to run in polynomial time in
+$n$ and $k$, with 
+theoretical guarantee of producing a split that is close to the optimal
+one.
+
+Experiments over 11 datasets
+suggest that the GL$\chi^2$ criterion, obtained from our framework, is competitive with the well-established Twoing criterion in terms of both accuracy and speed for datasets with a small number of classes ($k \leq 7$). It is also much faster than Twoing when the number of classes is greater than 10, while keeping a comparable accuracy.
+ 
+Therefore, our methods are an interesting alternative to deal with
+datasets with a large number of classes that contain nominal attributes with a large
+number of different values, since those cannot be properly handled by Twoing due to its exponential running time dependence on the number of classes.
+
+Furthermore, our experiments also reinforce
+the potential of  aggregating attributes as a tool 
+for improving the accuracy of decision trees.
+An interesting topic for  future research is evaluating the behavior of our criteria in boosted tree methods.
+Another direction for future work is developing new methods for automatic aggregating attributes, or improving the available ones.
+

@@ -1,0 +1,43 @@
+\newpage
+
+\chapter{Related Work}
+\label{chap:relatedwork}
+
+Many splitting criteria have been proposed to 
+deal with continuous and nominal attributes.
+Arguably, the Gini gain, used by CART,  and entropy based measures, such  as 
+the Information Gain, adopted by C4.5, are among
+the most popular \cite{books/sp/datamining2005/RokachM05,
+Loh2014,series/sbcs/BarrosCF15}.
+
+There has been  some investigation on 
+methods to compute the best split efficiently 
+\cite{Breiman84,Chou:91,BPKN:92,journals/datamine/CoppersmithHH99}.
+For the 2-class problem,  \cite{Breiman84} proved a theorem which states that an optimal
+binary partition, for a certain class of splitting criteria,
+can be determined in linear time on $n$, the number of distinct values of the attributes, after ordering.
+The Gini  Gain belongs to this class.
+The  other  three papers generalize
+this theorem  in different directions 
+and show necessary conditions that are satisfied by optimal partitions for a certain class of splitting criteria. 
+These conditions, though useful to restrict the set of partitions
+that need to be considered, do not yield  a method that
+is efficient (polynomial time) for large values of $n$ and $k$.  These papers also  present  heuristics, without approximation guarantee, to obtain good splits.
+
+Other proposals to  speed up the attribute selection phase
+ include  \cite{MolaSiciliano1997,Shih2001}. 
+The first presents a simple  heuristic
+to reduce the number of binary splits considered to
+choose the best nominal variable among the $m$ available ones.
+ The second   extends the method for another class
+of impurity measures.
+
+In order to properly
+handle nominal attributes with a large number of values,
+apart from efficiently computing good splits, it is
+important to prevent bias in the attribute selection.
+Indeed, it is widely  known that many splitting criteria have bias toward
+attributes with a large number of values. There are some  proposals available
+to cope with this issue 
+\cite{conf/icml/DobraG01,Shih2004,Hothorn:2006:URP}. 
+This topic, though relevant, is not the focus of our paper.

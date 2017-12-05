@@ -1,0 +1,171 @@
+\newpage
+
+\chapter{Background}
+\label{chap:background}
+
+\section{Notation}
+\label{sec:notation}
+We adopt the following notation throughout the dissertation.
+Let $S$ be a set of $N$ samples and 
+ $C=\{c_1,\ldots,c_k\}$ be the domain of the class label. 
+In addition, for an attribute  $A$, we use $A(s)$ to denote the value taken by attribute
+$A$ on sample $s$; we use 
+  $V=\{ v_1,\ldots,v_n \}$ to denote the set of values
+taken by $A$;
+$A_{ij}$ to refer to the  number of samples
+from class $c_j$ for which  $A$ takes value $v_i$; 
+ $N_i$ for the number of samples with value $v_i$ for attribute $A$
+and $S_j$ for the number of samples from class $c_j$.
+Furthermore, we let $p_j = S_j /N$ and $p_{ij}= Pr[C=c_j | A = v_i]$.
+We observe that the estimator of maximum likelihood for $p_{ij} $ is
+$A_{ij} / N_i$.  
+
+\section{Impurity Measures}
+Many of the splitting criteria follow the same algorithm:
+
+TODO: algorithm
+create_tree(S: set of samples, L: list of attributes information, I: impurity measure)
+if S does not meet the stopping criterion:
+    For each attribute:
+        get the values\' split that yields the smallest impurity (measured by I)
+    Split S using the attribute whose best values\' split has the smallest impurity
+    Call create_tree recursively on each child node
+
+Therefore a good place to start is by presenting the two most common impurity measures found in the literature.
+
+TODO: falar de contingency tables aqui.
+
+\subsection{Gini}
+The Gini Index for a set of samples $S$ is given by 
+\begin{equation}
+ Gini(S) =  1- \sum_{i=1}^k (p_i)^2 .
+\label{eq:gini}
+\end{equation}
+
+The Gini Index can be used to generate binary splits
+and, as a consequence, binary decision trees.
+
+The Gini Gain, $\Delta_G$, induced by a binary partition $(L,R)$ 
+of the set of values $V$ is
+given by 
+\begin{equation}
+ \Delta_G (L,R) = Gini(S) -
+p_L Gini(S_L) - p_R Gini(S_R),
+\label{eq:Ginigain}
+\end{equation}
+where $S_L= \{ s \in S | A(s) \in L \}$, $S_R= \{ s \in S | A(s) \in R \}$,
+ $p_L=|S_L| /N $
+and $p_R=|S_R| /N$. Therefore, the largest the Gini Gain is, the better the partition.
+
+\subsection{Entropy}
+The Entropy for a set of samples $S$ is given by 
+\begin{equation}
+ Entropy(S) =  - \sum_{i=1}^k p_i \log(p_i)
+\label{eq:entropy}
+\end{equation}
+
+The Entropy can be used to generate binary splits
+and, as a consequence, binary decision trees.
+
+The Information Gain $IG$ induced by a binary partition $(L,R)$ 
+of the set of values $V$ is given by 
+\begin{equation}
+ IG(L,R) = Entropy(S) -
+p_L Entropy(S_L) - p_R Entropy(S_R),
+\label{eq:InformationGain}
+\end{equation}
+where $S_L= \{ s \in S | A(s) \in L \}$, $S_R= \{ s \in S | A(s) \in R \}$,
+ $p_L=|S_L| /N $ and $p_R=|S_R| /N$. Therefore, the largest the Information Gain is, the better the partition.
+
+
+\section{Splitting Criteria}
+In this section we recall some well-known splitting criteria.
+
+
+\subsection{Gini Gain}
+This criterion generates all $2^n$ binary values\' split and the partition with maximum Gini Gain shall be selected.
+As shown in \cite{Breiman:84}, for the 2-class problem this optimal partition  
+can be computed  in $O(n \log n + N )$ time: sort the values by the frequency of class $0$ on them. The best binary split of $S$ will be given by one of the values splits that follow this order (TODO: explicar melhor).
+
+For problems with more than 2 classes, however, there is no efficient procedure with theoretical approximation guarantee to compute the Gini Gain in subexponential time in $n$.
+
+
+\subsection{Twoing}
+The Twoing criterion
+for a  binary partition $(L,R)$ 
+of the set of values $V$ is given by
+$$ 0.25 \cdot p_L \cdot p_R  \cdot \left ( \sum_{i=1}^k | p_L^i - p_R^i | \right )^2, $$
+where
+
+$ p_L^i= \frac{|\{s \in S_L: s \mbox{ belongs to class } c_i \}|}{ |S_L|} $
+ and 
+$ p_R^i= \frac{|\{s \in S_R: s \mbox{ belongs to class } c_i\} |}{ |S_R|} $.
+
+When the Twoing criterion is used to generate binary decision trees, the binary partition with maximum twoing shall be selected at each node. 
+
+As shown in \cite{Breiman:84}, such partition can be calculated in $O(N + \min \{ n \log n 2^k, 2^n \} )$
+time by considering all possibilities of partitioning the classes into two superclasses
+and applying the Gini Gain criterion on each of them.
+We shall remark that, for the $2$-class problem, the Twoing criterion and the
+Gini Gain compute the same binary partitions.
+
+\subsection{Information Gain}
+This criterion works exactly the same as the Gini Gain, but replacing the Gini impurity by the Entropy. First it generates all $2^n$ binary values\' split and the partition with maximum Information Gain shall be selected.
+For the 2-class problem, the same result valid for the Gini Gain works here, and the optimal partition  
+can be computed  in $O(n \log n + N )$ time. Once again, when the number of classes is larger than 2 there is no efficient procedure with theoretical approximation guarantee to compute the Information Gain in subexponential time in $n$.
+
+A related criterion is the Gain Ratio, where the Information Gain of an attribute is normalized by the potential information of that attribute. This is used as a way of decreasing the bias of the k-ary Information Gain criterion towards attributes with larger number of values. Since we are only interested in binary splits in this dissertation, we will not go into its details.
+
+
+\subsection{$\chi^2$ criterion}
+The $\chi^2$ is a popular criterion that was  used in \cite{Mingers.87}. It is also the first one shown here not based on impurity measures, and it only works for k-ary (instead of binary) splits. Is is mentioned here because of its relation to the framework presented in chapter \ref{chap:framework}.
+
+For an attribute $A$ the $\chi^2$ criterion is given by 
+\begin{equation}
+\label{eq:chitest}
+\sum_{i=1}^n \sum_{j=1}^k \frac{(A_{ij}-E[A_{ij}] )^2}{E[A_{ij}]},
+\end{equation}
+where $E[A_{ij}]=N_i p_j$.
+
+\subsection{Conditional Inference Trees}
+Conditional Inference Trees are actually a framework of creating criteria that are bias-free when it comes to the number of values in an attribute. It was published by \cite{Hawthorn} and still is the only known method of obtaining criteria that do not have any bias towards attributes with larger number of values.
+
+It first chooses the best attribute to split at the current node and then evaluates all possible binary splits using any given impurity measure, choosing the best one found.
+
+TODO: ver se notacao bate.
+
+To choose the attribute in which to split, first one has to calculate the conditional expectation $\mu_j$ and covariance $\Sigma_j$ of the permutation test of all attributes $A_j$. Then, in order to compare the attributes, we need to calculate the p-value of a univariate test statistics $c_{quad}$ calculated on $\mu_j$ and $\Sigma_j$. The only exact form of doing this is by using the quadratic form (TODO: add equation and ref), which it follows an asymptotic $\chi^2$ distribution with degrees of freedom given by the rank of $\Sigma_j$. Since this involves the calculation of a pseudo-inverse, this is usually time consuming (the time complexity of the pseudo-inverse is cubic on the dimension of $\Sigma_j$, which is $n_j * k$).
+
+TODO: colocar formulas
+
+This method, although very complicated and somewhat slow, is used by the community very much. We mentioned it here because it will be used in our experiments in chapter \ref{chap:experiments-datasets}, since measuring the performance of any impurity measure in it is important in order to evaluate its usefulness. (TODO: melhorar texto desse paragrafo)
+
+
+
+
+\section{Heuristics for Splitting Decision Tree Nodes}
+As seen in the previous section, calculating the optimal split takes exponential time in the number of values or classes. Therefore many heuristics were created to create decision trees in this situation. The most used ones are listed below. All of them work with any impurity measure (e.g.: Gini or Entropy), but some of them work best with one of them. When this is the case, it will be mentioned.
+
+\subsection{SLIQ and SLIQ-ext}
+SLIQ was presented in (TODO: add citation) and it's a very simple greedy heuristic. Given an attribute, one starts with all the values going to the left split, and none on the right split. We then choose a value to go from the left to the right split. This value is the one that, when changing from the left to the right sides, decreases the impurity (increases the impurity gain) the most. This is repeated until there is no way of moving a value from the left to the right and decreasing the impurity.
+
+SLIQ-ext is a simple extension, where we keep changing values from the left to the right until the left side is empty (that is, we move from the left to the right even if that increases the impurity). Once again the value to move is chosen in a greedy fashion. SLIQ-ext returns the values' split seen that had the lowest impurity.
+
+\subsection{PC and PC-ext}
+These heuristics are based on the Principal Component of the contingency table the and were presented in (TODO: add citation). One first calculates the class probability distribution of every value, which is done by normalizing the contingency table rows to have 1 in the sum norm. We then group values into ``supervalues'' where each value in the same supervalue has the same class probability distribution. Now we get the contingency table of these supervalues and calculate the first principal component of this matrix. One then calculates the inner product of each class probability vector of the supervalues  with the principal component and sort the supervalues by it. We then calculate the supervalues split's impurity gain given by splits of the form
+
+TODO: write formula left, right.
+
+Once we find the supervalues split with the largest impurity gain, we translate the supervalues into original values to obtain a valid partition.
+
+PC-ext is a simple extension of this algorithm, where instead of only testing the supervalues splits given by (TODO: ex ref), we also test the split given by it and exchanging the last supervalue on the left with the first supervalue on the right (where first and last are given by the order after calculating the inner product).
+
+\subsection{Largest Alone}
+First one calculates the most frequent class and group the other classes in a single superclass. We then apply the Gini Gain criterion on this two-class problem. Since calculating the class frequencies can be done using the contingency table, this heuristic takes $O(N + n*k + n * \log(n))$ time in total.
+
+Another advantage of the Largest Alone heuristic is that is has an approximation guarantee of 2 (TODO: conferir) to the best gini impurity of the original problem. It is also proved that there is no other way of grouping classes into superclasses that has a smaller approximation guarantee for the Gini impurity. It can also be used with the Information Gain, instead of Gini Gain, but its approximation guarantee increases to 3 (TODO: conferir). These bounds are proved in (TODO: ver como colocar referencia).
+
+\subsection{List Scheduling}
+First one calculates the frequency of every class. Then, we use a List Scheduling algorithm to group the classes into 2 superclasses as balanced as possible (in terms of number of samples). Lastly we apply the Information Gain criterion on this two-class problem. Again, since calculating the class frequencies can be done using the contingency table, this heuristic and the List Scheduling algorithm is linear in the number of classes, this heuristic also takes $O(N + n*k + n * \log(n))$ time in total.
+
+Similarly to the Largest Alone heuristic, the List Scheduling heuristic has an approximation guarantee of 2 (TODO: conferir) to the best entropy impurity of the original problem. This is proved in (TODO: ver como colocar referencia). It is also proved that, for the entropy impurity, the best form of grouping classes into superclasses is by balancing them the best way possible.

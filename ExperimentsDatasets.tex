@@ -1,0 +1,563 @@
+\newpage
+
+\chapter{Experiments on Real Datasets}
+\label{chap:experimentsdatasets}
+
+
+In this chapter we describe our
+experimental study on real datasets.
+First, we describe the chosen datasets.
+Next, we discuss the max-cut algorithms 
+employed and, then, we
+present our results.
+
+All  experiments described in the following sections were executed on a machine with the following settings: Intel(R) Core(TM) i7-4790 CPU @ 3.60GHz
+with 32 GB of RAM. The code was
+developed using Python 3.6.1 
+with the libraries numpy, scipy, scikit-learn and cvxpy.
+The project can be accessed in 
+{\tt github.com/felipeamp/max\_cut\_paper}.
+It includes  the code, the datasets and the results of our experiments.
+
+
+\section{Datasets}
+We employed 11 datasets in total. Eight of them are from the UCI repository:
+Mushroom, KDD98, Adult, Nursery, Covertype, Cars, Contraceptive and Poker  \cite{Lichman:2013}.
+Two others are available in Kaggle: San Francisco Crime and Shelter Animal Outcome
+\cite{SFC,AnimalShelter}.
+The last dataset was created by translating texts from the Reuters database \cite{Lichman:2013} into phonemes, using the CMU pronouncing dictionary \cite{CMU-PD}.
+
+We chose  these datasets  because they
+have at least 1000 samples and they  either contain  multi-valued attributes 
+or attributes that can be naturally aggregated to produce multi-valued attributes. 
+From the KDD98 dataset we derived the datasets
+KDD98-k, for $k = 2$ and $9$. These datasets contain
+only the positive samples (people that donate money) 
+of KDD98 and the target attribute, Target$\_$D, is split into $k$ classes, where the $i$-th
+class correspond to the $i$-th quantile in terms of amount of money donated. For the Reuters Phonemes dataset,
+we extracted 10000 samples containing the 15 most common phonemes as class and try to predict when they are about to happen given the 3 preceding phonemes.
+This dataset is motivated by Spoken Language Recognition problems, where phonotactic models are used as an important part of the classification system
+\cite{conf/interspeech/Navratil06}. 
+For the San Francisco Crime dataset, we give the month, day of the week, police department district and latitute/longitude and try to predict the crime category. Lastly, for the Shelter Animal Outcomes dataset, we converted the age into a numeric field containing the
+number of days old and separated the breed into two categorical fields, repeating the breed in both in case there was only one originally. We also removed the AnimalID, Name and the DateTime. For this dataset we try to predict the outcome type and subtype (concatenated into a single categorical field). For both 
+San Francisco Crime and  Shelter Animal Outcomes
+ datasets we created a version of them ({\tt S.F. Crime-15} and {\tt Shelter-15}), containing only 15 classes, instead of the 39 and 22 original ones, respectively. This was done by grouping the rarest classes into a single one. 
+
+\begin{table}
+\centering
+\caption{Information about  the employed datasets after data cleaning and attributes aggregation.
+Column $k$ is the number of classes and {\tt Reg} stands
+for Regression; columns $m_{nom}$ and $m^{ext}_{nom}$ are the
+number of  nominal attributes in the original and the
+extended datasets (when it exists), respectively; column $m_{num}$ is the number of  numeric attributes.}
+\label{exp:datasets}
+
+\medskip
+
+\begin{tabular}{c|c|c|c|c|c}
+Dataset             & Samples  &  k        & $m_{nom}$ &  $m^{ext}_{nom}$ &   $m_{num}$   \\  \hline
+{\tt Mushroom}      & 5644     & 2         & 22        & N/A              & 0             \\ 
+{\tt Adult}         & 30162    & 2         & 8         & N/A              & 6             \\
+{\tt KDD98}         & 4843     & {\tt Reg} & 65        & N/A              & 314           \\ 
+{\tt Nursery}       & 12960    & 5         & 8         & 11               & 0             \\ 
+{\tt CoverType}     & 581012   & 7         & 44        & 46               & 10            \\ 
+{\tt Car}           & 1728     & 4         & 6         & 8                & 0             \\ 
+{\tt Contracep}     & 1473     & 3         & 7         & 9                & 2             \\ 
+{\tt Poker}         & 25010    & 10        & 10        & 0                & 0             \\
+%{\tt Shelter-15}    & 26711    & 15        & 5         & N/A              & 1             \\
+{\tt Shelter}       & 26711    & 22        & 5         & N/A              & 1             \\      
+%{\tt S.F. Crime-15} & 878049   & 15        & 3         & N/A              & 2             \\      
+{\tt S.F. Crime}    & 878049   & 39        & 3         & N/A              & 2             \\  
+{\tt Phonemes}      & 10000    & 15        & 3         & N/A              & 0 
+\normalsize
+\end{tabular}
+
+\end{table}
+
+
+
+We also created extended versions
+of some of the above datasets 
+by adding nominal attributes  obtained by aggregating some of the original ones, as 
+we detail below.  
+Our goals are  examining the impact of multi-valued
+attributes in the classification performance and 
+also understanding how the  different 
+splitting criteria  handle them.
+
+
+\begin{table}[]
+\centering
+\begin{tabular}{c|c|c} 
+{\tt parents}     & {\tt has\_nurs}    & {\tt Aggregated Attribute}   \\ \hline
+usual       & proper       & usual-proper             \\
+usual       & less\_proper & usual-less\_proper       \\
+usual       & improper     & usual-improper           \\
+usual       & critical     & usual-critical           \\
+usual       & very\_crit   & usual-very\_crit         \\
+pretentious & proper       & pretentious-proper       \\
+pretentious & less\_proper & pretentious-less\_proper \\
+pretentious & improper     & pretentious-improper     \\
+pretentious & critical     & pretentious-critical     \\
+pretentious & very\_crit   & pretentious-very\_crit   \\
+great\_pret & proper       & great\_pret-proper       \\
+great\_pret & less\_proper & great\_pret-less\_proper \\
+great\_pret & improper     & great\_pret-improper     \\
+great\_pret & critical     & great\_pret-critical     \\
+great\_pret & very\_crit   & great\_pret-very\_crit  
+\end{tabular}
+\caption{Aggregation of attributes parents and has\_nurse from dataset {\tt Nursery}}
+\label{tab:Aggreation}
+
+\end{table}
+
+Table \ref{tab:Aggreation} illustrates this construction.
+
+\begin{itemize}
+
+\item {\tt Nursery-Ext}. This dataset is obtained by adding three
+new attributes to dataset Nursery. 
+The first attribute has  $15$ distinct values
+and it is constructed through the  aggregation of   2 attributes 
+from group  EMPLOY, one with 5 values and the other with 3 values. 
+The second attribute has 72 distinct values
+corresponding to the aggregation of attributes from 
+the attributes in group {\tt STRUCT\_FINAN}.
+The third attribute, with 9 distinct values, is the combination of
+the  attributes in group {\tt SOC\_HEALTH}.
+
+
+\item {\tt Covertype-Ext}. 
+We combined 40 binary attributes
+related with the soil type  into a new attribute with 40 distinct values.
+The same approach was employed to combine the 4 binary attributes related
+with the wilderness area into a new attribute
+with 4 distinct values.
+This is an interesting case because, apparently, the 40 (soil type)
+binary attributes  as well as the 4 (wilderness area) binary attributes
+ were derived from a binarization of two attributes, one with 40 distinct value and the other with 4 distinct values.
+ 
+
+\item {\tt Cars-Ext}. To obtain this dataset, the 2 attributes
+related with the concept {\tt PRICE},  {\tt buying} and {\tt maint},
+were combined into an attribute
+with 16 distinct values.
+Moreover, the 3 attributes
+related with concept {\tt CONFORT} were  combined into an 
+an attribute with 36 distinct values.
+
+\item {\tt Contraceptive-Ext}. The 2 attributes
+related with the couple's education were combined into an
+attribute with 16 distinct values.
+Moreover, the 3 attributes related with the couple's occupations  and  standard of living
+were  aggregated into a new attribute with 32 distinct values.
+
+\end{itemize}
+
+Samples with missing values were removed from the datasets.
+Table \ref{exp:datasets} provides some statistics.
+
+
+
+
+\section{Computing the Maximum Cut}
+ 
+
+The GW algorithm  requires  the solution of a semidefinite program (SDP),
+which may be computationally expensive despite  its 
+polynomial time worst
+case  behavior.
+As an example, for an attribute with 100 distinct values, the solution of
+the corresponding SDP takes in average about 2 second in our machine.
+One the one hand, this is a tiny amount of time 
+compared with that required to perform an exhaustive search on the $2^{100}$
+possible binary partitions. On the other hand, 
+ faster alternatives are desirable, even
+at the cost of losing part of the theoretical approximation guarantee. 
+
+To avoid solving a SDP, 
+we also evaluated a procedure
+that first executes the {\tt GreedyCut} algorithm presented
+in Section \ref{sec:maxcutbackground} and then runs a local search as described
+in the Algorithm  \ref{alg:localsearch} in the same section. 
+The use of this approach combined with the two
+ways of setting the edges' weights lead to
+ Greedy LocalSearch SquaredGini (GLSG) and 
+Greedy LocalSearch $\chi^2$ (GL$\chi^2$) 
+criteria, respectively.
+For attributes with 100 distinct values this approach is 60-70
+times faster than the one based on the GW algorithm.
+
+
+In fact, experiments similar to those described in the next section
+ show that  GL approach consistently obtains better results  than
+the GW algorithm in terms of both speed and accuracy. 
+This advantage is likely   related with the fact 
+ that the weights of the cuts computed by the GL approach are, in general, larger
+than those obtained by the GW algorithm. This pattern
+was observed in a set of  experiments with the max-cut instances 
+induced by the attributes of the datasets used in the experiments section.
+Due to these results, we proceed our investigation using only 
+the GL approach.
+
+
+It is worth mentioning that the greedy algorithm that precedes the local search
+guarantees that we  still have a theoretical guarantee
+of being at least 0.5 of the optimal solution. The local
+search may be not 
+
+In addition, it was recently  proved that a local search 
+runs in polynomial time ....
+TODO: melhorar 
+
+
+\section{Experimental Results}
+We performed a number of experiments to evaluate how the
+proposed methods behave with real datasets.
+All experiments consist of building decision trees
+with a predefined maximum depth.  In addition,
+to prevent the selection of non-informative nominal attributes, 
+we used a $\chi^2$-test for each attribute at every node of
+the tree: if the $\chi^2$-test  on the contingency table of attribute $A$
+has $p$-value larger than $10\%$ at a node $\nu$, then
+$A$ is not used in $\nu$.
+Furthermore, attributes with less than 15 samples associated with its
+second most frequent value
+are also not considered for splitting. This helps  avoid data overfitting.
+
+
+\begin{table*}
+    \caption{Average accuracy and statistical tests  for  decision trees 
+with depth at most 16 using only nominal attributes. The best accuracy for each dataset is bold-faced, even when multiple criteria have the same accuracy in the table because of rounding.
+The average and sum for the conditional inference tree criteria do not include the Shelter dataset, since the criteria don't run in reasonable time.}
+\label{tab:CrossVal}
+    \begin{subtable}{.6\linewidth}
+      \centering
+        \caption{Attribute selection via Twoing and GL criteria}
+        
+
+\begin{tabular}{c|cc|cc|cc} 
+Dataset             & \multicolumn{2}{c|}{Twoing} &  \multicolumn{2}{c|}{GLSG}  &   \multicolumn{2}{c}{GL$\chi^2$}  \\ \hline
+{\tt Adult}         &  {\bf 82.52} & {\bf (2)}    &  82.38       &  (0)         &  82.43       & (0)                \\
+{\tt Mushroom}      &  {\bf 100}   & {\bf (1)}    &  100         &  (0)         &  99.99       & (0)                \\
+{\tt KDD98}-2       &  79.41       & (0)          &  {\bf 80.65} & {\bf (2)}    &  79.73       & (0)                \\
+%{\tt KDD98}-3       &  62.61       & (0)          &  63.33       & {\bf (1)}    &  {\bf 63.56} & {\bf (1)}          \\
+%{\tt KDD98}-5       &  46.46       & (0)          &  46.39       & (0)          &  {\bf 47.53} & {\bf (2)}          \\
+{\tt KDD98}-9       &  38.54       & (1)          &  37.97       & (0)          &  {\bf 39.68} & {\bf (2)}          \\
+{\tt Nursery}       &  93.51       & (1)          &  92.39       & (0)          &  {\bf 93.74} & {\bf (2)}          \\
+{\tt Nursery-ext}   &  95.83       & (1)          &  94.79       & (0)          &  {\bf 96.02} & {\bf (2)}          \\
+{\tt Cars}          &  92.82       & {\bf (1)}    &  90.51       & (0)          &  {\bf 92.88} & {\bf (1)}          \\
+{\tt Cars-ext}      &  {\bf 96.49} & {\bf (2)}    &  90.89       & (0)          &  94.44       & (1)                \\
+{\tt Contracep}     &  43.5        & (0)          &  43.83       & (0)          &  {\bf 43.85} & {\bf (1)}          \\
+{\tt Contracep-ext} &  43.15       & (0)          &  {\bf 44.32} & {\bf (1)}    &  43.72       & (0)                \\
+{\tt CoverType}     &  64.09       & (1)          &  {\bf 64.59} & {\bf (2)}    &  63.61       & (0)                \\
+{\tt CoverType-ext} &  {\bf 65.08} & {\bf (1)}    &  {\bf 65.08} & {\bf (1)}    &  65.05       & (0)                \\
+{\tt Poker}         &  {\bf 52.24} & {\bf (2)}    &  49.88       & (0)          &  51.83       & (1)                \\ 
+{\tt Shelter-15}    &  47.64       & (1)          &  46.52       & (0)          & {\bf 48.09}  & {\bf (2)}          \\ 
+%{\tt Shelter}       &  ---         &              &  46.55       &              & {\bf 48.17}  &                    \\   
+{\tt S.F. Crime-15} &  22.08       & {\bf (1)}    &  22.06       & (0)          & {\bf 22.08}  & {\bf (1)}          \\   
+%{\tt S.F. Crime}    &  ---         &              &  22.06       &              & {\bf 22.08}  &                    \\ 
+{\tt Phonemes}      &  {\bf 37.13} & {\bf (2)}    &  35.9        & (0)          & 35.75        & (0)                \\  \hline
+Average (Sum)       &  65.87       &  (17)        &  65.11       & (6)          & 65.81        & (13)    
+ 
+
+\end{tabular}
+    \end{subtable}
+    \begin{subtable}{.4\linewidth}
+      \centering
+        \caption{Attribute selection via conditional inference}
+
+\begin{tabular}{cc|cc|cc} 
+\multicolumn{2}{c|}{CI-Twoing} &   \multicolumn{2}{c|}{CI-GLSG} & \multicolumn{2}{c}{CI-GL$\chi^2$} \\  \hline   
+ 82.33      &  {\bf (1)}       &   82.18      & (0)             & {\bf 82.35} &  {\bf (1)}          \\
+ 99.55      &  (0)             &   99.6       & (0)             & {\bf 99.64} &  {\bf (1)}          \\
+ 79.92      &  (0)             &  {\bf 81.53} & {\bf (2)}       &  80.65      &  (1)                \\
+ %63.72      &  (0)             &  {\bf 64.66} & {\bf (2)}       &  63.56      &  (0)                \\
+ %46.88      &  (0)             &  {\bf 48}    & {\bf (1)}       &  47.75      &  {\bf (1)}          \\
+ 39.44      &  (0)             &  {\bf 40.65} & {\bf (2)}       &  40.01      &  (1)                \\
+ 93.55      &  {\bf (1)}       &   92.22      & (0)             & {\bf 93.56} &  {\bf (1)}          \\
+ 93.64      &  {\bf (1)}       &   92.32      & (0)             & {\bf 93.65} &  {\bf (1)}          \\
+ 92.74      &  (1)             &   87.19      & (0)             & {\bf 92.92} &  {\bf (2)}          \\
+ 93.12      &  (1)             &   87.38      & (0)             & {\bf 93.34} &  {\bf (2)}          \\
+ 43.82      &  (0)             &   {\bf 44.05}& (0)             &  43.81      &  (0)                \\
+ 43.21      &  (0)             &   {\bf 43.78}& {\bf (1)}       &  43.72      &  {\bf (1)}          \\
+ 61.88      &  (0)             &   61.88      & (0)             &  61.88      &  (0)                \\
+ 61.88      &  (0)             &   61.88      & (0)             &  61.88      &  (0)                \\
+ {\bf 51.4} &  {\bf (2)}       &   50.67      & (0)             &  50.84      &  {\bf (1)}          \\
+ ---        &                  &   ---        &                 &   ---       &                     \\
+%---         &                  & ---          &                 & ---         &                     \\
+ 22.07      &  (0)             &  22.07       & (0)             & {\bf 22.07} &  {\bf (1)}          \\
+%---         &                  & ---          &                 & ---         &                     \\
+ {\bf 33.91}&  {\bf (2)}       & 31.26        &  (0)            &  33.32      &  (1)                 \\  \hline
+ 66.16      &  (9)             & 65.24        & (5)             &  66.24      & (14)
+       \end{tabular}
+    \end{subtable} 
+\end{table*}
+
+
+\begin{table}[]
+\small
+\caption{Average time in seconds of a 3-fold cross validation
+for building decision trees with depth at most 16.
+The fastest method for each dataset is bold-faced.}
+\centering
+\begin{tabular}{c|c|c|c|c}
+Dataset             & k  & Twoing        & GLSG      & GL$\chi^2$   \\ \hline
+{\tt Adult}         & 2  & 4.3           & {\bf 4.3} & 7.1          \\
+{\tt Mushroom}      & 2  & 0.7           & {\bf 0.6} & 0.9          \\
+{\tt KDD98}-2       & 2  & {\bf 10.8}    & 57.8      & 60.8         \\
+{\tt Contracep}     & 3  & 0.2           & 0.2       & {\bf 0.1}    \\
+{\tt Contracep-Ext} & 3  & {\bf 0.2}     & 0.3       & 0.3          \\
+%{\tt KDD98}-3       & 3  & {\bf 12.5}    & 73.3      & 82.4        \\
+{\tt Cars}          & 4  & 0.3           & 0.2       & {\bf 0.2}    \\
+{\tt Cars-Ext}      & 4  & {\bf 0.3}     & 0.4       & 0.4          \\
+{\tt Nursery}       & 5  & 1.6           &  {\bf 1.4}      &  1.4        \\
+{\tt Nursery-Ext}   & 5  & {\bf 1.7}           &  3.9 & 3.6          \\
+%{\tt KDD98}-5       & 5  & {\bf 22.2}    & 100.8     & 82.6        \\
+{\tt CoverType}     & 7  & 846.8         &{\bf 373.4}& 969.6        \\
+{\tt CoverType-Ext} & 7  & 338.6         &{\bf 280.5}& 505.7        \\
+{\tt KDD98}-9       & 9  & 209.9         & 119.9     & {\bf 112.5}  \\
+{\tt Poker}         & 10 & 10.7          & 3.9       & {\bf 3.7}    \\ 
+{\tt Shelter-15}    & 15 & 5183.3        &{\bf 155}  & 165.7        \\   
+{\tt S.F. Crime-15} & 15 & 2667.9        & 94.2      &{\bf 79.6}    \\ 
+{\tt Phonemes}      & 15 & 3738.6        &{\bf 8.7}  & 10.2         
+%{\tt Shelter}       & 22 & 1 week        & 312.8     & {\bf 254.5}  \\   
+%{\tt S.F. Crime}    & 39 & 1500 years    & 100.5     & {\bf 85.3}   \\ 
+%\hline
+%Average             &    & 813.6         & 69        & 120.1        \\
+%Median              &    &  7.5          & 4.1       & 5.4
+\end{tabular}
+\label{tab:time}
+\end{table}
+
+Table \ref{tab:CrossVal}.(a) presents  the results of an experiment to
+compare the accuracy of  Decision Trees built by  our methods with those built by Twoing.
+In this experiment, the maximum depth was set to 16 and we considered just the nominal attributes of the datasets. 
+Each accuracy is the average of 20 stratified 3-fold cross-validations,
+each generated with a different seed.
+The entry  associated with  $({\cal D},I)$ has two pieces of information: the average accuracy
+of criterion $I$ on dataset ${\cal D}$ and the number of criteria
+with accuracy   statistically lower than that of $I$ on dataset ${\cal D}$. 
+The statistical test used for criteria comparison is a  one-tailed paired $t$-student test with a $95\% $ confidence level. 
+In general there was a balance between Twoing and GL$\chi^2$, with GLSG being slightly worse.
+Running the same experiment using maximum depth 5 instead of 16 showed more balanced results.
+This suggests that our criteria should also be useful in boosting tree methods.
+
+
+The results of  Table \ref{tab:CrossVal}.(a) also
+provide evidence of  the potential
+of considering aggregated attributes. 
+The accuracy obtained for the extended versions of datasets
+{\tt Nursery}, {\tt Cars} and {\tt CoverType} are considerably higher than those obtained for 
+the original versions. For {\tt Contracep}, the effect is not clear.
+
+
+
+Table \ref{tab:CrossVal}.(b) presents the 
+comparison between  our  methods and Twoing in another scenario,
+where we use $c_{quad}$, one of the bias-free   criterion proposed in \cite{Hothorn:2006:URP}, to select the attribute at each node of the tree. 
+Then, both Twoing and our methods
+are  used only for splitting the chosen attribute,
+ which allows for a 
+  more direct comparison of their splitting ability. Again, we observed a balance between Twoing and GL$\chi^2$. This experiment also showed that it is not possible to run $c_{quad}$ in reasonable time for the {\tt Shelter-15} dataset. This happens because it calculates a pseudoinverse of a matrix whose dimension grows with the number of values and classes, which is infeasible for large $n$ and $k$.
+
+Another key aspect to discuss is the computational cost
+of the proposed criteria.
+Table \ref{tab:time}
+shows the running time of Twoing, GL$\chi^2$ and GLSG  when
+they are used for both selecting and splitting purposes (the experiment of Table \ref{tab:CrossVal}.(a)).
+When the number of classes is
+small all the criteria have very similar execution time, with Twoing being faster only on the {\tt KDD98}-2 dataset. As the number of classes increases, the GL-based methods become much faster than Twoing, with the turning point being around $k=7$. For datasets with 15 classes our criteria are 30-300 times faster. We also ran experiments using all the classes available in both the {\tt S.F. Crime} and {\tt Shelter} datasets (39 and 22, respectively). Twoing can not be executed in a reasonable time with that many classes, while GLSG and GL$\chi^2$ ran in approximately 100 seconds on the {\tt S.F. Crime} dataset and  300 seconds on the {\tt Shelter} dataset.  This behavior for the Twoing criterion is not surprising, since its running time has an exponential dependence of the number of classes $k$. Nonetheless, since the execution time for our criteria in this experiment grew in an approximately linear fashion with $k$, it suggests that they can also be used with datasets that have a much larger number of classes. It is also interesting to note that the aggregated attributes usually appeared at or near the root of the decision trees.
+
+Table \ref{exp:secondsetnumeric}
+shows experiments  similar to those presented at 
+Table \ref{tab:CrossVal}.(a), but now
+using also the numeric attributes.
+We observed a significant gain in terms of accuracy 
+ for almost all datasets. 
+The performance of GL$\chi^2$ was competitive with that of
+Twoing for all datasets but {\tt KDD98-9} and {\tt CoverType}, where it was
+considerably  better and worse, respectively.
+
+
+\begin{table}
+\small
+\caption{Average accuracy and statistical test results for  Decision Trees using both nominal and numeric attributes with depth at most 16.}
+\centering
+\begin{tabular}{c|cc|cc|cc} 
+Dataset              &        \multicolumn{2}{c|}{Twoing} &   \multicolumn{2}{c|}{GLSG} &   \multicolumn{2}{c}{GL$\chi^2$} \\  \hline   
+{\tt Adult}          &  83            &  (1)              &  77.34      &  (0)          &  {\bf 83.21} &  {\bf (2)}        \\
+{\tt KDD98}-2        &  {\bf 76.67}   &  {\bf (2)}        &  76.36      &  (0)          &  76.04       &  (1)              \\
+%{\tt KDD98}-3        &  63.24         &  (1)              &  62.21      &  (0)          &  {\bf 63.94} &  {\bf (2)}        \\
+%{\tt KDD98}-5        &  47.5          &  (1)              &  46.35      &  (0)          &  {\bf 49.71} &  {\bf (2)}        \\
+{\tt KDD98}-9        &  37.73         &  (1)              &  37.49      &  (0)          &  {\bf 43.44} &  {\bf (2)}        \\
+{\tt Contracep}      &  {\bf 48.78}   &  {\bf (1)}        &  48.01      &  (0)          &  48.66       &  {\bf (1)}        \\
+{\tt Contracep-Ext}  &  48.53         &  (0)              &  48.15      &  (0)          &  {\bf 48.6}  &  (0)              \\
+{\tt CoverType}      &  85.14         &  (1)              &  {\bf 90.32}&  {\bf (2)}    &  81.38       &  (0)              \\
+{\tt CoverType-Ext}  &  89.1          &  (1)              &  {\bf 92.03}&  {\bf (2)}    &  82.46       &  (0)              \\
+{\tt Shelter-15}     &  53.79         &  (1)              &  52         &  (0)          &  {\bf 54.4}  &  {\bf (2)}        \\   
+{\tt S.F. Crime-15}  &  26.66         &  (0)              &  26.71      &  (1)          &  {\bf 27.13} &  {\bf (2)}        \\
+%{\tt Shelter}        &  ---           &                   &  52.01      &               & {\bf 54.44}  &                   \\   
+%{\tt S.F. Crime}     &  ---           &                   &  26.71      &               & {\bf 26.84}  &                   \\ \hline
+\hline
+Average (Sum)        &   61.04        &  (8)              & 60.93       & (5)           &   60.59     & (10)
+
+\end{tabular}
+\label{exp:secondsetnumeric}
+\normalsize
+\end{table}
+
+
+
+
+\subsection{Depth 5}
+
+In Table \ref{exp:thirdset} we can see a balance among the different methods.
+In this experiment we also note that GLSG is more competitive with Twoing and GL$\chi^2$ than in the experiment with depth 16 described in the paper. This suggests that GLSG loses competitiveness as the tree depth increases.
+Another interesting observation is that the GW-based criteria were about equal or slightly inferior to their GL-based counterparts.
+This advantage is likely related with the fact that the weights of the cuts computed by the GL approach in this experiment are, in general, larger
+than those obtained by the GW algorithm.
+
+
+\begin{table*}[t]
+\small
+\centering
+\caption{Average accuracy and statistical tests  for  decision trees 
+with depth at most 5 using only nominal attributes. The best accuracy for each dataset is bold-faced.}
+\begin{tabular}{c|cc|cc|cc|cc|cc} 
+Dataset &        \multicolumn{2}{c|}{Twoing} &  \multicolumn{2}{c|}{GWSG}  
+&   \multicolumn{2}{c|}{GW$\chi^2$}  &    \multicolumn{2}{c|}{GLSG} &   \multicolumn{2}{c}{GL$\chi^2$} \\  \hline   
+{\tt Adult}         & 82.21 & {\bf  (2)} & 81.91 & (1) & {\bf  82.24} & {\bf  (2)} & 81.83 & (0) & {\bf  82.24} & {\bf  (2)} \\
+{\tt Mushroom}      & {\bf  100}   & {\bf  (2)} & 99.99 & (0) & 99.98 & (0) & {\bf  100}   & {\bf  (2)} & 99.99 & (0) \\
+{\tt KDD98}-2       & 80.47 & (0) & 81    & (2) & 80.74 & (1) & {\bf  81.16} & {\bf  (3)} & 80.51 & (0) \\
+%{\tt KDD98}-3       & 63.77 & (0) & 63.8  & (0) & 64.37 & {\bf  (3)} & 63.75 & (0) & {\bf  64.54} & {\bf  (3)} \\
+%{\tt KDD98}-5       & 48.02 & (2) & 46.79 & (0) & {\bf  48.59 }& {\bf  (3)} & 46.77 & (0) & 48.58 & {\bf  (3)} \\
+{\tt KDD98}-9       & 40.35 & (2) & 38.13 & (0) & 40.93 & {\bf  (3)} & 38.15 & (0) & {\bf  41 }   &{\bf   (3) }\\
+{\tt Nursery}       & 88.25 & {\bf  (3)} & 88.03 & (0) & 88.2  & (0) & {\bf  88.33} & {\bf  (3)} & 88.2  & (0) \\
+{\tt Nursery-Ext}   & {\bf  93.82} & {\bf  (4)} & 90.95 & (0) & 93.02 & (2) & 90.75 & (0) & 93.13 & (2) \\
+{\tt Cars}          & 86.53 & (1) & 85.39 & (0) & 86.37 & (1) & {\bf  87.93} & {\bf  (4)} & 86.42 & (1) \\
+{\tt Cars-Ext}      & 90.3  & (0) & 90.82 & (1) & 91.57 & (3) & 90.84 & (1) & {\bf  91.9}  & {\bf  (4)} \\
+{\tt Contracep}     & 43.77 & (0) & 43.96 & (0) & {\bf  44.04} & (0) & 43.89 & (0) & 44    & (0) \\
+{\tt Contracep-Ext} & 43.17 & (0) & 44.32 & {\bf  (3)} & 43.44 & (0) & {\bf  44.35} & {\bf  (3)} & 43.7  & (0) \\
+{\tt CoverType}     & 52.97 & (2) & {\bf  55.05} & {\bf  (3)} & 51.07 & (0) & {\bf  55.05} & {\bf  (3)} & 51.07 & (0) \\
+{\tt CoverType-Ext} & {\bf  64.48} & {\bf  (4)} & 64.12 & (2) & 57.73 & (0) & 64.23 & (3) & 59.95 & (1) \\ 
+{\tt Poker } & 51.9 & (2) &50.28 & (1) & 51.77 & (2) & 49.94 & (0) & {\bf  51.91} & {\bf  (3)} \\ 
+\hline
+Average (Sum) &             {\bf  68.67}  &  {\bf  (24)}  & 68.30  &  (13)  & 68.27 &  (20)   & 68.46 &  (22)   & 68.47 &  (22) 
+
+\end{tabular}
+\label{exp:thirdset}
+\normalsize
+\end{table*}
+
+
+For the experiment with the bias-free criteria, shown in table \ref{tab:CrossValCTree} we once again observed a balance among the different criteria, with a slight advantage towards our methods. Perhaps surprisingly, the bias free approach had significantly worse
+results for the datasets with extended attributes.
+
+
+\begin{table*}
+\small
+\centering
+    \caption{Average accuracy and statistical tests  for  Conditional Inference trees 
+with depth at most 5 using only nominal attributes. The best accuracy for each dataset is bold-faced.}
+\label{tab:CrossValCTree}
+\begin{tabular}{c|cc|cc|cc} 
+Dataset &   \multicolumn{2}{c|}{CI-Twoing} &   \multicolumn{2}{c|}{CI-GLSG} & \multicolumn{2}{c}{CI-GL$\chi^2$} \\  \hline   
+{\tt Adult}         &{\bf 81.96} &{\bf  (2)} & 81.61 & (0) & 81.77 & (1) \\
+{\tt Mushroom}         &86.97 & (0) &{\bf  94.79 }& {\bf (2)} & 90.15 & (1) \\
+{\tt KDD98}-2         &81.29 & (0) & {\bf 82.34 }& {\bf (2) }& 81.68 & (1) \\
+%{\tt KDD98}-3         &65.28 & (0) & {\bf 65.8  }& {\bf (2) }& 65.07 & (0) \\
+%{\tt KDD98}-5         &49.23 & (0) & {\bf 49.58} & {\bf (2)} & 49.27 & (0) \\
+{\tt KDD98}-9         &41.84 & (0) & 42    & (0) & {\bf 42.26} & {\bf (1)} \\
+{\tt Nursery}         &{\bf 88.48} & {\bf (1)} & 88.3  & (0) & 88.47 & {\bf (1)} \\
+{\tt Nursery-Ext}         &{\bf 88.48} & {\bf (1)} & 88.26 & (0) & 88.47 & {\bf (1)} \\
+{\tt Cars}         &86.51 & {\bf (1)} & 85.02 & (0) & {\bf 86.57} & {\bf (1)} \\
+{\tt Cars-Ext}         &88.27 & {\bf (1) }& 88.27& (0) & {\bf 88.32} & {\bf (1)} \\
+{\tt Contracep}         &43.83 & (0) & {\bf 44.12} & {\bf (1)} & 43.87 & (0) \\
+{\tt Contracep-Ext}         &43.39 & (0) & {\bf 43.81} & {\bf (1)} & 43.76 & {\bf (1)} \\
+{\tt CoverType}         &54.1  & (0) & 54.1  & (0) & 54.1  & (0) \\
+{\tt CoverType-Ext}         &54.1  & (0) & 54.1  & (0) & 54.1  & (0) \\
+{\tt Poker}         &{\bf 51.05} & {\bf (1)} & 50.56 & (0) & 50.91 & {\bf (1)} \\  \hline
+Average (Sum)         &66.98 & (7)  &  67.51 & (10)  & 67.25 &  (10)
+       \end{tabular}
+\end{table*}
+
+
+
+
+%Another key aspect to discuss is the computational cost
+%of the proposed criteria.
+
+Table \ref{tab:time} shows the running time of each criterion  when
+used for both selecting and splitting purposes.
+Twoing is the fastest method when the number of classes is
+small and the GL-based methods become competitive
+and even the fastest when the number of classes gets larger,
+as illustrated by the results on {\tt KDD98} dataset.
+We also observe that  the running time for the
+GW-based criteria were usually one or two orders of magnitude
+larger than the others. The only clear exception was in the {\tt CoverType} dataset,
+where the number of samples is very large while the attributes' number of values
+is much smaller.
+
+Finally, Table \ref{exp:secondsetnumeric} shows experiments similar to those presented at Table
+\ref{exp:thirdset}, but now using also the numeric attributes. We observed a
+significant gain in terms of accuracy for all datasets except for
+KDD98-2. Also note that GLSG was inferior to both Twoing and GL$\chi^2$.
+
+\begin{table*}[]
+\small
+\centering
+\caption{Average time in seconds of a 3-fold cross validation
+for building decision trees with depth at most 5.
+The fastest method for each dataset is bold faced.}
+\begin{tabular}{c|c|c|c|c|c|c}
+Dataset & k & Twoing  & GWSG  &         GW$\chi^2$      & GLSG  & GL$\chi^2$      \\ \hline
+{\tt Adult}         & 2 & {\bf  2.7} & 41   & 88   & 3   & 4   \\
+{\tt Mushroom}      & 2 & {\bf 0.6} & 6.9  & 8.6  & 0.9 & 1   \\
+{\tt KDD98}-2       & 2 & {\bf 4}   & 2162 & 3579 & 44  & 44  \\
+{\tt Contracep}     & 3 & {\bf 0.1} & 0.6  & 1    & 0.1 & 0.1 \\
+{\tt Contracep-Ext} & 3 & {\bf 0.1} & 3.3  & 13   & 0.2 & 0.2 \\
+%{\tt KDD98}-3       & 3 & {\bf 5.2} & 2289 & 4342 & 60  & 56  \\
+{\tt Cars}          & 4 & {\bf 0.1} & 2.5  & 2.4  & 0.1 & 0.1 \\
+{\tt Cars-Ext}      & 4 & {\bf 0.2} & 7.7  & 11   & 0.3 & 0.3 \\
+{\tt Nursery}       & 5 & {\bf 0.8} & 4.7  & 5    & 1   & 0.9 \\
+{\tt Nursery-Ext}   & 5 & {\bf 1.1} & 76  & 148  & 3.3 & 2.6   \\
+%{\tt KDD98}-5       & 5 & {\bf 11}  & 2469 & 4956 & 81  & 63  \\
+{\tt CoverType}     & 7 & 349 & 265  & {\bf 179}  & 245 & 308 \\
+{\tt CoverType-Ext} & 7 & 213 & 341  & 213  & {\bf 182} & 296 \\
+{\tt KDD98}-9       & 9 & 132 & 3410 & 5899 & 97  & {\bf 74}  \\ 
+{\tt Poker}     & 10 & 7.4 & 6.5 & 11.2 & 2.2  & {\bf 2.1}  
+%Average & & 48.4 & 739 &   1297 &  {\bf  48} & 56.8 \\
+%Median & & 3.4 & 58.5 &  118 &  {\bf  3.1} & 3.3 
+\end{tabular}
+\label{tab:time}
+\end{table*}
+
+
+\begin{table}
+\small
+\caption{Average accuracy and statistical test results for  Decision Trees using both nominal and numeric attributes.}
+\centering
+\begin{tabular}{c|cc|cc|cc} 
+Dataset &        \multicolumn{2}{c|}{Twoing} &   \multicolumn{2}{c|}{GLSG} &   \multicolumn{2}{c}{GL$\chi^2$} \\  \hline   
+{\tt Adult}      &   {\bf 84.2 }  & {\bf (1) }    & 82.4  & (0)   &  {\bf 84.2} & {\bf (1) }        \\
+{\tt KDD98}-2      & 80.9   & (0)      & {\bf 81.9 }& {\bf (1)}   & {\bf 81.9}  & {\bf (1)}        \\ 
+%{\tt KDD98}-3      & {\bf 69.5 } &{\bf   (2)}   & 67.9       & (0)  & 69.1 & (1)          \\ 
+%{\tt KDD98}-5      & 54.6   &  (0)  & 54.5   &  (0) & {\bf 55.3   }  & {\bf  (2) }     \\ 
+{\tt KDD98}-9      & 45.7 &   (1)    & 45.3 &  (0)  & {\bf 48.7 }  &{\bf  (2)  }        \\ 
+{\tt Contracep}  &{\bf  54.1  }&{\bf   (1)}      & 52.9   &  (0)  & 54    &{\bf  (1) }     \\ 
+{\tt Contracep-Ext}  & 51.7  &  (0)      & 52.3   &  (0) & {\bf 53.3 }   & {\bf (2) }    \\ 
+{\tt CoverType}  &  {\bf 70.3 } &  {\bf  (2) }   &   68.5  &  (0)   &   69.2   &  (1)      \\ 
+{\tt CoverType-Ext}  & {\bf 70.9}   & {\bf (2) }     &  70.3    &  (1)  &  69.2     & (0)      \\  \hline
+%\hline
+Average (Sum)  & 64.64  &  (9)  & 63.98  &  (2)   &   64.99   &  (11)
+%Median  & 69.46  &    & 67.86  &    &   69.12  &
+
+\end{tabular}
+\label{exp:secondsetnumeric}
+\normalsize
+\end{table}
+
+
+ 

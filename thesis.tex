@@ -1,0 +1,120 @@
+\documentclass[msc,british,bibkey]{ThesisPUC_uk}
+
+%---------- Math ----------%
+\usepackage{amsmath}
+\usepackage{amssymb}
+%\usepackage{amsthm}
+\usepackage{mathtools}
+\usepackage{bbm}
+%---------- Floting ----------%
+\usepackage{float}
+%---------- References ----------%
+\usepackage{natbib}
+%---------- Algorithm ----------%
+\usepackage{algorithm}
+\usepackage{algorithmic}
+%---------- Tables ----------%
+\usepackage{multicol}
+\usepackage{booktabs}
+\usepackage{subcaption}
+%---------- Others ----------%
+\usepackage{hyperref}
+\usepackage{bold-extra}
+\usepackage{graphicx}
+
+\colorlet{dark}{red!85!blue!60!black}
+
+%---------- Cover ----------%
+\author{\mbox{Felipe} \mbox{de} \mbox{Albuquerque} \mbox{Mello} \mbox{Pereira}}
+\authorR{\mbox{Pereira}, \mbox{Felipe} \mbox{de} \mbox{Albuquerque} \mbox{Mello}}
+\advisor{\mbox{Eduardo} \mbox{Sany} \mbox{Laber}}
+\advisorR{\mbox{Laber}, \mbox{Eduardo} \mbox{Sany}}
+\title{Binary Splitting Criteria for Large Categorical Attributes in Decision Trees}
+\day{28$^{th}$} \month{February} \myyear{2018}
+
+\city{Rio de Janeiro}
+\CDD{004}
+\department{Inform\'atica}
+\departmentbr{Inform\'atica}
+\program{Inform\'atica}
+\programbr{Inform\'atica}
+\school{Centro T\'{e}cnico Cient\'{\i}fico}
+\university{Pontif\'{\i}cia Universidade Cat\'{o}lica do Rio de Janeiro}
+\uni{PUC-Rio}
+
+%---------- Jury ----------%
+
+\jury{
+  \jurymember{H\'elio C\^ortes Vieira Lopes}{Departamento de Inform\'atica --- PUC-Rio}
+  \jurymember{Marco Serpa Molinaro}{Departamento de Inform\'atica --- PUC-Rio}
+  \jurymember{M\'arcio da Silveira Carvalho}{Vice Dean of Graduate Studies\\ Centro T\'ecnico Cient\'ifico da PUC-Rio}
+}
+
+%---------- Front letters ----------%
+\resume
+{
+Bachelor's in Electrical Engineering and Pure Mathematics at the Pontif\'icia Universidade Cat\'olica do Rio de Janeiro (2010 and 2011). Masters' in Mathematics at the Pontif\'icia Universidade Cat\'olica do Rio de Janeiro (2013).
+}
+
+\acknowledgment
+{
+TODO: acknowledgment.
+
+Thanks to CNPq for the conceded scholarship during my Masters.
+}
+
+\keywords
+{
+  \key{Decision Trees; Max-cut Problem; Approximated Algorithms}
+}
+
+\abstract{
+TODO: abstract.
+}
+
+\titulobr{Crit\'erios de Splits Bin\'arios para Atributos Categóricos Grandes em \'Arvores de Decis\~ao.}
+\departamentobr{Inform\'atica}
+
+\chavesbr
+{
+  \chave{\'Arvores de Decis\~ao; Problema de Corte M\'aximo; Algoritmos Aproximativos}
+}
+
+\resumobr
+{
+TODO: resumobr.
+}
+
+\tablesmode{figtab}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{document}
+
+\newcommand{\remove}[1]{}
+\newcommand{\dist}[3]{d(#1, #2)}
+\newcommand{\distC}[2]{d(#1, #2)}
+\newcommand{\OPT}[1]{\textrm{OPT}(#1)}
+\newcommand{\OPTf}[2]{\textrm{OPT}(#1, #2)}
+\newcommand{\Cf}[2]{\textrm{cost}(#1, #2)}
+\newcommand{\C}[1]{\textrm{cost}(#1)}
+\newcommand{\ans}[1]{\textbf{#1}}
+\newcommand{\bl}{\textrm{blocked}}
+\newcommand{\un}{\textrm{unassigned}}
+\newcommand{\comments}[1]{}
+\newcommand{\commento}[1]{\marginpar{\tiny \flushleft{#1}}}
+\newtheorem{lemma}{Lemma}
+
+\input{Introduction}
+\input{Background}
+\input{Framework}
+\input{ExperimentsSplits}
+\input{ExperimentsDatasets}
+\input{Conclusions}
+
+\begin{raggedright}
+	\bibliography{thesis}
+\end{raggedright}
+
+\end{document}
