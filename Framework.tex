@@ -16,18 +16,15 @@ The problem of computing the  cut $X^*$ with maximum weight in a graph with non-
 However, there are good  approximation algorithms
 available. A remarkable one is the randomized algorithm
  proposed in  \cite{GoeWil95} that relies on a formulation of
-the max-cut problem via semidefinite programming. This algorithm,  denoted here by GW, 
-returns a cut $X$ that satisfies  $E[w(X)] \ge 0.878 w(X^*).$
-
-TODO: explicar algoritmo
-
+the max-cut problem via semidefinite programming (SDP). This algorithm,  denoted here by GW, 
+returns a cut $X$ that satisfies  $E[w(X)] \ge 0.878 w(X^*)$. It involves solving an SDP on the graph weights matrix, calculating the Cholesky decomposition of it and then generating a random partition of the values based on the inner product of the decompositions column vectors with a randomly generated vector on the sphere of dimension $n$. As solving an SDP takes $O(n^4)$ arithmetic operations (see \cite{navascues2009power}) and calculating the Cholesky decomposition takes $O(n^3)$ operations, the time complexity is high but polynomial.
 
 Another possibility to solve the Max-Cut problem is by using the {\tt GreedyCut} algorithm, presented in Algorithm \ref{alg:greedy}. It
 obtains a cut $X$ such that $w(X)  \ge 0.5 w(X^*)$ \cite{SahGon:76}.
 The algorithm starts with two empty sets $X$ and $X'$. Then, it
 scans the nodes 
 and assigns each of them to the set that provides
-the maximum improvement on  the weight of the current cut (ties are broken arbitrarily).
+the maximum improvement on  the weight of the current cut (ties are broken arbitrarily). Is it easy to see that the time complexity of this greedy algorithm is $O(n^2)$.
 
 
 \begin{algorithm}[tb]
@@ -184,7 +181,7 @@ This measure favors the separation of the classes
 that incur  a large cost in the case they are mixed.
 
 
-\subsection{Setting weights according to binary criteria}
+\subsection{Setting weights according to other splitting criteria}
 
 Our second way of defining the weights makes use of some 
 given splitting criterion 
@@ -202,11 +199,8 @@ $$
 where $E[A_{i \ell }]=N_i p_{\ell}$
 and $E[A_{j \ell }]=N_j p_{\ell} $.
 
-In order to reduce the   bias towards
-attributes with many values,
-we divide 
-$w_{ij}$ by  $n-1$, for every pair $i,j$.
-We make this adjustment  because each value contributes
+In order to reduce the bias towards attributes with many values, we divide 
+$w_{ij}$ by  $n-1$, for every pair $i,j$. We make this adjustment  because each value contributes
 to the weight of $n-1$ edges.
 
 We shall remark that, although not explored in this work,
