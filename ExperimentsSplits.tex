@@ -4,3 +4,230 @@
 \label{chap:experimentssplits}
 
 In this chapter we compare the ability of different heuristics in finding the values' split with lowest impurity.
+
+We report a number of experiments with the heuristics proposed/analyzed
+in the previous sections.
+Our experiments are very similar to those proposed in \cite{journals/datamine/CoppersmithHH99}
+except for a few details.
+All experiments are Monte Carlo simulations with 10,000 runs, each using a randomly-generated contingency table for the given number of values $n$ and classes $k$. 
+By a contingency table we mean a matrix where each row  corresponds to a distinct vector of
+the input $V$. Each table  was created by uniformly picking a number in $\{0, \ldots, 7\}$ for each entry. This guarantees a substantial probability of a row/column having some zero frequencies, which is common in practice. Differing from  \cite{journals/datamine/CoppersmithHH99}, if all the entries corresponding to a value or a class are zero, we re-generate the contingency table, otherwise the number of actual values and classes would not match $n$ and $k$.
+
+We evaluated  Twoing, \Alg  and PCext. The latter is a method
+proposed in  \cite{journals/datamine/CoppersmithHH99} that defines the partition of $V$ by using  a hyperplane
+in $\R^k$ whose normal  direction is the principal direction of the 
+contingency table associated with the instance.
+According to the experiments reported in \cite{journals/datamine/CoppersmithHH99}  PCext
+consistently  outperformed SliqExt \cite{} and the Flip Flop method \cite{}
+in terms of speed and the impurity of the partitions found.
+
+Table \ref{tab:Wins-Gini} and \ref{tab:wins-entropy} show, for different values of $n$ and $k$, the percentage of times that
+Twoing outperformed/ was outperformed by PCext for Gini and Entropy, respectively.
+Note that the percentages do not necessarily sum up $100\%$ because
+there were ties.
+We only show results for $k \leq 9$ because for larger values
+of $k$ Twoing becomes non practical due to its running time. In addition,
+we do not present results for small values of $n$ because in this
+case the optimal  partition can be found reasonably quick by testing all possible partitions
+so that there is no motivation for heuristics.
+
+\begin{table}[ht]
+\caption{Percentage of Wins for PCExt and Twoing for Gini impurity. At each entry the top and the bottom values
+corresponds to the number of wins for Twoing and PCExt, respectively}
+\begin{center}
+\begin{tabular}{c|c|c|c|c}
+    
+		n/k & 3 & 5 & 7 & 9 \\ \hline
+    \multirow{2}{*}{12 }& 8.7 & 12.0  &  13.4 & 15.0  \\ &2.4 & 0.7 & 0.1 & 0 \\ \hline
+		\multirow{2}{*}{25 }&  24 & 33.6 & 38.4 & 45.1 \\ & 21.4 & 27.9 & 21.1  & 10.9 \\ \hline
+		\multirow{2}{*}{50 } & 38.3  & 41.6  &  41.8 & 46.8  \\ & 37.8 & 52.4 & 54.6  & 49.9 \\
+		
+				%\multirow{2}{*}{12 }&X & 6\\ &Y & 2\\ & Z & 4 \\
+		
+		%\multirow{2}{*}{70 }&X & 3\\ &Y & 2\\ 
+		
+    
+\end{tabular}
+\end{center}
+\label{tab:Wins-Gini}
+\end{table}
+
+\begin{table}[ht]
+\caption{Percentage of Wins for PCExt and Twoing for Gini Entropy. At each entry the top and the bottom values
+corresponds to the number of wins for Twoing and PCExt, respectively}
+\begin{center}
+\begin{tabular}{c|c|c|c|c}
+    
+		 n/k & 3 & 5 & 7 & 9 \\ \hline
+    \multirow{2}{*}{12 }& 19.7 & 25.8  &  26.8 & 27.7  \\ &1.3 & 0.4 & 0.0 & 0.0 \\ \hline
+		\multirow{2}{*}{25 }&  43.4 & 54.4 & 58.4 & 60.9 \\ & 12.4 & 15.8 & 12.1  & 7.0 \\ \hline
+		\multirow{2}{*}{50 } & 64.6  & 70.2  &  70.0 & 69.8  \\ & 18.9 & 25.7 & 27.5  & 28.0 \\
+		
+				
+    
+\end{tabular}
+\end{center}
+\label{tab:wins-entropy}
+\end{table}
+
+
+In general, we observe an advantage of Twoing  
+for both criteria, being more clear for Entropy impurity.
+The maximum relative excess  between the impurities 
+of the partitions found by  Twoing and PCext was $0.9\%$ for
+Gini and $1.4 \%$ for Entropy.
+On the other hand, the 
+ maximum relative excess  between the impurities 
+of the partitions found by  PCext and Twoing was $3.48 \%$ for
+Gini and $6.23 \%$ for Entropy. 
+In terms of speed, as expected, Twoing was faster up to $k=7$ and then 
+PCext becomes faster.
+
+% Although Twoing  only outperforms
+% PCExt for limited number of classes we believe that this is relevant
+%because one can find a number of classification tasks (e.g. UCI) 
+%where the number of classes is small but larger than 2.
+
+
+We do not report the results for \Alg because it was not competitive with the other
+two heuristics. However, due to its running time it might be used when both $n$ and $k$ are very large and
+speed is an  issue. When $n=200$ and $k=100$ $\Alg$, using one care, is almost 50 times
+faster than PCExt, with the latter using  8 cores. In addition,
+\Alg could be  used together with  PCExt, incurring a negligible overhead, to guarantee that the ratio 
+between the impurity of the partition found and the optimal one is bounded.
+
+ 
+Taking into account these  experiments, those reported in \cite{journals/datamine/CoppersmithHH99}
+and the  theoretical properties of the available algorithms, 
+Table  \ref{tab:guidelines}  suggests  guidelines on how to solve the 
+problem of finding the binary partition of minimum impurity  in practical situation.
+Of course small, medium and large depend on the available
+hardware and the time one  is up to wait to train/test classification models. 
+
+
+\begin{table}[htb]
+\centering
+\caption{Guidelines on how to solve the problem of finding the partition with minimum impurity 
+in Practice.}
+\label{tab:guidelines}
+\begin{tabular}{c|c|c}
+{\bf n} & {\bf k} & {\bf Suggested Method} \\ \hline 
+small &  &  Exact \\
+not small  & small & Twoing \\
+not small  & not small & PC-Ext \\
+\end{tabular}
+\end{table}
+%We are not aiming to understand which is the best availble method 
+
+
+
+
+ 
+
+--------------------------------------------------------------------------
+
+
+All experiments in this section are Monte Carlo simulations with 10,000 runs, each using a randomly-generated contingency table for the given number of values $n$ and classes $k$. The contingency tables were created by uniformly picking a number in $\{0, \ldots, 7\}$ for each entry, as done in Copersmith et al (TODO: ref). This guarantees a substantial probability of a row/column having some zero frequencies, which is common in practice. If all the entries corresponding to a value or a class are zero, we re-generate the contingency table, otherwise the number of actual values and classes would not match $n$ and $k$.
+
+We ran the experiments for two different impurity measures: the Gini Gain and the Information Gain. We measured the performance of the same criteria for both of them. All of the non-exact criteria studied are based on the superclass trick, using the theorem proved by Breiman et al (TODO: ref). To separate the classes into a pair of superclasses we use two heuristics: \Alg (where the class with the largest frequency is separated from the others) and ListScheduling (balancing the superclasses using a polynomial algorithm with a $4/3$-approximation, as explained in TODO: ref). Since \Alg (ListScheduling) should be the best heuristic for the Gini (InformationGain) impurity, we compare against ListScheduling (\Alg) as a baseline. Given a partition of classes into superclasses, we use the theorem (TODO:ref) to find the optimal partition of values in linear time after sorting.
+
+We compare those methods with the exact and the Twoing criteria, which run in exponential time in $n$ and $k$, respectively. For all the non-exact criteria, we measured the impurity with respect to all the $k$ classes--instead of the impurity with respect to the superclasses--since that's what we are optimizing. We also studied a criterion that picks a random partition of values into two non-empty groups, but it was significantly worse than all the other methods, thus we chose not to report its results. 
+
+We are interested in choosing what criterion to use when the exact ones don't run in reasonable time. In some experiments we choose values for $n$ that are not very large because we want to be able to compare the other criteria with the exact ones. In others, we choose $n$ to be very large, and don't analize the exact criteria because they don't finish executing.
+
+
+%\subsection{Small Number of Classes ($k=3$)}
+The first set of experiments uses $k=3$ classes and $n=6,~12$ values. Since the Twoing criterion behaves almost perfectly, both in terms of execution time and impurity found, we don't compare it against the \Alg and ListScheduling criteria.
+
+From tables \ref{imp-all-gini}, \ref{imp-all-infogain}, \ref{match-all-gini} and \ref{match-all-infogain}, it is striking how well Twoing performs. In almost all the simulations the impurity found is exactly the same as the exact methods. This suggests that, in cases when the exact methods don't run in reasonable time but Twoing does (that is, large $n$ and small $k$), we lose almost nothing by using it.
+
+
+%\subsection{Medium Number of Classes ($k=9$)}
+
+The second set of experiments uses $k=9$ classes and $n=6,~12$ values. The results are shown in tables \ref{imp-all-gini}, \ref{imp-all-infogain}, \ref{match-all-gini} and \ref{match-all-infogain}. The comparison between \Alg and ListScheduling is shown in tables \ref{heuristics-gini} and \ref{heuristics-infogain}.
+
+
+Once again Twoing behaves remarkably well when it comes to getting the lowest impurity, but its execution time is already much larger than the criteria that use a single superclass split.
+
+
+Comparing the heuristics between themselves we can see that, in terms of the Gini impurity, the \Alg heuristic is the best among them, while for the Entropy impurity, the best one is the ListScheduling method. This is consistent with the theory developed earlier in this paper.
+
+
+%\subsection{Very Large Number of Values ($n\ge30$)}
+
+The last set of experiments is focused on studying what happens when the number of values is very large ($n\ge30$) and the number of classes increases. 
+
+First we study what happens when the number of classes is not very large ($k=3, ~9$). In this comparison we use Twoing as a baseline, since its behavior is so close to the exact methods in the other experiments and since it is still feasible to run it, while the exact methods aren't. Note that, since Twoing evaluates all the possible superclass partitions, the impurity it finds is never worse than that of \Alg and ListSchedule. The results are shown in tables \ref{imp-large1-gini}, \ref{imp-large1-infogain}, \ref{match-large1-gini}, \ref{match-large1-infogain}, \ref{heuristics-gini} and \ref{heuristics-infogain}.
+
+
+
+Note that the results for the \Alg and the ListScheduling methods are the same when $k=3$ because they give the same superclass partitions. We can also notice that the number of times that Twoing finds a partition with impurity smaller than the other methods increases with $k$. This is explained by the exponential growth of the number of possible superclass partitions with $k$. What's surprising is that the \Alg method gives slightly better partitions than ListSchedule for the Information Gain impurity. Since both methods are within the approximation bounds set in this paper, this does not contradict our results.
+
+
+
+In the next experiments, we use large number of values and classes. This makes both Twoing and the exact methods infeasible to be executed, so we only compare \Alg with ListSchedule. We use the minimum impurity between the two as a baseline.
+
+
+\begin{table}[]
+\centering
+\caption{Percentage of Gini impurity above the one found by the best heuristic.}
+\label{imp-large2-gini}
+\begin{tabular}{l|l|l|l}
+n   & k   & \Alg          & ListSchedule \\
+\hline
+30  & 50  & 2.82e-3\%        & 2.86e-3\% \\
+50  & 30  & 3.91e-3\%        & 6.04e-3\% \\
+50  & 50  & 1.72e-3\%        & 2.23e-3\% \\
+50  & 100 & 0.56e-3\%        & 0.65e-3\% \\
+100 & 50  & 0.72e-3\%        & 1.90e-3\% \\
+100 & 100 & 0.26e-3\%        & 0.49e-3\% \\
+100 & 200 & 0.09e-3\%        & 0.13e-3\% \\
+200 & 100 & 0.08e-3\%        & 0.46e-3\%
+\end{tabular}
+\end{table}
+
+\begin{table}[]
+\centering
+\caption{Percentage of Information Gain impurity above the one found by the best heuristic.}
+\label{imp-large2-infogain}
+\begin{tabular}{l|l|l|l}
+n   & k   & \Alg & ListSchedule \\
+\hline
+30  & 50  & 0.02\% & 0.02\% \\
+50  & 30  & 0.02\% & 0.02\% \\
+50  & 50  & 0.01\% & 0.01\% \\
+50  & 100 & 5.89e-3\% & 5.96e-3\% \\
+100 & 50  & 4.97e-3\% & 0.01\% \\
+100 & 100 & 3.02e-3\% & 5.05e-3\% \\
+100 & 200 & 1.55e-3\% & 2.17e-3\% \\
+200 & 100 & 0.75e-3\% & 5.66e-3\%
+\end{tabular}
+\end{table}
+
+\begin{table}[]
+\centering
+\caption{Percentage of simulations where the Gini impurity found is worse than the one found by the best heuristic.}
+\label{match-large2-gini}
+\begin{tabular}{l|l|l|l}
+n   & k   & \Alg & ListSchedule \\
+\hline
+30  & 50  & 49.71\%        & 50.22\%        \\
+50  & 30  & 42.98\%        & 57.02\%        \\
+50  & 50  & 46.19\%        & 53.81\%        \\
+50  & 100 & 47.39\%        & 52.57\%        \\
+100 & 50  & 34.74\%        & 65.26\%        \\
+100 & 100 & 39.72\%        & 60.28\%        \\
+100 & 200 & 43.27\%        & 56.73\%        \\
+200 & 100 & 24.22\%        & 75.78\%
+\end{tabular}
+\end{table}
+
+
+
+Comparing the results in tables \ref{imp-large2-gini}, \ref{imp-large2-infogain}, \ref{match-large2-gini}, \ref{match-large2-infogain}, \ref{heuristics-gini} and \ref{heuristics-infogain} we can see that, for both the Gini and Information Gain impurity measures, the \Alg is usually the best method. This is specially interesting for the Information Gain impurity, since the approximation guarantees for the method that uses a balanced superclass partition is better. Furthermore, the results for the \Alg criterion improve as the number of values and classes increase. This suggests that, in practice, one should prefer the \Alg method when $n$ and $k$ are very large, even though the approximation guarantee for the ListSchedule method is tighter.
+
+%\subsection{Experiments Conclusions}
+The above experiments strongly suggest that, when we can't run the exact criteria, the best choice we can make is to choose the Twoing criterion, if its execution time is feasible. If that's also not possible, for the Gini impurity, the best choice is always to use the \Alg criterion. For the Information Gain, we should choose between ListSchedule, if $n$ and $k$ are not significantly large, or \Alg, for larger number of values and classes.
+
+In all the simulations the criteria satistied the approximation guarantees given in this paper. Since they all performed much better than their approximation bounds, the criterion with the best guarantee is not necessarily the best in terms of the expected impurity of the chosen partition.
+
