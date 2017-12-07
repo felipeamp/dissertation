@@ -3,23 +3,14 @@
 \chapter{Experiments on Splits}
 \label{chap:experimentssplits}
 
-In this chapter we compare the ability of different heuristics in finding the values' split with lowest impurity.
+In this chapter we compare the ability of different heuristics in finding the values' split with lowest impurity. We are interested in choosing what heuristic/criterion to use when the exact ones don't run in reasonable time.
 
-We report a number of experiments with the heuristics proposed/analyzed
-in the previous sections.
 Our experiments are very similar to those proposed in \cite{journals/datamine/CoppersmithHH99}
-except for a few details.
-All experiments are Monte Carlo simulations with 10,000 runs, each using a randomly-generated contingency table for the given number of values $n$ and classes $k$. 
-By a contingency table we mean a matrix where each row  corresponds to a distinct vector of
-the input $V$. Each table  was created by uniformly picking a number in $\{0, \ldots, 7\}$ for each entry. This guarantees a substantial probability of a row/column having some zero frequencies, which is common in practice. Differing from  \cite{journals/datamine/CoppersmithHH99}, if all the entries corresponding to a value or a class are zero, we re-generate the contingency table, otherwise the number of actual values and classes would not match $n$ and $k$.
+except for a few details. All experiments are Monte Carlo simulations with 10,000 runs, each using a randomly-generated contingency table for the given number of values $n$ and classes $k$. Each table  was created by uniformly picking a number in $\{0, \ldots, 7\}$ for every entry. This guarantees a substantial probability of a row/column having some zero frequencies, which is common in practice. Differing from  \cite{journals/datamine/CoppersmithHH99}, if all the entries corresponding to a value or a class are zero, we re-generate the contingency table, otherwise the number of actual values and classes would not match $n$ and $k$. We evaluated Twoing, SLIQ-ext, PC-ext, LargestAlone and ListSchedule for both the Gini and Entropy impurities.
 
-We evaluated  Twoing, \Alg  and PCext. The latter is a method
-proposed in  \cite{journals/datamine/CoppersmithHH99} that defines the partition of $V$ by using  a hyperplane
-in $\R^k$ whose normal  direction is the principal direction of the 
-contingency table associated with the instance.
-According to the experiments reported in \cite{journals/datamine/CoppersmithHH99}  PCext
-consistently  outperformed SliqExt \cite{} and the Flip Flop method \cite{}
-in terms of speed and the impurity of the partitions found.
+
+
+TODO: remover daqui pra baixo (ate linha)?
 
 Table \ref{tab:Wins-Gini} and \ref{tab:wins-entropy} show, for different values of $n$ and $k$, the percentage of times that
 Twoing outperformed/ was outperformed by PCext for Gini and Entropy, respectively.
@@ -76,8 +67,7 @@ for both criteria, being more clear for Entropy impurity.
 The maximum relative excess  between the impurities 
 of the partitions found by  Twoing and PCext was $0.9\%$ for
 Gini and $1.4 \%$ for Entropy.
-On the other hand, the 
- maximum relative excess  between the impurities 
+On the other hand, the  maximum relative excess  between the impurities 
 of the partitions found by  PCext and Twoing was $3.48 \%$ for
 Gini and $6.23 \%$ for Entropy. 
 In terms of speed, as expected, Twoing was faster up to $k=7$ and then 
@@ -126,14 +116,6 @@ not small  & not small & PC-Ext \\
 
 --------------------------------------------------------------------------
 
-
-All experiments in this section are Monte Carlo simulations with 10,000 runs, each using a randomly-generated contingency table for the given number of values $n$ and classes $k$. The contingency tables were created by uniformly picking a number in $\{0, \ldots, 7\}$ for each entry, as done in Copersmith et al (TODO: ref). This guarantees a substantial probability of a row/column having some zero frequencies, which is common in practice. If all the entries corresponding to a value or a class are zero, we re-generate the contingency table, otherwise the number of actual values and classes would not match $n$ and $k$.
-
-We ran the experiments for two different impurity measures: the Gini Gain and the Information Gain. We measured the performance of the same criteria for both of them. All of the non-exact criteria studied are based on the superclass trick, using the theorem proved by Breiman et al (TODO: ref). To separate the classes into a pair of superclasses we use two heuristics: \Alg (where the class with the largest frequency is separated from the others) and ListScheduling (balancing the superclasses using a polynomial algorithm with a $4/3$-approximation, as explained in TODO: ref). Since \Alg (ListScheduling) should be the best heuristic for the Gini (InformationGain) impurity, we compare against ListScheduling (\Alg) as a baseline. Given a partition of classes into superclasses, we use the theorem (TODO:ref) to find the optimal partition of values in linear time after sorting.
-
-We compare those methods with the exact and the Twoing criteria, which run in exponential time in $n$ and $k$, respectively. For all the non-exact criteria, we measured the impurity with respect to all the $k$ classes--instead of the impurity with respect to the superclasses--since that's what we are optimizing. We also studied a criterion that picks a random partition of values into two non-empty groups, but it was significantly worse than all the other methods, thus we chose not to report its results. 
-
-We are interested in choosing what criterion to use when the exact ones don't run in reasonable time. In some experiments we choose values for $n$ that are not very large because we want to be able to compare the other criteria with the exact ones. In others, we choose $n$ to be very large, and don't analize the exact criteria because they don't finish executing.
 
 
 %\subsection{Small Number of Classes ($k=3$)}

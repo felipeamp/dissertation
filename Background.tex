@@ -23,18 +23,21 @@ $A_{ij} / N_i$.
 \section{Impurity Measures}
 Many of the splitting criteria follow the same algorithm:
 
+TODO: descomentar algoritmo
+
 
 \begin{algorithm}[tb]
-   \caption{ CreateTree($S$: set of samples, $List_A$: list of attributes\' information, $I$: split impurity measure)}
+   \caption{CreateTree($S$: set of samples, $List\_A$: list of attributes' information, $I$: split impurity measure)}
    \label{alg:create-tree}
 \begin{algorithmic}
-\STATE{{\bf If} $S$ does not meet the stopping criterion:}
-\FOREACH{attribute $A$ in $List_A$ }
-\STATE{get the split of values of $A$ that yields the smallest impurity as measured by $I$}
+\IF{$S$ does not meet the stopping criterion:}
+\FOR{attribute $A$ in $List\_A$}
+\STATE $s_A = $ split of $A$ with smallest impurity as measured by $I$
 \ENDFOR
-\STATE{split $S$ into $(L, R)$ using the attribute $A$ whose best split has the smallest impurity}
-\STATE{CreateTree($L$)}
-\STATE{CreateTree($R$)}
+\STATE $(L, R) = s_{A^*}$ s.t. $I(s_{A^*}) \leq I(s_A) ~\forall ~ A$
+\STATE CreateTree($L$)
+\STATE CreateTree($R$)
+\ENDIF
 \end{algorithmic}
 \end{algorithm}
 
@@ -162,7 +165,10 @@ SLIQ was presented in \cite{mehta1996sliq} and it's a very simple greedy heurist
 SLIQ-ext is a simple extension, where we keep changing values from the left to the right until the left side is empty (that is, we move from the left to the right even if that increases the impurity). Once again the value to move is chosen in a greedy fashion. SLIQ-ext returns the values' split seen that had the lowest impurity.
 
 \subsection{PC and PC-ext}
-These heuristics are based on the Principal Component of the contingency table the and were presented in \cite{journals/datamine/CoppersmithHH99}. One first calculates the class probability distribution of every value, which is done by normalizing the contingency table rows to have 1 in the sum norm. We then group values into ``supervalues'' where each value in the same supervalue has the same class probability distribution. Now we get the contingency table of these supervalues and calculate the first principal component of this matrix. One then calculates the inner product of each class probability vector of the supervalues  with the principal component and sort the supervalues by it. Denote by $v_1,\ldots,v_{n^*}$ the $n^*$ supervalues sorted in this manner and denote by $pc$ the first principal component. We then calculate the impurity gain of the supervalues\' splits of the form
+These heuristics are based on the Principal Component of the contingency table the and were presented in \cite{journals/datamine/CoppersmithHH99}. The idea is to define the values partition by using  a hyperplane in $\mathbb{R}^k$ whose normal  direction is the principal direction of the 
+contingency table associated with the instance.
+
+In more details, one first calculates the class probability distribution of every value, which is done by normalizing the contingency table rows to have 1 in the sum norm. We then group values into ``supervalues'' where each value in the same supervalue has the same class probability distribution. Now we get the contingency table of these supervalues and calculate the first principal component of this matrix. One then calculates the inner product of each class probability vector of the supervalues  with the principal component and sort the supervalues by it. Denote by $v_1,\ldots,v_{n^*}$ the $n^*$ supervalues sorted in this manner and denote by $pc$ the first principal component. We then calculate the impurity gain of the supervalues\' splits of the form
 $$L = \{v_i : v_i \cdot pc \leq t\}$$
 $$R = \{v_i : v_i \cdot pc > t\}$$
 
