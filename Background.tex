@@ -159,11 +159,11 @@ This method, although very complicated and quite slow, is employed by the commun
 \section{Heuristics for Splitting Decision Tree Nodes}
 As seen in the previous section, calculating the optimal split takes exponential time in the number of values or classes. Therefore many heuristics were created to create decision trees in this situation. The most used ones are listed below. All of them work with any impurity measure (e.g.: Gini or Entropy), but some of them work best with one of them. When this is the case, it will be mentioned.
 
-\subsection{SLIQ and SLIQ-ext}
-SLIQ was presented in \cite{mehta1996sliq} and it's a very simple greedy heuristic. Given an attribute, one starts with all the values going to the left split, and none on the right split. We then choose a value to go from the left to the right split. This value is the one that, when changing from the left to the right sides, decreases the impurity (increases the impurity gain) the most. This is repeated until there is no way of moving a value from the left to the right and decreasing the impurity.
-
-SLIQ-ext is a simple extension, where we keep changing values from the left to the right until the left side is empty (that is, we move from the left to the right even if that increases the impurity). Once again the value to move is chosen in a greedy fashion. SLIQ-ext returns the values' split seen that had the lowest impurity.
-
+%\subsection{SLIQ and SLIQ-ext}
+%SLIQ was presented in \cite{mehta1996sliq} and it's a very simple greedy heuristic. Given an attribute, one starts with all the values going to the left split, and none on the right split. We then choose a value to go from the left to the right split. This value is the one that, when changing from the left to the right sides, decreases the impurity (increases the impurity gain) the most. This is repeated until there is no way of moving a value from the left to the right and decreasing the impurity.
+%
+%SLIQ-ext is a simple extension, where we keep changing values from the left to the right until the left side is empty (that is, we move from the left to the right even if that increases the impurity). Once again the value to move is chosen in a greedy fashion. SLIQ-ext returns the values' split seen that had the lowest impurity.
+%
 \subsection{PC and PC-ext}
 These heuristics are based on the Principal Component of the contingency table the and were presented in \cite{journals/datamine/CoppersmithHH99}. The idea is to define the values partition by using  a hyperplane in $\mathbb{R}^k$ whose normal  direction is the principal direction of the 
 contingency table associated with the instance.
