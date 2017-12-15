@@ -1,21 +1,23 @@
 \newpage
 
 \chapter{Experiments on Real Datasets}
-\label{chap:experimentsdatasets}
+\label{chap:experiments-datasets}
 
 
 In this chapter we describe our experimental study on real datasets. First, we describe the chosen datasets. Next, we discuss the max-cut algorithms 
-employed and, then, we present our results. We will compare the performance between Twoing, PC-ext and criteria generated from our framework. Both Twoing and PC-ext were chosen based on the experiments results on impurity splits done in the previous chapter.
+employed and, then, we present our results. We will compare the performance between Twoing, PC-ext and some criteria generated from our framework. Both Twoing and PC-ext were chosen based on the experiments results of the previous chapter.
 
 All  experiments described in the following sections were executed on a machine with the following settings: Intel(R) Core(TM) i7-4790 CPU @ 3.60GHz with 32 GB of RAM. The code was developed using Python 3.6.1 with the libraries numpy, scipy, scikit-learn and cvxpy.
-The project can be accessed in {\tt github.com/felipeamp/dissertation-code}. It includes the code, the datasets and the results of our experiments.
+The project can be accessed in {\tt github.com/felipeamp/dissertation-code}.
+
+TODO: tornar repositorio publico.
 
 
 \section{Datasets}
 We employed 11 datasets in total. Eight of them are from the UCI repository:
-Mushroom, KDD98, Adult, Nursery, Covertype, Cars, Contraceptive and Poker  \cite{Lichman:2013}.
+Mushroom, KDD98, Adult, Nursery, Covertype, Cars, Contraceptive and Poker (\cite{Lichman:2013}).
 Two others are available in Kaggle: San Francisco Crime and Shelter Animal Outcome
-\cite{SFC,AnimalShelter}. The last dataset was created by translating texts from the Reuters database \cite{Lichman:2013} into phonemes, using the CMU pronouncing dictionary \cite{CMU-PD}.
+\cite{SFC,AnimalShelter}. The last dataset was created by translating texts from the Reuters database \cite{Lichman:2013} into phonemes, using the CMU pronouncing dictionary (see \cite{CMU-PD}).
 
 We chose  these datasets  because they
 have at least 1000 samples and they  either contain  multi-valued attributes 
@@ -26,9 +28,8 @@ only the positive samples (people that donate money)
 of KDD98 and the target attribute, Target$\_$D, is split into $k$ classes, where the $i$-th
 class correspond to the $i$-th quantile in terms of amount of money donated. For the Reuters Phonemes dataset,
 we extracted 10000 samples containing the 15 most common phonemes as class and try to predict when they are about to happen given the 3 preceding phonemes.
-This dataset is motivated by Spoken Language Recognition problems, where phonotactic models are used as an important part of the classification system
-\cite{conf/interspeech/Navratil06}. 
-For the San Francisco Crime dataset, we give the month, day of the week, police department district and latitute/longitude and try to predict the crime category. Lastly, for the Shelter Animal Outcomes dataset, we converted the age into a numeric field containing the
+This dataset is motivated by Spoken Language Recognition problems, where phonotactic models are used as an important part of the classification system, as seen in \cite{conf/interspeech/Navratil06}. 
+For the San Francisco Crime dataset, we try to predict the crime category given the month, day of the week, police department district and latitute/longitude. Lastly, for the Shelter Animal Outcomes dataset, we converted the age into a numeric field containing the
 number of days old and separated the breed into two categorical fields, repeating the breed in both in case there was only one originally. We also removed the AnimalID, Name and the DateTime. For this dataset we try to predict the outcome type and subtype (concatenated into a single categorical field). For both 
 San Francisco Crime and  Shelter Animal Outcomes
  datasets we created a version of them ({\tt S.F. Crime-15} and {\tt Shelter-15}), containing only 15 classes, instead of the 39 and 22 original ones, respectively. This was done by grouping the rarest classes into a single one. 
@@ -96,7 +97,7 @@ great\_pret & improper     & great\_pret-improper     \\
 great\_pret & critical     & great\_pret-critical     \\
 great\_pret & very\_crit   & great\_pret-very\_crit  
 \end{tabular}
-\caption{Aggregation of attributes parents and has\_nurse from dataset {\tt Nursery}}
+\caption{Aggregation of attributes parents and has\_nurse from dataset {\tt Nursery}.}
 \label{tab:Aggreation}
 
 \end{table}
@@ -194,10 +195,11 @@ second most frequent value are also not considered for splitting. This helps  av
 
 \subsection{Maximum Depth 5}
 
-TODO: adicionar resultados pro PC-ext e possivelmente pra uma heuristica.
+TODO: adicionar resto dos resultados pro PC-ext.
+TODO: adicionar PC-ext nas analises qualitativas dos resultados.
 
-Table \ref{tab:CrossVal}.(a) presents  the results of an experiment to
-compare the accuracy of  Decision Trees built by  our methods with those built by Twoing.
+Table \ref{tab:nominal-5} presents  the results of an experiment to
+compare the accuracy of  Decision Trees built by  our methods with those built by Twoing and PC-ext.
 In this experiment, the maximum depth was set to 5 and we considered just the nominal attributes of the datasets. 
 The motivation for this depth is to produce trees that
 are relatively easy to interpret and, in addition, some random
@@ -245,12 +247,12 @@ Dataset & \multicolumn{2}{c|}{Twoing} &  \multicolumn{2}{c|}{GWSG}
 Average (Sum)       &     63.7 &        &          &        &          &        & 63.33    &        & 63.36    &        & 64.08    & 
 
 \end{tabular}
-\label{exp:thirdset}
+\label{tab:nominal-5}
 \normalsize
 \end{table*}
 
 
-The results of  Table \ref{tab:CrossVal}.(a) also
+The results of  Table \ref{tab:nominal-5} also
 provide evidence of  the potential
 of considering aggregated attributes. 
 The accuracy obtained for the extended versions of datasets
@@ -258,12 +260,12 @@ The accuracy obtained for the extended versions of datasets
 the original versions. For {\tt Contracep}, the effect is not clear.
 
 Another key aspect to discuss is the computational cost of the
-proposed criteria. Table \ref{tab:time-depth5} shows the running time of each criterion in the experiment of Table \ref{tab:CrossVal}.(a). Twoing is the fastest method when the number of classes is small and the GL-based methods become competitive and eventually the
-fastest ones when the number of classes gets larger, as illustrated by the results on KDD98 dataset. As the number of classes increases, the GL-based methods become much faster than Twoing, with the turning point being around $k=7$. For datasets with 15 classes our criteria are 30-300 times faster. We also ran experiments using all the classes available in both the {\tt S.F. Crime} and {\tt Shelter} datasets (39 and 22, respectively). Twoing can not be executed in a reasonable time with that many classes, while GLSG and GL$\chi^2$ ran in approximately 100 seconds on the {\tt S.F. Crime} dataset and  300 seconds on the {\tt Shelter} dataset.  This behavior for the Twoing criterion is not surprising, since its running time has an exponential dependence of the number of classes $k$. Nonetheless, since the execution time for our criteria in this experiment grew in an approximately linear fashion with $k$, it suggests that they can also be used with datasets that have a much larger number of classes. It is also interesting to note that the aggregated attributes usually appeared at or near the root of the decision trees. Lastly, the running time for the GW-based criteria were usually one or two orders of magnitude larger than the others. The only clear exception was in the CoverType dataset, where the number of samples is very large while the attributes’ number of values is much smaller.
+proposed criteria. Table \ref{tab:time-5} shows the running time of each criterion in the experiment of Table \ref{tab:nominal-5}. Twoing is the fastest method when the number of classes is small and the GL-based methods become competitive and eventually the
+fastest ones when the number of classes gets larger, as illustrated by the results on KDD98 dataset. As the number of classes increases, the GL-based methods become much faster than Twoing, with the turning point being around $k=7$. For datasets with 15 classes our GL criteria are 30-300 times faster. We also ran experiments using all the classes available in both the {\tt S.F. Crime} and {\tt Shelter} datasets (39 and 22, respectively). Twoing and the GW criteria can not be executed in a reasonable time with that many classes, while GLSG and GL$\chi^2$ ran in approximately 100 seconds on the {\tt S.F. Crime} dataset and  300 seconds on the {\tt Shelter} dataset.  This behavior for the Twoing criterion is not surprising, since its running time has an exponential dependence of the number of classes $k$. Nonetheless, since the execution time for our criteria in this experiment grew in an approximately linear fashion with $k$, it suggests that they can also be used with datasets that have a much larger number of classes. It is also interesting to note that the aggregated attributes usually appeared at or near the root of the decision trees. Lastly, the running time for the GW-based criteria were usually one or two orders of magnitude larger than the others. The only clear exception was in the CoverType dataset, where the number of samples is very large while the attributes’ number of values is much smaller.
 
 TODO: adicionar acima os resultados e analise dos criterios em depth 5 pra SF Crime, Shelter e Reuters.
 
-Since the GW-criteria performe much worse in terms of execution time and yield comparable or worse accuracy than the other criteria, they were not used in any experiments that follow.
+Since the GW-criteria performe much worse in terms of execution time and yield comparable or worse accuracy than the other criteria, they were not used in any of the experiments that follow.
 
 \begin{table*}[]
 \small
@@ -292,15 +294,15 @@ Dataset             & k  & Twoing    & GWSG  & GW$\chi^2$ & GLSG      & GL$\chi^
 {\tt S.F. Crime-15} & 15 & 638.2     &      &             & 40.7      & {\bf 40.2} & 41.7       \\ 
 {\tt Phonemes}      & 15 & 1343      &      &             &      4.4  & 5.5        & {\bf 2.2 }
 \end{tabular}
-\label{tab:time}
+\label{tab:time-5}
 \end{table*}
 
 
 
-Table \ref{tab:CrossVal}.(b) presents the 
-comparison between our GL methods and Twoing in another scenario,
-where we use $c_{quad}$, one of the bias-free   criterion proposed in \cite{Hothorn:2006:URP}, to select the attribute at each node of the tree. 
-Then, both Twoing and our methods are  used only for splitting the chosen attribute,  which allows for a  more direct comparison of their splitting ability. Once again we observed a balance between the different criteria, with a small advantage towards our methods. Perhaps surprisingly, the bias free approach had significantly worse results for the datasets with extended attributes. This experiment also showed that it is not possible to run $c_{quad}$ in reasonable time for the {\tt Shelter-15} dataset. This happens because it calculates a pseudoinverse of a matrix whose dimension grows with the number of values and classes, which is infeasible for large $n$ and $k$.
+Table \ref{tab:ctree-5} presents the 
+comparison between our GL methods, Twoing and PC-ext in another scenario,
+where we use $c_{quad}$, one of the bias-free criterion proposed in \cite{Hothorn:2006:URP}, to select the attribute at each node of the tree. 
+Then, both Twoing, PC-ext and our methods are  used only for splitting the chosen attribute,  which allows for a  more direct comparison of their splitting ability. Once again we observed a balance between the different criteria, with a small advantage towards our methods. Perhaps surprisingly, the bias free approach had significantly worse results for the datasets with extended attributes. This experiment also showed that it is not possible to run $c_{quad}$ in reasonable time for the {\tt Shelter-15} dataset. This happens because it calculates a pseudoinverse of a matrix whose dimension grows with the number of values and classes, which is infeasible for large $n$ and $k$.
 
 TODO: adicionar acima os resultados e analise dos criterios com ctree em depth 5 pra SF Crime, Shelter e Reuters.
 
@@ -310,7 +312,7 @@ TODO: adicionar acima os resultados e analise dos criterios com ctree em depth 5
 \centering
     \caption{Average accuracy and statistical tests  for  Conditional Inference trees 
 with depth at most 5 using only nominal attributes. The best accuracy for each dataset is bold-faced.}
-\label{tab:CrossValCTree}
+\label{tab:ctree-5}
 \begin{tabular}{c|cc|cc|cc|cc} 
 Dataset  &   \multicolumn{2}{c|}{CI-Twoing} &   \multicolumn{2}{c|}{CI-GLSG} & \multicolumn{2}{c|}{CI-GL$\chi^2$}& \multicolumn{2}{c}{CI-PC-ext} \\  \hline   
 % Dataset          &        CI-Twoing       &        CI-GLSG          &      CI-GL$\chi^2$      &       CI-PC-ext
@@ -338,7 +340,7 @@ Average (Sum)      &            &           &             &           &         
 \end{table*}
 
 
-Table \ref{exp:secondsetnumeric} shows experiments  similar to those presented at Table \ref{tab:CrossVal}.(a), but now
+Table \ref{exp:numeric-5} shows experiments  similar to those presented at Table \ref{tab:nominal-5}, but now
 using also the numeric attributes. We observed a significant gain in terms of accuracy for all datasets except for KDD98-2. 
 Also note that GLSG was inferior to both Twoing and GL$\chi^2$.
 
@@ -365,7 +367,7 @@ Dataset            &\multicolumn{2}{c|}{Twoing} & \multicolumn{2}{c|}{GLSG} & \m
 Average (Sum)      & 59.44          & (10)      & 58.74      &  (2)         & 59.86       & (14)              & 60.3        & (20)
 
 \end{tabular}
-\label{exp:secondsetnumeric}
+\label{exp:numeric-5}
 \normalsize
 \end{table}
 
@@ -375,12 +377,13 @@ Average (Sum)      & 59.44          & (10)      & 58.74      &  (2)         & 59
 
 In this subsection we explore the same experiments, except now the maximum depth allowed is 16. 
 
+TODO: adicionar resultados e analise qualitativa do PC-ext
 
-Table \ref{tab:CrossVal-a} presents  the results of an experiment to
+Table \ref{tab:nominal-16} presents  the results of an experiment to
 compare the accuracy of  Decision Trees built by our GL-methods with those built by Twoing, using just the nominal attributes of the datasets.
 In general there was a balance between Twoing and GL$\chi^2$, with GLSG being slightly worse. This suggests that GLSG loses competitiveness as the tree depth increases.
 
-Table \ref{tab:CrossVal-b} presents the 
+Table \ref{tab:ctree-16} presents the 
 comparison between  our  methods and Twoing in the scenario where we use $c_{quad}$ to select the attribute at each node of the tree, and the criteria are used only for splitting the chosen attribute. Again, we observed a balance between Twoing and GL$\chi^2$. This experiment also showed that it is not possible to run $c_{quad}$ in reasonable time for the {\tt Shelter-15} dataset. This happens because it calculates a pseudoinverse of a matrix whose dimension grows with the number of values and classes, which is infeasible for large $n$ and $k$.
 
 
@@ -413,7 +416,7 @@ Dataset             & \multicolumn{2}{c|}{Twoing} &  \multicolumn{2}{c|}{GLSG}  
 Average (Sum)       &  65.88       & (18)         &  65.11       & (8)          & 65.81        & (17)             &  66.02     & (22)
 \end{tabular}
 \normalsize
-\label{tab:CrossVal-a}
+\label{tab:nominal-16}
 \end{table}
 
     \begin{table}
@@ -446,12 +449,12 @@ Dataset             & \multicolumn{2}{c|}{CI-Twoing} &   \multicolumn{2}{c|}{CI-
 Average (Sum)       & 66.16      &                   & 65.24        &                 &  66.24      &                      &             &
        \end{tabular}
 \normalsize
-\label{tab:CrossVal-b}
+\label{tab:ctree-16}
 \end{table}
 
 
-Table \ref{tab:time} shows the running time of Twoing, GL$\chi^2$ and GLSG  when
-they are used for both selecting and splitting purposes (the experiment of Table \ref{tab:CrossVal}.(a)).
+Table \ref{tab:time-16} shows the running time of Twoing, GL$\chi^2$ and GLSG  when
+they are used for both selecting and splitting purposes (the experiment of Table \ref{tab:nominal-16}).
 When the number of classes is small all the criteria have very similar execution time, with Twoing being faster only on the {\tt KDD98}-2 dataset. As the number of classes increases, the GL-based methods become much faster than Twoing, with the turning point being around $k=7$. For datasets with 15 classes our criteria are 30-300 times faster. We also ran experiments using all the classes available in both the {\tt S.F. Crime} and {\tt Shelter} datasets (39 and 22, respectively). Twoing can not be executed in a reasonable time with that many classes, while GLSG and GL$\chi^2$ ran in approximately 100 seconds on the {\tt S.F. Crime} dataset and  300 seconds on the {\tt Shelter} dataset. Nonetheless, since the execution time for our criteria in this experiment grew in an approximately linear fashion with $k$, it suggests that they can also be used with datasets that have a much larger number of classes. It is also interesting to note that the aggregated attributes usually appeared at or near the root of the decision trees.
 
 
@@ -482,12 +485,12 @@ Dataset             & k  & Twoing        & GLSG      & GL$\chi^2$  & PC-ext    \
 {\tt S.F. Crime-15} & 15 & 2667.9        & 94.2      & 79.6        &{\bf 50.5} \\ 
 {\tt Phonemes}      & 15 & 3738.6        & 8.7       & 10.2        &{\bf 6.3}
 \end{tabular}
-\label{tab:time}
+\label{tab:time-16}
 \end{table}
 
 
-Table \ref{exp:secondsetnumeric}
-shows experiments  similar to those presented at Table \ref{tab:CrossVal}.(a), except now it also uses the numeric attributes.
+Table \ref{exp:numeric-16}
+shows experiments  similar to those presented at Table \ref{tab:nominal-16}, except now it also uses the numeric attributes.
 We observed a significant gain in terms of accuracy for almost all datasets. 
 The performance of GL$\chi^2$ was competitive with that of Twoing for all datasets but {\tt KDD98-9} and {\tt CoverType}, where it was
 considerably better and worse, respectively.
@@ -514,7 +517,7 @@ Dataset              &        \multicolumn{2}{c|}{Twoing} &   \multicolumn{2}{c|
 Average (Sum)        &   61.04        &                   & 60.93       &               &   60.59      &                    &             &
 
 \end{tabular}
-\label{exp:secondsetnumeric}
+\label{exp:numeric-16}
 \normalsize
 \end{table}
 

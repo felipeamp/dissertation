@@ -20,7 +20,7 @@ For recent surveys on this topic we refer to \cite{books/sp/datamining2005/Rokac
 Many criteria, with different properties,  have been proposed to evaluate 
 the quality of different types of attributes, including
 continuous and categorical ones.  Among the most popular criteria,
-we have the Gini Gain and the Information Gain \cite{}.
+we have the Gini Gain and the Information Gain \cite{} (TODO: cite).
 
 Despite the large body of work we believe  there are still questions to be answered.
 One of them is to how to  properly handle nominal  attributes that may assume a large number of values.
@@ -47,13 +47,13 @@ A brute force search to compute the best binary split
 requires $\Omega(2^n)$ time, where $n$ is the number of distinct values the attribute may assume. The computational efficiency can be improved if a $n$-ary split is used rather than a binary one. However,  this may lead to a severe fragmentation of the sample space, which is not desirable: the number of samples available for each of the children of the split node 
 may be small and, as a consequence, the underlying classification tasks may become significantly more difficult.
 When the target variable is binary, the Gini Gain, proposed
-in the influential monography by Breiman et al \cite{Breiman84}, can be computed efficiently.
+in the influential monograph by Breiman et al \cite{Breiman84}, can be computed efficiently.
 However, when the number of classes $k$ is larger than 2,
 most, if not all, of the available exact solutions take exponential time
 in $(n,k)$.
-The Twoing method \cite{Breiman84}, which is equivalent to
-Gini Gain when $k=2$, 
-is an  interesting case since its running time is $O(2^{\min\{n,k\}})$ rather than $O( 2^ n)$.
+The Twoing method, also from \cite{Breiman84}, 
+is an  interesting case since its running time is $O(2^{\min\{n,k\}})$ rather than $O( 2^ n)$ while being equivalent to
+Gini Gain when $k=2$.
 
 When both $n$ and $k$ are large, in the sense that an exhaustive search does not run in a reasonable time, one can rely on heuristics to compute the best binary split.
 As an example, the GUIDE algorithm  \cite{Loh2009}, the  last
@@ -63,6 +63,8 @@ as follows: if $k=2$ or $n \le 11$ the Gini Index is computed;
 if $k \le 11$ and $n > 20$ a new variable $X'$ with at most $k$ distinct values is created according to a certain rule and an exhaustive search is performed over it;  finally, if $k > 11$ or $n \le 20$,  $X$ is binarized and a Linear Discriminant Analysis (LDA) is employed.
 These rules reflect the difficulty in dealing with multi-valued nominal attributes.
 In general, the main drawback of using heuristics is the lack of a theoretical guarantee about their behavior. 
+
+TODO: Falar de PC e PC-ext.
 
 \section{Our Contribution}
 \label{sec:contribution}
@@ -80,14 +82,14 @@ values in different partitions. The  motivation behind the use of the max-cut pr
 the existence of efficient algorithms with 
 approximation guarantee, in particular 
 the one proposed  by \cite{GoeWil95}, with $0.878$ approximation,
-and  local search  algorithms with 0.5-approximation \cite{journals/corr/AngelBPW16}.
+and  local search  algorithms with 0.5-approximation as shown in \cite{journals/corr/AngelBPW16}.
 
 
 We discuss two criteria that are derived from this framework:
 the first one  can be seen as a natural variation of the
 Gini Gain, while the second criterion uses the $\chi^2$-test  to set the edges' weights. For that, each
-edge $e_{ij}$, between nodes  $v_i$ and $v_j$,
-is thought as a binary attribute $A(i,j)$, with values $v_i$ and $v_j$.
+edge $e_{ij}$ between nodes  $v_i$ and $v_j$
+is thought as a binary attribute $A(i,j)$ with values $v_i$ and $v_j$.
 After discussing these criteria, we show how to extend them to handle
 numeric attributes.
 
@@ -102,19 +104,21 @@ In addition, the experiments also  provide
 evidence of the potential of aggregating  attributes for improving
 the accuracy of decision trees.
 
-\chapter{Related Work}
+TODO: falar que existem heuristicas, como SLIQ e PC, que nao tem garantias de aproximacao, mas rodam pra $n$ e $k$ grande.
+
+\section{Related Work}
 \label{chap:relatedwork}
 
 Many splitting criteria have been proposed to 
 deal with continuous and nominal attributes.
-Arguably, the Gini gain, used by CART,  and entropy based measures, such  as 
-the Information Gain, adopted by C4.5, are among
-the most popular \cite{books/sp/datamining2005/RokachM05,
-Loh2014,series/sbcs/BarrosCF15}.
+Arguably, the Gini Gain---used by CART---and entropy-based measures---such as 
+the Information Gain, adopted by C4.5---are among
+the most popular (\cite{books/sp/datamining2005/RokachM05,
+Loh2014,series/sbcs/BarrosCF15}).
 
 There has been  some investigation on 
 methods to compute the best split efficiently 
-\cite{Breiman84,Chou:91,BPKN:92,journals/datamine/CoppersmithHH99}.
+(\cite{Breiman84,Chou:91,BPKN:92,journals/datamine/CoppersmithHH99}).
 For the 2-class problem,  \cite{Breiman84} proved a theorem which states that an optimal
 binary partition, for a certain class of splitting criteria,
 can be determined in linear time on $n$, the number of distinct values of the attributes, after ordering.
@@ -124,7 +128,9 @@ this theorem  in different directions
 and show necessary conditions that are satisfied by optimal partitions for a certain class of splitting criteria. 
 These conditions, though useful to restrict the set of partitions
 that need to be considered, do not yield  a method that
-is efficient (polynomial time) for large values of $n$ and $k$.  These papers also  present  heuristics, without approximation guarantee, to obtain good splits.
+is efficient (polynomial time) for large values of $n$ and $k$. These papers also  present  heuristics, without approximation guarantee, to obtain good splits.
+
+TODO: falar do teorema do paper do \cite{journals/datamine/CoppersmithHH99} que garante que o otimo eh separavel por um hiperplano (vai ser mencionado no prox capitulo).
 
 Other proposals to  speed up the attribute selection phase
  include  \cite{MolaSiciliano1997,Shih2001}. 
@@ -141,8 +147,8 @@ important to prevent bias in the attribute selection.
 Indeed, it is widely  known that many splitting criteria have bias toward
 attributes with a large number of values. There are some  proposals available
 to cope with this issue 
-\cite{conf/icml/DobraG01,Shih2004,Hothorn:2006:URP}. 
-This topic, though relevant, is not the focus of our paper.
+(\cite{conf/icml/DobraG01,Shih2004,Hothorn:2006:URP}). 
+This topic, though relevant, is not the focus of this dissertation.
 
 \section{Organization}
 \label{sec:organization}
@@ -150,4 +156,4 @@ In chapter \ref{chap:background} we explain how decision trees are used for clas
 
 Chapter \ref{chap:framework} contains the framework for generating splitting criteria that run in polynomial time. Its relation with the Max-Cut problem and its approximation algorithms are explained and some criteria obtained from this framework are presented.
 
-Later, in chapters \ref{chap:experiments-splits} and \ref{chap:experiments-datasets}, we compare all the existing criteria and see how they perform in practice. In chapter \ref{chap:experiments-splits} we explore how the many heuristics used to find splits with optimal impurity perform compare with the exact methods. This suggests a couple of criteria that perform better and can be used when the number of values and classes are high. In chapter \ref{chap:experiments-datasets} we analyse these heuristics together with exact methods on real datasets that contain attributes with large number of values and classes. Lastly, in chapter \ref{chap:con	clusions} we present our study conclusions.
+Later, in chapters \ref{chap:experiments-splits} and \ref{chap:experiments-datasets}, we compare all the existing criteria and see how they perform in practice. In chapter \ref{chap:experiments-splits} we explore how the many heuristics used to find splits with optimal impurity compare among themselves. This suggests a couple of criteria that perform better and can be used when the number of values and classes are large. In chapter \ref{chap:experiments-datasets} we analyze these methods on real datasets that contain attributes with large number of values and classes. Lastly, in chapter \ref{chap:conclusions} we present our study conclusions.

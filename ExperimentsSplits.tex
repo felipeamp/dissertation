@@ -1,26 +1,29 @@
 \newpage
 
 \chapter{Experiments on Splits}
-\label{chap:experimentssplits}
+\label{chap:experiments-splits}
 
 In this chapter we compare the ability of different heuristics in finding the values' split with lowest impurity. We are interested in choosing what heuristic/criterion to use when the exact ones don't run in reasonable time. In the next chapter the performance of the best one will be compared on real datasets against Twoing and criteria generated from our framework.
 
-Our experiments are very similar to those proposed in \cite{journals/datamine/CoppersmithHH99} except for a few details. All experiments are Monte Carlo simulations with 10,000 runs, each using a randomly-generated contingency table for the given number of values $n$ and classes $k$. Each table  was created by uniformly picking a number in $\{0, \ldots, 7\}$ for every entry. This guarantees a substantial probability of a row/column having some zero frequencies, which is common in practice. Differing from  \cite{journals/datamine/CoppersmithHH99}, if all the entries corresponding to a value or a class are zero, we re-generate the contingency table, otherwise the number of actual values and classes would not match $n$ and $k$. We evaluated Twoing, PC-ext, SLIQ-ext, LargestAlone and ListSchedule for both the Gini and Entropy impurities.
+Our experiments are very similar to those proposed in \cite{journals/datamine/CoppersmithHH99} except for a few details. All experiments are Monte Carlo simulations with 10,000 runs, each using a randomly-generated contingency table for the given number of values $n$ and classes $k$. Each table  was created by uniformly picking a number in $\{0, \ldots, 7\}$ for every entry. This guarantees a substantial probability of a row/column having some zero frequencies, which is common in practice. Differing from  \cite{journals/datamine/CoppersmithHH99}, if all the entries corresponding to a value or a class are zero, we re-generate the contingency table, otherwise the number of actual values and classes would not match $n$ and $k$. We evaluated Twoing, PC-ext,
+%SLIQ-ext, 
+Largest Alone and List Scheduling for both the Gini and Entropy impurities.
 
 Table \ref{tab:Splits-Gini} and \ref{tab:Splits-Entropy} show, for different values of $n$ and $k$, the percentage of times that
-each criterion found the best Gini and Entropy impurities, respectively. Note that the percentages do not necessarily sum up $100\%$ because
+each criterion found the best Gini and Entropy impurities, respectively. Note that the percentages do not necessarily sum exactly $100\%$ since
 there were ties. In these tables we only show results for $k \leq 9$ because for larger values
-of $k$ Twoing becomes non practical due to its running time. In addition, we do not present results for small values of $n$ because in this
-case the optimal  partition can be found reasonably quick by testing all possible partitions, so that there is no motivation for heuristics.
+of $k$ Twoing becomes non-practical due to its running time. In addition, we do not present results for small values of $n$ because in this
+case the optimal  partition can be found quickly by testing all possible partitions, so that there is no motivation for heuristics.
 
+TODO: ``transpor'' as tabelas de numero de vitorias
 
 \begin{table}
 \small
 \caption{Percentage of times each criterion finds the smallest Gini impurity, compared among themselves.}
 \centering
 \begin{tabular}{c|cccc|cccc|cccc} 
-# values                       & \multicolumn{4}{c|}{12}        &  \multicolumn{4}{c|}{25}        & \multicolumn{4}{c}{50}  \\ 
-\diagbox{Criterion}{# classes} &   3   &   5   &   7   &   9    &   3   &   5   &   7   &   9     &   3   &   5   &   7   &   9    \\
+\# values                       & \multicolumn{4}{c|}{12}        &  \multicolumn{4}{c|}{25}        & \multicolumn{4}{c}{50}  \\ 
+\diagbox{Criterion}{\# classes} &   3   &   5   &   7   &   9    &   3   &   5   &   7   &   9     &   3   &   5   &   7   &   9    \\
 \hline
 Twoing                         & 97.3  & 99.2  & 99.9  & 100    & 73.9  & 65.8  & 73.3  & 85.3    & 51.4  & 33.1  & 31.0  & 33.9   \\
 PC-ext                         & 91.2  & 88.0  & 86.6  & 85.0   & 72.7  & 62.4  & 58.8  & 53.2    & 50.6  & 41.1  & 40.7  & 37.8   \\
@@ -38,8 +41,8 @@ ListScheduling                 & 42.8  & 17.8  & 10.8  &  8.4   & 24.3  &  4.0  
 \caption{Percentage of times each criterion finds the smallest Entropy impurity, compared among themselves.}
 \centering
 \begin{tabular}{c|cccc|cccc|cccc} 
-# values                       & \multicolumn{4}{c|}{12}        &  \multicolumn{4}{c|}{25}        & \multicolumn{4}{c}{50}  \\ 
-\diagbox{Criterion}{# classes} &   3   &   5   &   7   &   9    &   3   &   5   &   7   &   9     &   3   &   5   &   7   &   9    \\
+\# values                       & \multicolumn{4}{c|}{12}        &  \multicolumn{4}{c|}{25}        & \multicolumn{4}{c}{50}  \\ 
+\diagbox{Criterion}{\# classes} &   3   &   5   &   7   &   9    &   3   &   5   &   7   &   9     &   3   &   5   &   7   &   9    \\
 \hline
 Twoing                         & 98.3  & 99.4  & 100   & 100    & 83.3  & 76.9  & 81.0  & 87.7    & 70.0  & 57.4  & 53.5  & 52.5   \\
 PC-ext                         & 80.2  & 74.2  & 73.2  & 72.4   & 54.4  & 42.7  & 39.2  & 37.7    & 29.5  & 22.0  & 21.7  & 22.1   \\
@@ -51,12 +54,17 @@ ListScheduling                 & 33.5  & 15.3  & 10.1  &  8.0   & 18.5  &  2.6  
 \label{tab:Splits-Entropy}
 \end{table}
 
-In general, we observe an advantage of Twoing for both criteria, being more clear for Entropy impurity, followed by PC-ext. This suggests that the LargestAlone and ListScheduling are not competitive with them.
+In general, we observe an advantage for Twoing with both impurities, being more clear for the Entropy, followed by PC-ext. This suggests that the Largest Alone and List Scheduling heuristics are not competitive with them in terms of split impurity found.
 
-Comparing Twoing and PC-ext in terms of speed we can see, as expected, that Twoing was faster up to $k=7$ and then PC-ext becomes faster.
+TODO: colocar tabela de tempos?
+
+TODO: colocar tabela comparando impureza do Twoing e PC-ext?
+
+Comparing Twoing and PC-ext in terms of speed we can see, as expected, that Twoing was faster up to $k=7$, when PC-ext becomes faster.
 Another possible comparison between them is to see what happens when Twoing and PC-ext find different partitions. When Twoing's partition is better than PC-ext's, the maximum relative excess between the impurities was of $0.9\%$ for the Gini impurity and $1.4 \%$ for the Entropy impurity.
 When PC-ext's partition is better than Twoing's, the  maximum relative excess was of $3.48 \%$ for the Gini impurity and $6.23 \%$ for the Entropy impurity. 
-Lastly, we note that, due to LargestAlone and ListScheduling running times, they might be used when both $n$ and $k$ are very large and
+
+Lastly, we note that, due to Largest Alone and List Scheduling running times, they might be used when both $n$ and $k$ are very large and
 speed is an  issue. When $n=200$ and $k=100$, using a single core, they are almost 50 times
 faster than PC-ext, with the latter using 8 cores. In addition, they could be  used together with PC-ext, incurring a negligible overhead, to guarantee that the ratio between the impurity of the partition found and the optimal one is bounded.
 
@@ -65,7 +73,7 @@ Taking into account these  experiments, those reported in \cite{journals/datamin
 and the  theoretical properties of the available algorithms, 
 Table  \ref{tab:guidelines}  suggests  guidelines on which criterion to use to solve the 
 problem of finding the binary partition of minimum impurity in practical situation.
-Of course small, medium and large depend on the available hardware and the time one  is up to wait to train/test classification models. 
+Of course small, medium and large depend on the available hardware and the time one accepts to wait for training/testing classification models. 
 
 
 \begin{table}[htb]

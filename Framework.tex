@@ -12,15 +12,19 @@ We  recall some definitions from graph theory. A cut  $X$ in  a weighted graph $
 a subset of vertexes of $V$. The weight of a cut $X$, denoted here by $w(X)$, is the sum of the weights
 of the edges that have one endpoint in $X$ and the other one in $V-X$.
 
+TODO: colocar uma figura de exemplo.
+
 The problem of computing the  cut $X^*$ with maximum weight in a graph with non-negative weights is NP-Hard.
 However, there are good  approximation algorithms
 available. A remarkable one is the randomized algorithm
  proposed in  \cite{GoeWil95} that relies on a formulation of
-the max-cut problem via semidefinite programming (SDP). This algorithm,  denoted here by GW, 
-returns a cut $X$ that satisfies  $E[w(X)] \ge 0.878 w(X^*)$. It involves solving an SDP on the graph weights matrix, calculating the Cholesky decomposition of it and then generating a random partition of the values based on the inner product of the decompositions column vectors with a randomly generated vector on the sphere of dimension $n$. As solving an SDP takes $O(n^4)$ arithmetic operations (see \cite{navascues2009power}) and calculating the Cholesky decomposition takes $O(n^3)$ operations, the time complexity is high but polynomial.
+the max-cut problem via semidefinite programming (SDP). This algorithm,  denoted throughout this dissertation by GW, 
+returns a cut $X$ that satisfies  $E[w(X)] \ge 0.878 w(X^*)$. It involves solving an SDP on the graph weights matrix, calculating the Cholesky decomposition of it and then generating a random partition of the values based on the inner product of the decomposition column vectors with a randomly generated vector on the sphere of dimension $n$. As solving such an SDP takes $O(n^4)$ arithmetic operations (see \cite{navascues2009power}) and calculating the Cholesky decomposition takes $O(n^3)$ operations, the time complexity is high but polynomial.
+
+TODO: procurar uma referencia melhor pra complexidade do SDP.
 
 Another possibility to solve the Max-Cut problem is by using the {\tt GreedyCut} algorithm, presented in Algorithm \ref{alg:greedy}. It
-obtains a cut $X$ such that $w(X)  \ge 0.5 w(X^*)$ \cite{SahGon:76}.
+obtains a cut $X$ such that $w(X)  \ge 0.5 w(X^*)$, as proved in \cite{SahGon:76}.
 The algorithm starts with two empty sets $X$ and $X'$. Then, it
 scans the nodes 
 and assigns each of them to the set that provides
@@ -47,8 +51,7 @@ In its simplest version, it
 moves a node from one group to
 the other while some improvement on the cut weight is possible.
 Although this algorithm is not polynomial  in the worst case,
-it has polynomial behavior in the smoothed analysis framework
-\cite{journals/corr/AngelBPW16}. In addition, it is always possible
+it has polynomial behavior in the smoothed analysis framework (see \cite{journals/corr/AngelBPW16}). In addition, it is always possible
 to set a limit on the number of moves.
 A more refined version  allows exchanging a pair of nodes
 as long as the weight of the cut is improved.
@@ -100,7 +103,7 @@ as we explain further.
 
 \item  Ideally, the value of the criterion $I$ for attribute
 $A$ is the weight of the cut with maximum weight  in $G$.
-However, this is not a reasonable possibility for large $n$ since the problem of computing the  cut $X^*$ with maximum weight in a graph with non-negative weights is NP-Hard.
+However, this is not a reasonable possibility for large $n$ since, as mentioned before, the problem of computing the  cut $X^*$ with maximum weight in a graph with non-negative weights is NP-Hard.
 Thus, the value of criterion $I$ is given by the weight
 of the cut obtained by some  algorithm, with approximation guarantee, for the maximum cut
 problem in $G$.   
@@ -108,8 +111,8 @@ problem in $G$.
 
 What distinguishes the  criteria
 generated  by our framework
-is how the weights of the edges are set and the
-method employed to compute the cut on graph $G$.
+is how the weights of the edges are set and what 
+method is employed to compute the cut on graph $G$.
 Here, we discuss two ways to set the weights:
 the first one yields to criteria that
 are related with the Gini Gain, while the second 
@@ -135,15 +138,15 @@ The difference is that $p_L$ and $p_R$ are replaced with
 $p_L^2$ and $p_R^2$, respectively.
 Because of the squares, this new criterion tends to favor more balanced partitions. 
 
-For that the proof of Lemma \ref{lem:GiniSq}, recall that $A_{ix}$ is the number
-of samples of  class $x$ 
-that have value $v_i$, and  $C$ is used to denote the set of classes.
+For the proof of Lemma \ref{lem:GiniSq}, recall that $A_{ix}$ is the number
+of samples of  class $x$ that have value $v_i$, and that $C$ is used to denote the set of classes.
 
 
 \begin{lemma}
 For every $i,j$, with $i \ne j$ and $i,j \in \{1,\ldots,n\}$,  let
 $$ w_{ij} = \frac{ 2 \sum_{ x,y \in C \atop x \ne y }  A_{ix} A_{jy} }{ N^2}.$$
-Then, for every partition $(L,R)$ of  $V$ we have $w(S_L)=Gini(S) - p^2_L \cdot Gini(S_L) - p^2_R \cdot Gini(S_R)$. 
+Then, for every partition $(L,R)$ of  $V$ we have
+$$w(S_L)=Gini(S) - p^2_L \cdot Gini(S_L) - p^2_R \cdot Gini(S_R)$$
 \label{lem:GiniSq}
 \end{lemma}
 
@@ -189,8 +192,7 @@ for each $i$ and $j$, and, thus, defining the edges' weights.
 Here, we investigate the criterion obtained by 
 defining $w_{ij}$ as the value of the $\chi^2$-test
 for the attribute $A$ when  evaluated over the restricted dataset 
-that contains only the samples of $S$ with values $v_i$ and $v_j$.
-In formulae,
+that contains only the samples of $S$ with values $v_i$ and $v_j$:
 $$w_{ij}=  \sum_{\ell=1}^k \frac{(A_{i \ell}-E[A_{i \ell}] )^2}{E[A_{ i \ell}]}
 + \sum_{\ell=1}^k \frac{(A_{j \ell}-E[A_{j \ell}] )^2}{E[A_{ j \ell}]}
 $$
@@ -198,12 +200,12 @@ where $E[A_{i \ell }]=N_i p_{\ell}$
 and $E[A_{j \ell }]=N_j p_{\ell} $.
 
 In order to reduce the bias towards attributes with many values, we divide 
-$w_{ij}$ by  $n-1$, for every pair $i,j$. We make this adjustment  because each value contributes
+$w_{ij}$ by  $n-1$, for every pair $(i,j)$. We make this adjustment  because each value contributes
 to the weight of $n-1$ edges.
 
 We shall remark that, although not explored in this work,
 other criteria such as Information Gain or Gini Index
-could be used, instead of $\chi^2$ test, to
+could be used, instead of the $\chi^2$-test, to
 set the weights.
 
 
