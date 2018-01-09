@@ -3,16 +3,16 @@
 \chapter{Experiments on Splits}
 \label{chap:experiments-splits}
 
-In this chapter we compare the ability of different heuristics in finding the values' split with lowest impurity. We are interested in choosing what heuristic/criterion to use when the exact ones don't run in reasonable time. In the next chapter the performance of the best one will be compared on real datasets against Twoing and criteria generated from our framework.
+In this chapter we compare the ability of different heuristics in finding the values' split with lowest impurity. We are interested in choosing what heuristic/criterion to use when the exact ones don't run in reasonable time. In the next chapter the performance of the best heuristics will be compared on real datasets against Twoing and criteria generated from our framework.
 
-Our experiments are very similar to those proposed in \cite{journals/datamine/CoppersmithHH99} except for a few details. All experiments are Monte Carlo simulations with 10,000 runs, each using a randomly-generated contingency table for the given number of values $n$ and classes $k$. Each table  was created by uniformly picking a number in $\{0, \ldots, 7\}$ for every entry. This guarantees a substantial probability of a row/column having some zero frequencies, which is common in practice. Differing from  \cite{journals/datamine/CoppersmithHH99}, if all the entries corresponding to a value or a class are zero, we re-generate the contingency table, otherwise the number of actual values and classes would not match $n$ and $k$. We evaluated Twoing, PC-ext,
+Our experiments are very similar to those proposed in \cite{journals/datamine/CoppersmithHH99} except for a few details. All experiments are Monte Carlo simulations with 10,000 runs, each using a randomly-generated contingency table for the given number of values $n$ and classes $k$. Each table  was created by uniformly picking a number in $\{0, \ldots, 7\}$ for every entry. This guarantees a substantial probability of a row/column having some zero frequencies, which is common in practice. Differing from  \cite{journals/datamine/CoppersmithHH99}, if all the entries corresponding to a value or a class are zero, we re-generate the contingency table, otherwise the number of actual values and classes would not match $n$ and $k$. We evaluated Hypercube Cover, PC-ext,
 %SLIQ-ext, 
-Largest Alone and List Scheduling for both the Gini and Entropy impurities.
+Largest Alone and List Scheduling for both the Gini and Entropy impurities. Note that we don't evaluate Twoing because the split selected by Hypercube Cover is always purer by construction.
 
 Table \ref{tab:Splits-Gini} and \ref{tab:Splits-Entropy} show, for different values of $n$ and $k$, the percentage of times that
 each criterion found the best Gini and Entropy impurities, respectively. Note that the percentages do not necessarily sum exactly $100\%$ since
 there were ties. In these tables we only show results for $k \leq 9$ because for larger values
-of $k$ Twoing becomes non-practical due to its running time. In addition, we do not present results for small values of $n$ because in this
+of $k$ Hypercube Cover becomes non-practical due to its running time. In addition, we do not present results for small values of $n$ because in this
 case the optimal  partition can be found quickly by testing all possible partitions, so that there is no motivation for heuristics.
 
 TODO: ``transpor'' as tabelas de numero de vitorias
@@ -25,11 +25,11 @@ TODO: ``transpor'' as tabelas de numero de vitorias
 \# values                       & \multicolumn{4}{c|}{12}        &  \multicolumn{4}{c|}{25}        & \multicolumn{4}{c}{50}  \\ 
 \diagbox{Criterion}{\# classes} &   3   &   5   &   7   &   9    &   3   &   5   &   7   &   9     &   3   &   5   &   7   &   9    \\
 \hline
-Twoing                         & 97.3  & 99.2  & 99.9  & 100    & 73.9  & 65.8  & 73.3  & 85.3    & 51.4  & 33.1  & 31.0  & 33.9   \\
-PC-ext                         & 91.2  & 88.0  & 86.6  & 85.0   & 72.7  & 62.4  & 58.8  & 53.2    & 50.6  & 41.1  & 40.7  & 37.8   \\
-%SLIQ-ext                       & 89.9  & 81.9  & 78.3  & 75.5   & 78.8  & 64.6  & 57.9  & 52.5    & 68.1  & 53.1  & 47.1  & 42.9   \\
-LargestAlone                   & 42.8  & 19.1  & 11.5  &  8.5   & 24.3  &  5.9  &  2.0  &  0.8    & 16.0  &  3.3  &  1.0  &  0.4   \\
-ListScheduling                 & 42.8  & 17.8  & 10.8  &  8.4   & 24.3  &  4.0  &  1.7  &  0.9    & 16.0  &  1.3  &  0.4  &  0.1 
+Hypercube Cover                 & 97.3  & 99.2  & 99.9  & 100    & 73.9  & 65.8  & 73.3  & 85.3    & 51.4  & 33.1  & 31.0  & 33.9   \\
+PC-ext                          & 91.2  & 88.0  & 86.6  & 85.0   & 72.7  & 62.4  & 58.8  & 53.2    & 50.6  & 41.1  & 40.7  & 37.8   \\
+%SLIQ-ext                        & 89.9  & 81.9  & 78.3  & 75.5   & 78.8  & 64.6  & 57.9  & 52.5    & 68.1  & 53.1  & 47.1  & 42.9   \\
+LargestAlone                    & 42.8  & 19.1  & 11.5  &  8.5   & 24.3  &  5.9  &  2.0  &  0.8    & 16.0  &  3.3  &  1.0  &  0.4   \\
+ListScheduling                  & 42.8  & 17.8  & 10.8  &  8.4   & 24.3  &  4.0  &  1.7  &  0.9    & 16.0  &  1.3  &  0.4  &  0.1 
 \end{tabular}
 \normalsize
 \label{tab:Splits-Gini}
@@ -44,25 +44,25 @@ ListScheduling                 & 42.8  & 17.8  & 10.8  &  8.4   & 24.3  &  4.0  
 \# values                       & \multicolumn{4}{c|}{12}        &  \multicolumn{4}{c|}{25}        & \multicolumn{4}{c}{50}  \\ 
 \diagbox{Criterion}{\# classes} &   3   &   5   &   7   &   9    &   3   &   5   &   7   &   9     &   3   &   5   &   7   &   9    \\
 \hline
-Twoing                         & 98.3  & 99.4  & 100   & 100    & 83.3  & 76.9  & 81.0  & 87.7    & 70.0  & 57.4  & 53.5  & 52.5   \\
-PC-ext                         & 80.2  & 74.2  & 73.2  & 72.4   & 54.4  & 42.7  & 39.2  & 37.7    & 29.5  & 22.0  & 21.7  & 22.1   \\
-%SLIQ-ext                       & 87.5  & 78.2  & 75.2  & 72.8   & 71.8  & 57.1  & 52.1  & 47.1    & 55.1  & 42.5  & 38.8  & 36.2   \\
-LargestAlone                   & 33.5  & 13.6  &  8.3  &  6.8   & 18.5  &  5.3  &  2.0  &  1.3    & 13.4  &  3.7  &  1.6  &  0.8   \\
-ListScheduling                 & 33.5  & 15.3  & 10.1  &  8.0   & 18.5  &  2.6  &  1.2  &  0.8    & 13.4  &  0.6  &  0.1  &  0.1 
+Hypercube Cover                 & 98.3  & 99.4  & 100   & 100    & 83.3  & 76.9  & 81.0  & 87.7    & 70.0  & 57.4  & 53.5  & 52.5   \\
+PC-ext                          & 80.2  & 74.2  & 73.2  & 72.4   & 54.4  & 42.7  & 39.2  & 37.7    & 29.5  & 22.0  & 21.7  & 22.1   \\
+%SLIQ-ext                        & 87.5  & 78.2  & 75.2  & 72.8   & 71.8  & 57.1  & 52.1  & 47.1    & 55.1  & 42.5  & 38.8  & 36.2   \\
+LargestAlone                    & 33.5  & 13.6  &  8.3  &  6.8   & 18.5  &  5.3  &  2.0  &  1.3    & 13.4  &  3.7  &  1.6  &  0.8   \\
+ListScheduling                  & 33.5  & 15.3  & 10.1  &  8.0   & 18.5  &  2.6  &  1.2  &  0.8    & 13.4  &  0.6  &  0.1  &  0.1 
 \end{tabular}
 \normalsize
 \label{tab:Splits-Entropy}
 \end{table}
 
-In general, we observe an advantage for Twoing with both impurities, being more clear for the Entropy, followed by PC-ext. This suggests that the Largest Alone and List Scheduling heuristics are not competitive with them in terms of split impurity found.
+In general, we observe an advantage for Hypercube Cover with both impurities, being more clear for the Entropy, followed by PC-ext. This suggests that the Largest Alone and List Scheduling heuristics are not competitive with them in terms of split impurity found.
 
 TODO: colocar tabela de tempos?
 
-TODO: colocar tabela comparando impureza do Twoing e PC-ext?
+TODO: colocar tabela comparando impureza do Hypercube Cover e PC-ext?
 
-Comparing Twoing and PC-ext in terms of speed we can see, as expected, that Twoing was faster up to $k=7$, when PC-ext becomes faster.
-Another possible comparison between them is to see what happens when Twoing and PC-ext find different partitions. When Twoing's partition is better than PC-ext's, the maximum relative excess between the impurities was of $0.9\%$ for the Gini impurity and $1.4 \%$ for the Entropy impurity.
-When PC-ext's partition is better than Twoing's, the  maximum relative excess was of $3.48 \%$ for the Gini impurity and $6.23 \%$ for the Entropy impurity. 
+Comparing Hypercube Cover and PC-ext in terms of speed we can see, as expected, that Hypercube Cover was faster up to $k=7$, when PC-ext becomes faster.
+Another possible comparison between them is to see what happens when Hypercube Cover and PC-ext find different partitions. When Hypercube Cover's partition is better than PC-ext's, the maximum relative excess between the impurities was of $0.9\%$ for the Gini impurity and $1.4 \%$ for the Entropy impurity.
+When PC-ext's partition is better than Hypercube Cover's, the  maximum relative excess was of $3.48 \%$ for the Gini impurity and $6.23 \%$ for the Entropy impurity. 
 
 Lastly, we note that, due to Largest Alone and List Scheduling running times, they might be used when both $n$ and $k$ are very large and
 speed is an  issue. When $n=200$ and $k=100$, using a single core, they are almost 50 times
@@ -83,8 +83,8 @@ Of course small, medium and large depend on the available hardware and the time 
 \begin{tabular}{c|c|c}
 {\bf n}    & {\bf k}   & {\bf Suggested Method} \\ \hline 
 small      & any       &  Exact \\
-not small  & small     & Twoing \\
-not small  & not small & PC-ext \\
+not small  & small     &  Hypercube Cover \\
+not small  & not small &  PC-ext \\
 \end{tabular}
 \end{table}
 

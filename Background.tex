@@ -121,6 +121,14 @@ As shown in \cite{Breiman84}, such partition can be calculated in $O(\min \{ n (
 time by considering all possibilities of partitioning the classes into two superclasses
 and applying the Gini Gain criterion on each of them. We shall remark that, for the two-class problem, the Twoing criterion and the Gini Gain compute the same binary partitions.
 
+
+\subsection{Hypercube Cover}
+
+TODO: possivelmente melhorar/aumentar essa subsecao.
+
+The Hypercube cover criterion works exactly the same as the Twoing criterion, except when it comes to the split impurity calculation. Instead of calculating the impurity based on the two superclasses, we calculate it using the original $k$ classes. This guarantees, for instance, that the split impurity, when measured with respect to the original classes, is never worse than that of Twoing.
+
+
 \subsection{Information Gain}
 This criterion works exactly the same as the Gini Gain, but replacing the Gini impurity by the Entropy. First it generates all $2^n$ binary values' split and the partition with maximum Information Gain shall be selected.
 For the two-class problem, the same result valid for the Gini Gain works here, and the optimal partition  
