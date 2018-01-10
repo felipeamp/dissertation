@@ -124,9 +124,7 @@ and applying the Gini Gain criterion on each of them. We shall remark that, for 
 
 \subsection{Hypercube Cover}
 
-TODO: possivelmente melhorar/aumentar essa subsecao.
-
-The Hypercube cover criterion works exactly the same as the Twoing criterion, except when it comes to the split impurity calculation. Instead of calculating the impurity based on the two superclasses, we calculate it using the original $k$ classes. This guarantees, for instance, that the split impurity, when measured with respect to the original classes, is never worse than that of Twoing.
+The Hypercube cover criterion works exactly the same as the Twoing criterion, except when it comes to the split impurity calculation. Instead of calculating the impurity based on the two superclasses, we calculate it using the original $k$ classes. This guarantees, for instance, that the split impurity, when measured with respect to the original classes, is never worse than that of Twoing. This method was first suggested in \cite{icml2018}, together with its approximation guarantee of 2 for both the Gini and Entropy impurities.
 
 
 \subsection{Information Gain}
@@ -171,11 +169,9 @@ As seen in the previous section, calculating the optimal binary split takes expo
 %
 \subsection{PC and PC-ext}
 These heuristics are based on the Principal Component of the contingency table and were presented in \cite{journals/datamine/CoppersmithHH99}.
-They are based on the following theorem:
+They are based on a theorem that states that the optimal partition of values can be found by separating the class probability vectors by a hyperplane.
 
-TODO: adicionar teorema do hiperplano.
-
-In other words, the theorem above states that the optimal partition can be obtained by choosing the right hyperplane. This motivates the PC criterion, which look at the hyperplanes in $\mathbb{R}^k$ whose normal vector is the principal direction of the attribute's contingency table.
+In other words, the theorem above states that, in order to find the optimal partition, we just need to choose the right hyperplane. This motivates the PC criterion, which look at the hyperplanes in $\mathbb{R}^k$ whose normal vector is the principal direction of the attribute's contingency table.
 
 In more details, one first calculates the class probability distribution of every value, which is done by normalizing the contingency table rows to measure 1 in the sum norm. Then the values are grouped into ``supervalues'' where all values in the same supervalue have the same class probability distribution. Now the first principal component of these sypervalues' contingency table is calculated. One then calculates the inner product of each class probability vector of the supervalues  with the principal component and sort the supervalues by it. Denote by $v_1,\ldots,v_{n^*}$ the $n^*$ supervalues sorted in this manner and denote by $p$ the first principal component. We then calculate the impurity gain of the supervalues' splits of the form
 
@@ -186,20 +182,22 @@ where $t$ is a chosen threshold. Once we find the supervalues split with the lar
 
 PC-ext is a simple extension of this algorithm, where instead of only testing the supervalues splits given by the equations above, we also test the splits given by  exchanging the last supervalue on the left with the first supervalue on the right (where first and last are given by the order after calculating the inner product).
 
-TODO: adicionar complexidade
+These procedures require $O(k^3)$ operations to find the principal component and $O(n)$ impurity calculations and inner products in the class probability space.
 
-\subsection{Largest Alone}
+\subsection{Largest Class Alone}
 
 This is a heuristic that, when using the Gini impurity, has an approximation guarantee of 2 compared with the optimal partition found by Gini Gain.
 
 First one calculates the most frequent class and group the other classes in a single superclass. One then applies the Gini Gain criterion on this two-class problem. Since calculating the class frequencies can be done using the contingency table, this heuristic takes $O(N + n k + n \log n)$ time in total.
 
-It is also proved that there is no other way of grouping classes into superclasses that has a smaller approximation guarantee for the Gini impurity. It can also be used with the Information Gain impurity, instead of Gini Gain, but its approximation guarantee increases to 3 (TODO: conferir). These bounds are all proved in (TODO: ver como colocar referencia).
+It is also proved that there is no other way of grouping classes into superclasses that has a smaller approximation guarantee for the Gini impurity. It can also be used with the Information Gain impurity, instead of Gini Gain, but its approximation guarantee increases to 3. These bounds are all proved in \cite{icml2018}.
 
 \subsection{List Scheduling}
+
+TODO: tirar do paper, ja que saiu da icml?
 
 Similarly to the Largest Alone heuristic, List Scheduling has an approximation guarantee of 2 for the Informatio Gain criterion when using the Entropy impurity (TODO: conferir).
 
 First one calculates the frequency of every class. Then, one uses a List Scheduling algorithm to group the classes into 2 superclasses as balanced as possible (in terms of number of samples). Lastly the Information Gain criterion is applied on this two-class problem. Again, since calculating the class frequencies can be done using the contingency table and the List Scheduling algorithm is linear in the number of classes, this heuristic also takes $O(N + n k + n \log n)$ time in total.
 
-It is also proved that, for the entropy impurity, the best form of grouping classes into superclasses is by balancing them the best way possible. See (TODO: ver como colocar referencia) for more details.
+It is also proved that, for the entropy impurity, the best form of grouping classes into superclasses is by balancing them the best way possible.

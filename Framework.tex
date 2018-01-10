@@ -21,8 +21,6 @@ available. A remarkable one is the randomized algorithm
 the max-cut problem via semidefinite programming (SDP). This algorithm,  denoted throughout this dissertation by GW, 
 returns a cut $X$ that satisfies  $E[w(X)] \ge 0.878 w(X^*)$. It involves solving an SDP on the graph weights matrix, calculating the Cholesky decomposition of it and then generating a random partition of the values based on the inner product of the decomposition column vectors with a randomly generated vector on the sphere of dimension $n$. As solving such an SDP takes $O(n^4)$ arithmetic operations (see \cite{navascues2009power}) and calculating the Cholesky decomposition takes $O(n^3)$ operations, the time complexity is high but polynomial.
 
-TODO: procurar uma referencia melhor pra complexidade do SDP.
-
 Another possibility to solve the Max-Cut problem is by using the {\tt GreedyCut} algorithm, presented in Algorithm \ref{alg:greedy}. It
 obtains a cut $X$ such that $w(X)  \ge 0.5 w(X^*)$, as proved in \cite{SahGon:76}.
 The algorithm starts with two empty sets $X$ and $X'$. Then, it

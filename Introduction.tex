@@ -20,7 +20,7 @@ For recent surveys on this topic we refer to \cite{books/sp/datamining2005/Rokac
 Many criteria, with different properties,  have been proposed to evaluate 
 the quality of different types of attributes, including
 continuous and categorical ones.  Among the most popular criteria,
-we have the Gini Gain and the Information Gain \cite{} (TODO: cite).
+we have the Gini Gain and the Information Gain (\cite{Breiman84}, \cite{quinlan2014c4}).
 
 Despite the large body of work we believe  there are still questions to be answered.
 One of them is to how to  properly handle nominal  attributes that may assume a large number of values.
@@ -61,10 +61,9 @@ of a series of algorithms/developments designed by Loh and its contributors,
 deals with a nominal variable $X$
 as follows: if $k=2$ or $n \le 11$ the Gini Index is computed;
 if $k \le 11$ and $n > 20$ a new variable $X'$ with at most $k$ distinct values is created according to a certain rule and an exhaustive search is performed over it;  finally, if $k > 11$ or $n \le 20$,  $X$ is binarized and a Linear Discriminant Analysis (LDA) is employed.
-These rules reflect the difficulty in dealing with multi-valued nominal attributes.
+These rules reflect the difficulty in dealing with multi-valued nominal attributes. Another interesting heuristic is the PC and PC-ext criteria, which calculates the principal component of the class probability vectors and uses the order given by the vector projections in this direction to look for splits.
 In general, the main drawback of using heuristics is the lack of a theoretical guarantee about their behavior. 
 
-TODO: Falar de PC e PC-ext.
 
 \section{Our Contribution}
 \label{sec:contribution}
@@ -99,12 +98,10 @@ is  competitive with the Twoing method, which
 is -- as far as we know -- the only well-established
 criterion with binary splits that can be optimally computed for large $n$ when $k > 2$.
 However, in contrast with our methods, Twoing cannot handle
-datasets that also have a large number of classes.
+datasets that also have a large number of classes. Some criteria based on heuristics are also part of the comparison.
 In addition, the experiments also  provide 
 evidence of the potential of aggregating  attributes for improving
 the accuracy of decision trees.
-
-TODO: falar que existem heuristicas, como SLIQ e PC, que nao tem garantias de aproximacao, mas rodam pra $n$ e $k$ grande.
 
 \section{Related Work}
 \label{chap:relatedwork}
@@ -129,8 +126,7 @@ and show necessary conditions that are satisfied by optimal partitions for a cer
 These conditions, though useful to restrict the set of partitions
 that need to be considered, do not yield  a method that
 is efficient (polynomial time) for large values of $n$ and $k$. These papers also  present  heuristics, without approximation guarantee, to obtain good splits.
-
-TODO: falar do teorema do paper do \cite{journals/datamine/CoppersmithHH99} que garante que o otimo eh separavel por um hiperplano (vai ser mencionado no prox capitulo).
+Another related result is a theorem from \cite{journals/datamine/CoppersmithHH99} that guarantees that the optimum split can be found by separating the class probability vectors by a hyperplane. This motivated the creation of the PC criterion, as will be shown in the next chapter.
 
 Other proposals to  speed up the attribute selection phase
  include  \cite{MolaSiciliano1997,Shih2001}. 
