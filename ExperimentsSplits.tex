@@ -17,9 +17,8 @@ case the optimal  partition can be found quickly by testing all possible partiti
 
 \begin{table}
 \tiny 
-\caption{Percentage of times each criterion finds the smallest Gini impurity, compared among themselves.}
 \centering
-\begin{tabular}{c|cccc|cccc|cccc} 
+\begin{tabularx}{\textwidth}{c|xxxx|xxxx|xxxx} 
 \# values                       & \multicolumn{4}{c|}{12}        &  \multicolumn{4}{c|}{25}        & \multicolumn{4}{c}{50}  \\ 
 \diagbox{Criterion}{\# classes} &   3   &   5   &   7   &   9    &   3   &   5   &   7   &   9     &   3   &   5   &   7   &   9    \\
 \hline
@@ -28,17 +27,17 @@ PC-ext                          & 91.2  & 88.0  & 86.6  & 85.0   & 72.7  & 62.4 
 %SLIQ-ext                        & 89.9  & 81.9  & 78.3  & 75.5   & 78.8  & 64.6  & 57.9  & 52.5    & 68.1  & 53.1  & 47.1  & 42.9   \\
 LargestClassAlone               & 42.8  & 19.1  & 11.5  &  8.5   & 24.3  &  5.9  &  2.0  &  0.8    & 16.0  &  3.3  &  1.0  &  0.4   \\
 ListScheduling                  & 42.8  & 17.8  & 10.8  &  8.4   & 24.3  &  4.0  &  1.7  &  0.9    & 16.0  &  1.3  &  0.4  &  0.1 
-\end{tabular}
+\end{tabularx}
 \normalsize
+\caption{Percentage of times each criterion finds the smallest Gini impurity, compared among themselves.}
 \label{tab:Splits-Gini}
 \end{table}
 
 
 \begin{table}
 \tiny 
-\caption{Percentage of times each criterion finds the smallest Entropy impurity, compared among themselves.}
 \centering
-\begin{tabular}{c|cccc|cccc|cccc} 
+\begin{tabularx}{\textwidth}{c|xxxx|xxxx|xxxx} 
 \# values                       & \multicolumn{4}{c|}{12}        &  \multicolumn{4}{c|}{25}        & \multicolumn{4}{c}{50}  \\ 
 \diagbox{Criterion}{\# classes} &   3   &   5   &   7   &   9    &   3   &   5   &   7   &   9     &   3   &   5   &   7   &   9    \\
 \hline
@@ -47,8 +46,9 @@ PC-ext                          & 80.2  & 74.2  & 73.2  & 72.4   & 54.4  & 42.7 
 %SLIQ-ext                        & 87.5  & 78.2  & 75.2  & 72.8   & 71.8  & 57.1  & 52.1  & 47.1    & 55.1  & 42.5  & 38.8  & 36.2   \\
 LargestClassAlone                    & 33.5  & 13.6  &  8.3  &  6.8   & 18.5  &  5.3  &  2.0  &  1.3    & 13.4  &  3.7  &  1.6  &  0.8   \\
 ListScheduling                  & 33.5  & 15.3  & 10.1  &  8.0   & 18.5  &  2.6  &  1.2  &  0.8    & 13.4  &  0.6  &  0.1  &  0.1 
-\end{tabular}
+\end{tabularx}
 \normalsize
+\caption{Percentage of times each criterion finds the smallest Entropy impurity, compared among themselves.}
 \label{tab:Splits-Entropy}
 \end{table}
 
@@ -72,7 +72,6 @@ Of course small, medium and large depend on the available hardware and the time 
 
 \begin{table}[htb]
 \centering
-\caption{Guidelines on how to solve the problem of finding the partition with minimum impurity in practice.}
 \label{tab:guidelines}
 \begin{tabular}{c|c|c}
 {\bf n}    & {\bf k}   & {\bf Suggested Method} \\ \hline 
@@ -80,5 +79,6 @@ small      & any       &  Exact \\
 not small  & small     &  Hypercube Cover \\
 not small  & not small &  PC-ext \\
 \end{tabular}
+\caption{Guidelines on how to solve the problem of finding the partition with minimum impurity in practice.}
 \end{table}
 

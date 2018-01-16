@@ -12,8 +12,6 @@ We  recall some definitions from graph theory. A cut  $X$ in  a weighted graph $
 a subset of vertexes of $V$. The weight of a cut $X$, denoted here by $w(X)$, is the sum of the weights
 of the edges that have one endpoint in $X$ and the other one in $V-X$.
 
-TODO: colocar uma figura de exemplo.
-
 The problem of computing the  cut $X^*$ with maximum weight in a graph with non-negative weights is NP-Hard.
 However, there are good  approximation algorithms
 available. A remarkable one is the randomized algorithm
@@ -206,6 +204,17 @@ other criteria such as Information Gain or Gini Index
 could be used, instead of the $\chi^2$-test, to
 set the weights.
 
+
+\subsection{Example}
+
+Let's assume the are using the Squared Gini criterion on a dataset with a single attribute (the marital status) and we try to predict whether it's a male or female.
+The contingency table and associated Squared Gini graph is given in figure \ref{fig:cut-example}. Since this example is small (there are only $7$ non-empty distinct cuts), we can run through all the possible cuts and see that the one shown in red is actually the maximum one. In larger examples we need to use approximated algorithms such as the one mentioned before, since the number of possible cuts grows exponentially with the number of nodes/values.
+
+\begin{figure}[h]
+\includegraphics[width=\textwidth]{cut-example}
+\caption{Contingency table, associated Squared Gini graph and maximum cut.}
+\label{fig:cut-example}
+\end{figure}
 
 \subsection{Handling Numeric Attributes}
 We observe  that criteria from our framework can handle
