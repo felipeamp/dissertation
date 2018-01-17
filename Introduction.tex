@@ -46,8 +46,8 @@ Our contribution, explained in the next section, is related with this issue.
 A brute force search to compute the best binary split 
 requires $\Omega(2^n)$ time, where $n$ is the number of distinct values the attribute may assume. The computational efficiency can be improved if a $n$-ary split is used rather than a binary one. However,  this may lead to a severe fragmentation of the sample space, which is not desirable: the number of samples available for each of the children of the split node 
 may be small and, as a consequence, the underlying classification tasks may become significantly more difficult.
-When the target variable is binary, the Gini Gain, proposed
-in the influential monograph by Breiman et al \cite{Breiman84}, can be computed efficiently.
+When the target variable is binary, a family of impurity measures that include both the Gini Gain and the Information Gain can be computed efficiently, as shown
+in the influential monograph by Breiman et al \cite{Breiman84}.
 However, when the number of classes $k$ is larger than 2,
 most, if not all, of the available exact solutions take exponential time
 in $(n,k)$.
@@ -61,7 +61,7 @@ of a series of algorithms/developments designed by Loh and its contributors,
 deals with a nominal variable $X$
 as follows: if $k=2$ or $n \le 11$ the Gini Index is computed;
 if $k \le 11$ and $n > 20$ a new variable $X'$ with at most $k$ distinct values is created according to a certain rule and an exhaustive search is performed over it;  finally, if $k > 11$ or $n \le 20$,  $X$ is binarized and a Linear Discriminant Analysis (LDA) is employed.
-These rules reflect the difficulty in dealing with multi-valued nominal attributes. Another interesting heuristic is the PC and PC-ext criteria, which calculates the principal component of the class probability vectors and uses the order given by the vector projections in this direction to look for splits.
+These rules reflect the difficulty in dealing with multi-valued nominal attributes. Other interesting heuristics are the PC and PC-ext criteria, which calculate the principal component of the class probability vectors and uses the order given by the vector projections in this direction to look for splits.
 In general, the main drawback of using heuristics is the lack of a theoretical guarantee about their behavior. 
 
 
@@ -92,16 +92,7 @@ is thought as a binary attribute $A(i,j)$ with values $v_i$ and $v_j$.
 After discussing these criteria, we show how to extend them to handle
 numeric attributes.
 
-We also  present a number of experiments 
-that suggest that one of our  criteria 
-is  competitive with the Twoing method, which 
-is -- as far as we know -- the only well-established
-criterion with binary splits that can be optimally computed for large $n$ when $k > 2$.
-However, in contrast with our methods, Twoing cannot handle
-datasets that also have a large number of classes. Some criteria based on heuristics are also part of the comparison.
-In addition, the experiments also  provide 
-evidence of the potential of aggregating  attributes for improving
-the accuracy of decision trees.
+We also  present a number of experiments that suggest that one of our criteria is competitive with the Twoing method, which is -- as far as we know -- the only well-established criterion with binary splits that can be optimally computed for large $n$ when $k > 2$. However, in contrast with our methods, Twoing cannot handle datasets that also have a large number of classes. Some criteria based on heuristics, such as the PC-ext and Hypercube Cover, are also part of the comparison. In addition, the experiments also  provide evidence of the potential of aggregating  attributes for improving the accuracy of decision trees.
 
 \section{Related Work}
 \label{chap:relatedwork}
@@ -118,7 +109,7 @@ methods to compute the best split efficiently
 (\cite{Breiman84,Chou:91,BPKN:92,journals/datamine/CoppersmithHH99}).
 For the 2-class problem,  \cite{Breiman84} proved a theorem which states that an optimal
 binary partition, for a certain class of splitting criteria,
-can be determined in linear time on $n$, the number of distinct values of the attributes, after ordering.
+can be determined in linear time on $n$ (TODO: qual o erro?), the number of distinct values of the attributes, after ordering.
 The Gini  Gain belongs to this class.
 The  other  three papers generalize
 this theorem  in different directions 
@@ -126,7 +117,7 @@ and show necessary conditions that are satisfied by optimal partitions for a cer
 These conditions, though useful to restrict the set of partitions
 that need to be considered, do not yield  a method that
 is efficient (polynomial time) for large values of $n$ and $k$. These papers also  present  heuristics, without approximation guarantee, to obtain good splits.
-Another related result is a theorem from \cite{journals/datamine/CoppersmithHH99} that guarantees that the optimum split can be found by separating the class probability vectors by a hyperplane. This motivated the creation of the PC criterion, as will be shown in the next chapter.
+Another related result is a theorem from \cite{journals/datamine/CoppersmithHH99} that guarantees that the optimum split can be found by separating the class probability vectors by a hyperplane. This motivated the creation of the PC criterion, as will be shown in the next chapter. TODO: falar do Sliq e FlipFlop.
 
 Other proposals to  speed up the attribute selection phase
  include  \cite{MolaSiciliano1997,Shih2001}. 
@@ -152,4 +143,4 @@ In chapter \ref{chap:background} we explain how decision trees are used for clas
 
 Chapter \ref{chap:framework} contains the framework for generating splitting criteria that run in polynomial time. Its relation with the Max-Cut problem and its approximation algorithms are explained and some criteria obtained from this framework are presented.
 
-Later, in chapters \ref{chap:experiments-splits} and \ref{chap:experiments-datasets}, we compare all the existing criteria and see how they perform in practice. In chapter \ref{chap:experiments-splits} we explore how the many heuristics used to find splits with optimal impurity compare among themselves. This suggests a couple of criteria that perform better and can be used when the number of values and classes are large. In chapter \ref{chap:experiments-datasets} we analyze these methods on real datasets that contain attributes with large number of values and classes. Lastly, in chapter \ref{chap:conclusions} we present our study conclusions.
+Later, in chapters \ref{chap:experiments-splits} and \ref{chap:experiments-datasets}, we compare the criteria and see how they perform in practice. In chapter \ref{chap:experiments-splits} we explore how the many heuristics used to find splits with optimal impurity compare among themselves. This suggests a couple of criteria that perform better and can be used when the number of values and classes are large. In chapter \ref{chap:experiments-datasets} we analyze these methods on real datasets that contain attributes with large number of values and classes. Lastly, in chapter \ref{chap:conclusions} we present our study conclusions.

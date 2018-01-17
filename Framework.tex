@@ -51,8 +51,7 @@ it has polynomial behavior in the smoothed analysis framework (see \cite{journal
 to set a limit on the number of moves.
 A more refined version  allows exchanging a pair of nodes
 as long as the weight of the cut is improved.
-In our experiments we use the version presented at 
-Algorithm \ref{alg:localsearch}.
+In our experiments this is the version we use, as presented in Algorithm \ref{alg:localsearch}.
 
 
 \begin{algorithm}[tb]
@@ -125,14 +124,12 @@ weights of the edges so that
  \label{lem:squaredgini}
 w(S_L)= Gini(S) - p^2_L \cdot Gini(S_L) - p^2_R \cdot Gini(S_R) 
 \end{equation}
-for every partition $(L,R)$ of  $V$. 
+for every partition $(L,R)$ of $V$ (TODO: ver se troca $S_L$ por L ou mantem pq esta no Gini Gain, cap anterior. Possivelmente definir na subsecao de notacao). 
 
 Note that the weight of the cut  $S_L$ in the above identity 
-is similar to the expression for
-the Gini Gain given by equation (\ref{eq:Ginigain}).
+is similar to the expression for the Gini Gain given by equation (\ref{eq:Ginigain}).
 The difference is that $p_L$ and $p_R$ are replaced with
-$p_L^2$ and $p_R^2$, respectively.
-Because of the squares, this new criterion tends to favor more balanced partitions. 
+$p_L^2$ and $p_R^2$, respectively. Because of the squares, this new criterion tends to favor more balanced partitions. Another practical observation is that one can define the edges without the $2/N^2$ term in \ref{lem:squaredgini} and find the same maximum cut, since this constant appears in all edges weights.
 
 For the proof of Lemma \ref{lem:GiniSq}, recall that $A_{ix}$ is the number
 of samples of  class $x$ that have value $v_i$, and that $C$ is used to denote the set of classes.
@@ -207,11 +204,13 @@ set the weights.
 
 \subsection{Example}
 
-Let's assume the are using the Squared Gini criterion on a dataset with a single attribute (the marital status) and we try to predict whether it's a male or female.
-The contingency table and associated Squared Gini graph is given in figure \ref{fig:cut-example}. Since this example is small (there are only $7$ non-empty distinct cuts), we can run through all the possible cuts and see that the one shown in red is actually the maximum one. In larger examples we need to use approximated algorithms such as the one mentioned before, since the number of possible cuts grows exponentially with the number of nodes/values.
+Let's assume the are using the Squared Gini criterion on a dataset with a single attribute (the marital status) and we try to predict whether it's a male or female. The contingency table and associated Squared Gini graph are given in figure \ref{fig:cut-example}.
+
+Since this example is small (there are only $7$ non-empty distinct cuts), we can run through all the possible cuts and see that the one shown in red is actually the maximum one. In larger examples we need to use approximated algorithms such as the one mentioned before, since the number of possible cuts grows exponentially with the number of nodes/values.
 
 \begin{figure}[h]
-\includegraphics[width=\textwidth]{cut-example}
+\centering
+\includegraphics[width=0.75\textwidth]{cut-example2}
 \caption{Contingency table, associated Squared Gini graph and maximum cut.}
 \label{fig:cut-example}
 \end{figure}
