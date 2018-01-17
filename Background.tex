@@ -113,6 +113,8 @@ $$L = \{v_i : v_i \leq v\}$$
 $$R = \{v_i : v_i > v\}$$
 for some chosen value $v$. Since we only need to test a single value of $v$ that is between each pair of consecutive values $v_i$, $v_{i+1}$, the time complexity follows.
 
+TODO: colocar exemplo e enunciar o teorema de 2 classes.
+
 For problems with more than two classes, however, there is no efficient procedure with theoretical approximation guarantee to compute the Gini Gain in subexponential time in $n$.
 
 \subsection{Twoing}
@@ -205,6 +207,9 @@ PC-ext is a simple extension of this algorithm, where instead of only testing th
 
 These procedures require $O(k^3)$ operations to find the principal component and $O(n)$ impurity calculations and inner products in the class probability space.
 
+
+TODO: talvez colocar exemplo.
+
 \subsection{Largest Class Alone}
 
 This is a heuristic that, when using the Gini impurity, has an approximation guarantee of 2 compared with the optimal partition found by Gini Gain.
@@ -215,7 +220,7 @@ It can also be used with the Information Gain impurity, instead of Gini Gain, bu
 
 \subsection{List Scheduling}
 
-Similarly to the Largest Alone heuristic, List Scheduling has an approximation guarantee of 2 for the Informatio Gain criterion when using the Entropy impurity (TODO: conferir).
+Similarly to the Largest Alone heuristic, List Scheduling has an approximation guarantee of 2 for the Informatio Gain criterion when using the Entropy impurity\footnote{This assumes that the partition of the values is as balanced as possible, which is an NP-hard problem. We will use a greedy algorithm instead, which obtains a $4/3$ approximation guarantee.}.
 
 First one calculates the frequency of every class. Then, one uses a List Scheduling algorithm to group the classes into 2 superclasses as balanced as possible (in terms of number of samples). Lastly the Information Gain criterion is applied on this two-class problem. Again, since calculating the class frequencies can be done using the contingency table and the List Scheduling algorithm is linear in the number of classes, this heuristic also takes $O(N + n k + n \log n)$ time in total.
 
