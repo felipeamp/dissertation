@@ -206,10 +206,9 @@ The statistical test used for criteria comparison is a  one-tailed paired $t$-st
 In general, there was a clear advantage towards PC-ext and a clear disadvantage towards the GW-based criteria. Twoing, Hypercube Cover and the GL criteria had somewhat similar results. The advantage of the GL-based criteria over the Gw-based ones is likely related with the fact that the weights of the cuts computed by the GL approach in this experiment are, in general, larger than those obtained by the GW algorithm.
 
 
-\begin{table*}[t]
-\tiny 
+\begin{sidewaystable*}[ph!]
 \centering
-\begin{tabularx}{\textwidth}{c|XX|XX|XX|XX|XX|XX|XX} 
+\begin{tabular}{c|cc|cc|cc|cc|cc|cc|cc} 
 Dataset & \multicolumn{2}{c|}{Twoing} &  \multicolumn{2}{c|}{GWSG}  
 &   \multicolumn{2}{c|}{GW$\chi^2$}                   &\multicolumn{2}{c|}{GLSG}       &\multicolumn{2}{c|}{GL$\chi^2$} & \multicolumn{2}{c|}{PC-ext} & \multicolumn{2}{c}{HcC}\\  \hline 
 % Dataset           &        Twoing     &     GWSG          &      GW$\chi^2$   &       GLSG        &    GL$\chi^2$     &     PC-ext                 &         HcC
@@ -234,12 +233,12 @@ Dataset & \multicolumn{2}{c|}{Twoing} &  \multicolumn{2}{c|}{GWSG}
 \hline
 Average (Sum)       &     63.7 & (33)   & 66.81*   & (16)   & 66.66*   & (19)   & 63.33    & (30)   & 63.36    & (27)   & 64.08    & (43)            & 63.94    & ()
 
-\end{tabularx}
+\end{tabular}
 \caption{Average accuracy and statistical tests  for  decision trees 
 with depth at most 5 using only nominal attributes. The best accuracy for each dataset is bold-faced. Experiments that did not finish in reasonable time are considered statistically worse than the others. These criteria have a * mark besides their average accuracies, since they are calculated only on the experiments that finished.}
 \label{tab:nominal-5}
 \normalsize
-\end{table*}
+\end{sidewaystable*}
 
 
 The results of  Table \ref{tab:nominal-5} also
