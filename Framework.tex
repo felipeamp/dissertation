@@ -186,10 +186,12 @@ Finding the maximum weighted cut in a complete graph whose weights are set by eq
 \begin{proof}
  The idea is to show a reduction from the NP-complete problem PARTITION using the fact that, for some specific instances of our problem, the optimal partition is the most balanced one.
  
- Recall that, in the PARTITION problem, we are given a multiset of integers and want to decide whether it can be partitioned into two multisets with the same sum of elements. Consider an instance given by a multiset $U = \{u_1, \ldots, u_k\}$ of integers. Create an instance of our decision tree problem as follows: for each $u_i \in U$ add a value $v_i$ whose row in the contingency table is given by $u_i e_i$. In other words, in this instance every value has a single class and every class appears for a single value. Hence, every edge $w_{ij}$ in the associated Squared Gini graph will have weight equal to $ij$. Therefore, any cut partitioning $V$ into $(L, R)$ will have value equal to
+ Recall that, in the PARTITION problem, we are given a multiset of integers and want to decide whether it can be partitioned into two multisets with the same sum of elements. Consider an instance given by a multiset $U = \{u_1, \ldots, u_k\}$ of integers. Create an instance of our decision tree problem as follows: for each $u_i \in U$ add a value $v_i$ whose row in the contingency table is given by $u_i e_i$. In other words, in this instance every value has a single class and every class appears for a single value.
+ 
+ W.l.o.g. we can ignore the $2/N^2$ factors in \ref{eq:squaredgini}. Hence every edge $w_{ij}$ in the associated Squared Gini graph will have weight equal to $ij$. Therefore any cut partitioning $V$ into $(L, R)$ will have value equal to
  $$cut(L, R) = \Big(\sum_{i|v_i \in L} u_i\Big) \cdot \Big(\sum_{i|v_i \in R} u_i\Big)$$
  
-Note that this formula is maximized when the two terms are as close as possible, i.e. the two partition sides are as balanced as possible. Thus, if we can find a polynomial time algorithm that finds the best partition of this instance's values, we can solve the associated PARTITION problem. This concludes the reduction.
+Note that this formula is maximized when the two terms are as close as possible, i.e. the two partition sides are as balanced as possible. Thus, if we can find a polynomial time algorithm that finds the best partition of this instance's values, we can solve the associated PARTITION problem in polynomial time. This concludes the reduction.
 \end{proof}
 
 \subsection{Setting weights according to other splitting criteria}
