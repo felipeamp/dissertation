@@ -205,56 +205,46 @@ of criterion $I$ on dataset ${\cal D}$ and the number of criteria
 with accuracy   statistically lower than that of $I$ on dataset ${\cal D}$. 
 The statistical test used for criteria comparison is a  one-tailed paired $t$-student test with a $95\% $ confidence level. 
 
-TODO: editar analise abaixo.
-In general, there was a clear advantage towards PC-ext. Twoing, Hypercube Cover and the GL criteria had somewhat similar results.
+In general, there was a clear advantage towards PC-ext, followed by Hypercube Cover and GL Squared Gini. Twoing and GL$\chi^2$had, in general, the worse performance. As expected, the criteria created the same tree for many datasets, and this happened more frequently when the number of classes was smaller.
 
 \begin{table}
 \small
 \centering
 \begin{tabular}{c|cc|cc|cc|cc|cc} 
-Dataset             & \multicolumn{2}{c|}{Twoing} &  \multicolumn{2}{c|}{GLSG}  & \multicolumn{2}{c|}{GL$\chi^2$} & \multicolumn{2}{c|}{PC-ext}& \multicolumn{2}{c}{HcC}\\ \hline
-{\tt Adult}         &  {\bf 82.52} & {\bf (2)}    &  82.38       &  (0)         &  82.43       & (0)              & 82.51      & {\bf (2)}    & {\bf 82.52}&            \\
-{\tt Mushroom}      &  {\bf 100}   & {\bf (1)}    &  100         &  (0)         &  99.99       & (0)              & {\bf 100 } & {\bf (1)}    & {\bf 100}  &            \\
-{\tt KDD98}-2       &  79.41       & (0)          &  {\bf 80.65} & {\bf (3)}    &  79.73       & (0)              & 79.91      & (1)          & 79.41      &            \\
-%{\tt KDD98}-3       &  62.61       & (0)          &  63.33       & {\bf (1)}    &  {\bf 63.56} & {\bf (1)}        &            &              &            &            \\
-%{\tt KDD98}-5       &  46.46       & (0)          &  46.39       & (0)          &  {\bf 47.53} & {\bf (2)}        &            &              &            &            \\
-{\tt KDD98}-9       &  38.54       & (1)          &  37.97       & (0)          &  {\bf 39.68} & {\bf (3)}        & 38.55      & (1)          & 37.95      &            \\
-{\tt Nursery}       &  93.51       & (2)          &  92.39       & (0)          &  {\bf 93.74} & {\bf (3)}        & 93.5       & (1)          & 93.5       &            \\
-{\tt Nursery-ext}   &  95.83       & (1)          &  94.79       & (0)          &  {\bf 96.02} & {\bf (3)}        & 95.83      & (1)          & 95.83      &            \\
-{\tt Cars}          &  92.82       & {\bf (1)}    &  90.51       & (0)          &  {\bf 92.88} & {\bf (1)}        & 92.69      & {\bf (1)}    & 92.69      &            \\
-{\tt Cars-ext}      &  96.49       & {\bf (2)}    &  90.89       & (0)          &  94.44       & (1)              & 96.46      & {\bf (2)}    & {\bf 96.5} &            \\
-{\tt Contracep}     &  43.5        & (0)          &  43.83       & (0)          &  {\bf 43.85} & {\bf (1)}        & 43.53      & (0)          & 43.53      &            \\
-{\tt Contracep-ext} &  43.15       & (0)          &  {\bf 44.32} & {\bf (2)}    &  43.72       & (0)              & 43.75      & (1)          & 43.37      &            \\
-{\tt CoverType}     &  64.09       & (1)          &  64.59       & (2)          &  63.61       & (0)              &{\bf 64.66} & {\bf (3)}    & {\bf 64.66}&            \\
-{\tt CoverType-ext} &  {\bf 65.08} & {\bf (1)}    &  {\bf 65.08} & {\bf (1)}    &  65.05       & (0)              & 65.08      & {\bf (1)}    & {\bf 65.08}&            \\
-{\tt Poker}         &  {\bf 52.24} & {\bf (2)}    &  49.88       & (0)          &  51.83       & (1)              & 52.09      & {\bf (2)}    & 52.09      &            \\
-{\tt Shelter-15}    &  47.64       & (1)          &  46.52       & (0)          & {\bf 48.09}  & {\bf (3)}        & 47.71      & (1)          & 47.26      &            \\
-{\tt S.F. Crime-15} &  22.08       & {\bf (1)}    &  22.06       & (0)          & {\bf 22.08}  & {\bf (1)}        & 22.08      & {\bf (1)}    & 22.08      &            \\
-{\tt Phonemes}      &  37.13       & (2)          &  35.9        & (0)          & 35.75        & (0)              &{\bf 37.95} & {\bf (3)}    & 37.89      &            \\
+Dataset             & \multicolumn{2}{c|}{Twoing} &  \multicolumn{2}{c|}{GLSG}  & \multicolumn{2}{c|}{GL$\chi^2$} & \multicolumn{2}{c|}{PC-ext}& \multicolumn{2}{c}{HcC} \\
 \hline
-Average (Sum)       &  65.88       & (18)         &  65.11       & (8)          & 65.81        & (17)             &  66.02     & (22)         & 65.9       &    
+{\tt Adult}         &  75.11       & (0)          &  75.11       & (0)          &  75.11       & (0)              & 75.11      & (0)           & 75.11      & (0)        \\
+{\tt Mushroom}      &  98.44       & (0)          &  98.44       & (0)          &  98.44       & (0)              & 98.44      & (0)           & 98.44      & (0)        \\
+{\tt KDD98}-2       &  {\bf 83.61} & {\bf (1)}    &  83.3        & (0)          &  {\bf 83.61} & {\bf (1)}        &{\bf 83.61} & {\bf (1)}     & {\bf 83.61}& {\bf (1)}  \\
+%{\tt KDD98}-3       &  62.61       &              &  63.33       &              &  {\bf 63.56} &                  &            &               &            &            \\
+%{\tt KDD98}-5       &  46.46       &              &  46.39       &              &  {\bf 47.53} &                  &            &               &            &            \\
+{\tt KDD98}-9       &  31.66       & (0)          &  32.32       & {\bf (4)}    &  31.61       & (0)              & 31.74      & (2)           & 31.74      & (2)        \\
+{\tt Nursery}       &  66.25       & (0)          &  66.25       & (0)          &  66.25       & (0)              & 66.25      & (0)           & 66.25      & (0)        \\
+{\tt Nursery-ext}   &  66.25       & (0)          &  66.25       & (0)          &  66.25       & (0)              & 66.25      & (0)           & 66.25      & (0)        \\
+{\tt Cars}          &  70.02       & (0)          &  70.02       & (0)          &  70.02       & (0)              & 70.02      & (0)           & 70.02      & (0)        \\
+{\tt Cars-ext}      &  70.02       & (0)          &  70.02       & (0)          &  70.02       & (0)              & 70.02      & (0)           & 70.02      & (0)        \\
+{\tt Contracep}     &  43.39       & {\bf (2)}    &  42.31       & (0)          &  42.23       & (0)              & 43.63      & {\bf (2)}     & 43.63      & {\bf (2)}  \\
+{\tt Contracep-ext} &  42.58       & (1)          &  {\bf 44.29} & {\bf (4)}    &  42.23       & (0)              & 43.73      & (3)           & 43.38      & (2)        \\
+{\tt CoverType}     &  {\bf 51.93} & {\bf (1)}    &  48.76       & (0)          & {\bf 51.93}  & {\bf (1)}        &{\bf 51.93} & {\bf (1)}     & {\bf 51.93}& {\bf (1)}  \\
+{\tt CoverType-ext} &  51.54       & (0)          &  55.55       & (3)          &  51.93       & (2)              &{\bf 58.64} & {\bf (4)}     & 51.54      & (0)        \\
+{\tt Poker}         &  49.93       & (0)          &  {\bf 49.95} & (0)          & {\bf 49.95}  & (0)              & 49.93      & (0)           & 49.93      & (0)        \\
+{\tt Shelter-15}    &  {\bf 48.44} &              &  35.39       &              &  40.1        &                  &{\bf 48.44} &               &            &            \\
+{\tt S.F. Crime-15} &  {\bf 21.61} & {\bf (2)}    &  21.24       & (1)          & 19.98        & (0)              & 21.58      & {\bf (2)}     & 21.58      & {\bf (2)}  \\
+{\tt Phonemes}      &  22.21       & (0)          &  22.22       & (0)          & 22.57        & (2)              &{\bf 23.92} & {\bf (3)}     & 23.91      & {\bf (3)}  \\
+\hline
+Average (Sum)       &  55.81       & (  )         &  55.09       & ( )          & 55.14        & (  )             &  56.45     & (  )          &            &    
 \end{tabular}
 \normalsize
-\caption{Average accuracy and statistical tests  for  decision trees 
-with depth at most 1 using only nominal attributes. The best accuracy for each dataset is bold-faced. Experiments that did not finish in reasonable time are considered statistically worse than the others. These criteria have a * mark besides their average accuracies, since they are calculated only on the experiments that finished.}
+\caption{Average accuracy and statistical tests  for  decision trees with depth at most 1 using only nominal attributes. The best accuracy for each dataset is bold-faced.}
 \label{tab:nominal-1}
 \end{table}
-
-TODO: Se mantiver paragrafo abaixo, editar/tirar da depth 5.
-The results of  Table \ref{tab:nominal-1} also
-provide evidence of  the potential
-of considering aggregated attributes. 
-The accuracy obtained for the extended versions of datasets
-{\tt Nursery}, {\tt Cars} and {\tt CoverType} are considerably higher than those obtained for 
-the original versions. For {\tt Contracep}, the effect is not clear.
 
 Table \ref{tab:ctree-1} presents the 
 comparison between our GL methods, Twoing, Hypercube Cover and PC-ext in another scenario,
 where we use $c_{quad}$, one of the bias-free criterion proposed in \cite{Hothorn:2006:URP}, to select the attribute at each node of the tree. 
 Then, both Twoing, Hypercube Cover, PC-ext and our methods are  used only for splitting the chosen attribute, which allows for a  more direct comparison of their splitting ability. Since the maximum depth is set to 1, all the criteria are splitting the same attribute. This makes the analysis of their splitting ability more direct than with larger depths. This experiment is very similar to the one from the previous chapter, except now we are using real datasets.
 
-TODO: editar analise abaixo.
-Once again we observed a balance between the different criteria, with an advantage towards GL-$\chi^2$. Perhaps surprisingly, the bias free approach had significantly worse results for the datasets with extended attributes. Another surprise was that the PC-ext criterion behaved much more poorly than in the previous experiment. This suggests that its advantage lies in comparing different attributes, and not necessarily finding the best split. This experiment also showed that it is not possible to run $c_{quad}$ in reasonable time for the {\tt Shelter-15} dataset. This happens because it calculates a pseudoinverse of a matrix whose dimension grows with the number of values and classes, which is infeasible for large $n$ and $k$.
+As can be seen, Twoing obtained the best results, followed by Hypercube Cover. Ignoring the extended datasets, since no extended attribute was chosen by the conditional inference tree, we note that PC-ext and the GL criteria obtained similar results. This suggests that Twoing and Hypercube Cover are better at choosing the best values partition, once the attribute is fixed.
 
 
 \begin{table*}
@@ -263,58 +253,54 @@ Once again we observed a balance between the different criteria, with an advanta
 \begin{tabular}{c|cc|cc|cc|cc|cc} 
 Dataset  &   \multicolumn{2}{c|}{CI-Twoing} &   \multicolumn{2}{c|}{CI-GLSG} & \multicolumn{2}{c|}{CI-GL$\chi^2$}& \multicolumn{2}{c|}{CI-PC-ext}& \multicolumn{2}{c}{CI-HcC} \\  \hline   
 % Dataset          &        CI-Twoing       &        CI-GLSG          &      CI-GL$\chi^2$      &       CI-PC-ext         &       CI-HcC
-{\tt Adult}        &{\bf 81.96} &{\bf  (3)} & 81.61       & (1)       & 81.77       & (2)       & 79.98       & (0)       & {\bf 81.96} &           \\
-{\tt Mushroom}     &86.97       & (1)       &{\bf  94.79 }& {\bf (3)} & 90.15       & (2)       & 86.77       & (0)       & 86.97       &           \\
-{\tt KDD98}-2      &81.29       & (0)       & {\bf 82.34 }& {\bf (3) }& 81.68       & (2)       & 81.35       & (0)       & 81.29       &           \\
-%{\tt KDD98}-3      &65.28       & (0)       & {\bf 65.8  }& {\bf (2) }& 65.07       & (0)       &             &           &             &           \\
-%{\tt KDD98}-5      &49.23       & (0)       & {\bf 49.58} & {\bf (2)} & 49.27       & (0)       &             &           &             &           \\
-{\tt KDD98}-9      &41.84       & (0)       & 42          & (0)       & {\bf 42.26} & {\bf (2)} & 41.73       & (0)       & 41.95       &           \\
-{\tt Nursery}      &{\bf 88.48} & {\bf (1)} & 88.3        & (0)       & 88.47       & {\bf (1)} &{\bf 88.48 } & {\bf (1)} & {\bf 88.48} &           \\
-{\tt Nursery-Ext}  &{\bf 88.48} & {\bf (1)} & 88.26       & (0)       & 88.47       & {\bf (1)} &{\bf 88.48 } & {\bf (1)} & {\bf 88.48} &           \\
-{\tt Cars}         &86.51       & {\bf (1)} & 85.02       & (0)       & {\bf 86.57} & {\bf (1)} & 86.48       & {\bf (1)} & 86.48       &           \\
-{\tt Cars-Ext}     &88.27       & {\bf (1) }& 88.27       & (0)       & {\bf 88.32} & {\bf (1)} & 88.26       & {\bf (1)} & 88.26       &           \\
-{\tt Contracep}    &43.83       & (0)       & {\bf 44.12} & {\bf (2)} & 43.87       & (0)       & 43.63       & (0)       & 43.69       &           \\
-{\tt Contracep-Ext}&43.39       & (0)       & {\bf 43.81} & {\bf (2)} & 43.76       & {\bf (2)} & 43.21       & (0)       & 43.32       &           \\
-{\tt CoverType}    &54.1        & (0)       & 54.1        & (0)       & 54.1        & (0)       & 54.1        & (0)       & 54.1        & (0)       \\
-{\tt CoverType-Ext}&54.1        & (0)       & 54.1        & (0)       & 54.1        & (0)       & 54.1        & (0)       & 54.1        & (0)       \\
-{\tt Poker}        &{\bf 51.05} & {\bf (2)} & 50.56       & (0)       & 50.91       & (1)       & 50.8        & (1)       & 50.79       &           \\  
-{\tt Shelter-15}   & 48.03      & (0)       & 48.03       & (0)       & {\bf 48.22} & {\bf (2)} & 48.22       & {\bf (2)} &             &           \\   
-{\tt S.F. Crime-15}&{\bf 21.59} & {\bf (3)} & 20.53       & (0)       & 21.49       & (1)       & 21.52       & (1)       & 21.52       &           \\ 
-{\tt Phonemes}     & 23.12      & (2)       & 22.52       & (1)       & {\bf 23.8 } & {\bf (3)} & 21.3        & (0)       & 22.11       &           \\ 
+{\tt Adult}        &{\bf 75.13} & {\bf (2)} & 75.11       & (0)       & 75.11       & (0)       & {\bf 75.13} & {\bf (2)} & {\bf 75.13} & {\bf (2)} \\
+{\tt Mushroom}     &63.88       & (1)       &{\bf 68.03 } & {\bf (4)} & 66.5        & (3)       & 63.72       & (0)       & 63.88       & (1)       \\
+{\tt KDD98}-2      &65.29       & (0)       & 65.29       & (0)       & 65.29       & (0)       & 65.29       & (0)       & 65.29       & (0)       \\
+%{\tt KDD98}-3      &65.28       &           & {\bf 65.8  }&           & 65.07       &           &             &           &             &           \\
+%{\tt KDD98}-5      &49.23       &           & {\bf 49.58} &           & 49.27       &           &             &           &             &           \\
+{\tt KDD98}-9      &25.48       & (0)       & 25.48       & (0)       & 25.48       & (0)       & 25.48       & (0)       & 25.48       & (0)       \\
+{\tt Nursery}      &{\bf 41.9}  & {\bf (1)} & 41.05       & (0)       & {\bf 41.9}  & {\bf (1)} & {\bf 41.9}  & {\bf (1)} & {\bf 41.9}  & {\bf (1)} \\
+{\tt Nursery-Ext}  &{\bf 41.9}  & {\bf (1)} & 41.05       & (0)       & {\bf 41.9}  & {\bf (1)} & {\bf 41.9}  & {\bf (1)} & {\bf 41.9}  & {\bf (1)} \\
+{\tt Cars}         &70.02       & (0)       & 70.02       & (0)       & 70.02       & (0)       & 70.02       & (0)       & 70.02       & (0)       \\
+{\tt Cars-Ext}     &70.02       & (0)       & 70.02       & (0)       & 70.02       & (0)       & 70.02       & (0)       & 70.02       & (0)       \\
+{\tt Contracep}    &43.39       & {\bf (2)} & 42.66       & (1)       & 42.23       & (0)       & {\bf 43.63} & {\bf (2)} & {\bf 43.63} & {\bf (2)} \\
+{\tt Contracep-Ext}&43.39       & {\bf (2)} & 42.66       & (1)       & 42.23       & (0)       & {\bf 43.63} & {\bf (2)} & {\bf 43.63} & {\bf (2)} \\
+{\tt CoverType}    &48.76       & (0)       & 48.76       & (0)       & 48.76       & (0)       & 48.76       & (0)       & 48.76       & (0)       \\
+{\tt CoverType-Ext}&48.76       & (0)       & 48.76       & (0)       & 48.76       & (0)       & 48.76       & (0)       & 48.76       & (0)       \\
+{\tt Poker}        &49.93       & (0)       & 49.95       & (0)       & 49.95       & (0)       & 49.93       & (0)       & 49.93       & (0)       \\  
+{\tt Shelter-15}   &35.93       &           & 35.93       &           &             &           &             &           &             &           \\   
+{\tt S.F. Crime-15}&19.92       & (0)       & 19.92       & (0)       & 19.92       & (0)       & 19.92       & (0)       & 19.92       & (0)       \\ 
+{\tt Phonemes}     &{\bf 15.7}  & {\bf (4)} & 15.34       & (0)       & 15.42       & (0)       & 15.46       & (1)       & 15.46       & (1)       \\ 
 \hline
-Average (Sum)      & 61.44      & (15)      & 61.77       & (12)      & 61.75       & (21)      & 61.15       & (8)       &             &    
+Average (Sum)      & 47.46      & (  )      & 47.5        & (  )      &             & (  )      &             & ( )       &             & (  )   
        \end{tabular}
-    \caption{Average accuracy and statistical tests  for  Conditional Inference trees 
-with depth at most 1 using only nominal attributes. The best accuracy for each dataset is bold-faced.}
+    \caption{Average accuracy and statistical tests  for  Conditional Inference trees with depth at most 1 using only nominal attributes. The best accuracy for each dataset is bold-faced.}
 \label{tab:ctree-1}
 \end{table*}
 
 
 Table \ref{exp:numeric-1} shows experiments  similar to those presented at Table \ref{tab:nominal-1}, but now
-using also the numeric attributes.
-
-TODO: editar analise abaixo.
-We observed a significant gain in terms of accuracy for all datasets except for KDD98-2. 
-Also note that GLSG was much inferior to the other criteria. Other than that, the comparison results were very similar to the ones found in table \ref{tab:nominal-1}.
+using also the numeric attributes. This time the GL criteria obtained the best results and Twoing had the worst. This suggests that criteria from our framework are better in terms of comparing numerical and nominal attributes among themselves.
 
 \begin{table}
 \small
 \centering
 \begin{tabular}{c|cc|cc|cc|cc|cc} 
-Dataset            &\multicolumn{2}{c|}{Twoing} & \multicolumn{2}{c|}{GLSG} & \multicolumn{2}{c|}{GL$\chi^2$} & \multicolumn{2}{c|}{PC-ext}& \multicolumn{2}{c}{HcC}\\  \hline   
-{\tt Adult}        & 84.2           & (1)       & 82.4       & (0)          &  84.2       & (1)               & {\bf 84.4 } & {\bf (3) }  & {\bf 84.4 } &           \\
-{\tt KDD98}-2      & 80.9           & (0)       & 81.9       & {\bf (1)}    & {\bf 81.9 } & {\bf (1) }        & 81.9        & {\bf (1) }  & {\bf 81.9 } &           \\ 
-%{\tt KDD98}-3      & {\bf 69.5 }    &{\bf  (2)} & 67.9       & (0)          & 69.1        & (1)               &             &             &             &           \\ 
-%{\tt KDD98}-5      & 54.6           &  (0)      & 54.5       &  (0)         & {\bf 55.3 } & {\bf  (2) }       &             &             &             &           \\ 
-{\tt KDD98}-9      & 45.7           & (1)       & 45.3       &  (0)         & {\bf 48.7 } & {\bf (3) }        &  47.4       & (2)         & 47.0        &           \\ 
-{\tt Contracep}    & 54.1           & (1)       & 52.9       &  (0)         & 54          & (1)               & {\bf 55.1 } & {\bf (3) }  & 55.0        &           \\  
-{\tt Contracep-Ext}& 51.7           & (0)       & 52.3       &  (0)         & 53.3        & {\bf (2) }        & {\bf 53.3 } & {\bf (2) }  & 52.8        &           \\ 
-{\tt CoverType}    &  {\bf 70.3 }   & {\bf (2)} & 68.5       &  (0)         & 69.2        & (1)               &  70.2       & {\bf (2) }  & 70.2        &           \\  
-{\tt CoverType-Ext}& 70.9           & (2)       & 70.3       &  (1)         & 69.2        & (0)               & {\bf 71.7 } & {\bf (3) }  & 71.2        &           \\ 
-{\tt Shelter-15}   & 53.7           & (1)       & 51.9       &  (0)         & 54.6        & (2)               & {\bf 54.8 } & {\bf (3) }  & 54.6        &           \\   
-{\tt S.F. Crime-15}& 23.5           & (2)       & 23.2       &  (0)         & {\bf 23.6 } & {\bf (3) }        & 23.5        & (1)         & 23.5        &           \\ 
+Dataset            &\multicolumn{2}{c|}{Twoing} & \multicolumn{2}{c|}{GLSG} & \multicolumn{2}{c|}{GL$\chi^2$} & \multicolumn{2}{c|}{PC-ext}& \multicolumn{2}{c}{HcC}\\
+\hline   
+{\tt Adult}        & 75.11          &  (0)      & 75.11      & (0)          & {\bf 79.55} &  {\bf (4)}        & 75.11       &  (0)        & 75.11       &  (0)      \\
+{\tt KDD98}-2      & 83.61          &  (0)      & {\bf 83.93}& {\bf (4)}    & 83.67       &  (1)              & 83.62       &  (0)        & 83.62       &  (0)      \\ 
+%{\tt KDD98}-3      & {\bf 69.5 }    &           & 67.9       &              & 69.1        &                   &             &             &             &           \\ 
+%{\tt KDD98}-5      & 54.6           &           & 54.5       &              & {\bf 55.3 } &                   &             &             &             &           \\ 
+{\tt KDD98}-9      & 31.66          &  (0)      &{\bf 32.52} & {\bf (3)}    & 32.46       &  {\bf (3)}        & 31.44       &  (0)        & 31.44       &  (0)      \\ 
+{\tt Contracep}    & 42.84          &  (1)      & 42.21      & (0)          & {\bf 45.19} &  {\bf (4)}        & 42.7        &  (1)        & 42.7        &  (1)      \\  
+{\tt Contracep-Ext}& 42.39          &  (0)      & 44.29      & (3)          & {\bf 45.19} &  {\bf (4)}        & 42.68       &  (0)        & 42.59       &  (0)      \\ 
+{\tt CoverType}    & 51.93          &  (0)      & 62         & (2)          & 52.38       &  (1)              & {\bf 63.36} &  {\bf (3)}  & {\bf 63.36} & {\bf (3)} \\  
+{\tt CoverType-Ext}& 51.54          &  (0)      & 62         & (2)          & 52.38       &  (1)              & {\bf 63.36} &  {\bf (3)}  & {\bf 63.36} & {\bf (3)} \\  
+{\tt Shelter-15}   & 48.44          &           & 35.4       &              &             &                   &             &             &             &           \\   
+{\tt S.F. Crime-15}& {\bf 21.61}    & {\bf (2)} & 21.24      & (1)          & 20.61       &  (0)              & 21.58       &  {\bf (2)}  & 21.58       & {\bf (2)} \\ 
 \hline
-Average (Sum)      & 59.44          & (10)      & 58.74      &  (2)         & 59.86       & (14)              & 60.3        & (20)        & 60.1        & 
+Average (Sum)      & 49.9           & (  )      & 50.97      &  ( )         & 59.86       & (  )              & 60.3        & (  )        & 60.1        & (  )
 
 \end{tabular}
 \caption{Average accuracy and statistical test results for  Decision Trees using both nominal and numeric attributes.}
@@ -338,7 +324,7 @@ The entry  associated with  $({\cal D},I)$ has two pieces of information: the av
 of criterion $I$ on dataset ${\cal D}$ and the number of criteria
 with accuracy   statistically lower than that of $I$ on dataset ${\cal D}$. 
 The statistical test used for criteria comparison is a  one-tailed paired $t$-student test with a $95\% $ confidence level. 
-In general, there was a clear advantage towards PC-ext and a clear disadvantage towards the GW-based criteria. Twoing, Hypercube Cover and the GL criteria had somewhat similar results. The advantage of the GL-based criteria over the Gw-based ones is likely related with the fact that the weights of the cuts computed by the GL approach in this experiment are, in general, larger than those obtained by the GW algorithm.
+In general, there was a clear advantage towards PC-ext and a clear disadvantage towards the GW-based criteria. Twoing, Hypercube Cover and the GL criteria had somewhat similar results. The advantage of the GL-based criteria over the GW-based ones is likely related with the fact that the weights of the cuts computed by the GL approach in this experiment are, in general, larger than those obtained by the GW algorithm.
 
 
 \begin{sidewaystable*}[ph!]
@@ -346,45 +332,39 @@ In general, there was a clear advantage towards PC-ext and a clear disadvantage 
 \begin{tabular}{c|cc|cc|cc|cc|cc|cc|cc} 
 Dataset & \multicolumn{2}{c|}{Twoing} &  \multicolumn{2}{c|}{GWSG}  
 &   \multicolumn{2}{c|}{GW$\chi^2$}                   &\multicolumn{2}{c|}{GLSG}       &\multicolumn{2}{c|}{GL$\chi^2$} & \multicolumn{2}{c|}{PC-ext} & \multicolumn{2}{c}{HcC}\\  \hline 
-% Dataset           &        Twoing     &     GWSG          &      GW$\chi^2$   &       GLSG        &    GL$\chi^2$     &     PC-ext                 &         HcC
-{\tt Adult}         & 82.21    & (2)    & 81.91    & (1)    & 82.24    & (2)    & 81.83    & (0)    & 82.24    & (2)    &{\bf82.31}&{\bf(5)}         & 82.21    &    \\
-{\tt Mushroom}      & {\bf 100}&{\bf(2)}& 99.99    & (0)    & 99.98    & (0)    &{\bf  100}&{\bf(2)}& 99.99    & (0)    &{\bf 100} &{\bf(2)}         &{\bf100}  &    \\
-{\tt KDD98}-2       & 80.47    & (0)    & 81       & (2)    & 80.74    & (1)    & 81.16    & (3)    & 80.51    & (0)    &{\bf81.25}&{\bf(4)}         & 80.47    &    \\
-%{\tt KDD98}-3       & 63.77    & (0)    & 63.8     & (0)    & 64.37    &{\bf(3)}& 63.75    & (0)    &{\bf64.54}&{\bf(3)}&          &                 &          &    \\
-%{\tt KDD98}-5       & 48.02    & (2)    & 46.79    & (0)    &{\bf48.59}&{\bf(3)}& 46.77    & (0)    & 48.58    &{\bf(3)}&          &                 &          &    \\
-{\tt KDD98}-9       & 40.35    & (2)    & 38.13    & (0)    & 40.93    &{\bf(4)}& 38.15    & (0)    &{\bf 41 } &{\bf(4)}& 40.27    & (2)             & 40.14    &    \\
-{\tt Nursery}       & 88.25    &{\bf(3)}& 88.03    & (0)    & 88.2     & (0)    &{\bf88.33}&{\bf(3)}& 88.2     & (0)    & 88.25    &{\bf(3)}         & 88.25    &    \\
-{\tt Nursery-Ext}   &{\bf93.82}&{\bf(4)}& 90.95    & (0)    & 93.02    & (2)    & 90.75    & (0)    & 93.13    & (2)    & 93.81    &{\bf(4)}         & 93.81    &    \\
-{\tt Cars}          & 86.53    & (1)    & 85.39    & (0)    & 86.37    & (1)    &{\bf87.93}&{\bf(5)}& 86.42    & (1)    & 86.5     & (1)             & 86.5     &    \\
-{\tt Cars-Ext}      & 90.3     & (0)    & 90.82    & (2)    & 91.57    & (4)    & 90.84    & (2)    &{\bf 91.9}&{\bf(5)}& 90.32    & (0)             & 90.32    &    \\
-{\tt Contracep}     & 43.77    & (0)    & 43.96    & (0)    &{\bf44.04}&{\bf(1)}& 43.89    & (0)    & 44       & (0)    & 43.59    & (0)             & 43.62    &    \\
-{\tt Contracep-Ext} & 43.17    & (0)    & 44.32    &{\bf(4)}& 43.44    & (0)    &{\bf44.35}&{\bf(4)}& 43.7     & (0)    & 43.77    & (1)             & 43.36    &    \\
-{\tt CoverType}     & 52.97    & (2)    & 55.05    & (3)    & 51.07    & (0)    & 55.05    & (3)    & 51.07    & (0)    &{\bf58.12}&{\bf(5)}         &{\bf58.12}&    \\
-{\tt CoverType-Ext} & 64.48    & (4)    & 64.12    & (2)    & 57.73    & (0)    & 64.23    & (3)    & 59.95    & (1)    &{\bf64.71}&{\bf(5)}         & 64.54    &    \\ 
-{\tt Poker }        & 51.9     & (3)    & 50.28    & (1)    & 51.77    & (2)    & 49.94    & (0)    &{\bf51.91}&{\bf(4)}& 51.7     & (2)             & 51.69    &    \\
-{\tt Shelter-15}    & 48.01    & (3)    & ---      & (0)    & ---      & (0)    & 45.31    & (2)    &{\bf48.13}&{\bf(4)}& 48.07    & (3)             & 48.05    &    \\   
-{\tt S.F. Crime-15} &{\bf22.1} &{\bf(2)}& 21.32    & (1)    & 22.09    &{\bf(2)}& 21.23    & (0)    & 22.09    &{\bf(2)}& 22.09    &{\bf(2)}         & 22.09    &    \\
-{\tt Phonemes}      &{\bf30.92}&{\bf(5)}& ---      & (0)    & ---      & (0)    & 30.29    & (3)    & 29.47    & (2)    & 30.59    & (4)             & 29.92    &    \\
+% Dataset           &        Twoing     &     GWSG          &      GW$\chi^2$   &       GLSG        &    GL$\chi^2$     &     PC-ext                  &         HcC
+{\tt Adult}         & 82.21    & (2)    & 81.91    & (1)    & 82.24    & (2)    & 81.83    & (0)    & 82.24    & (2)    &{\bf82.31}&{\bf(6)}          & 82.21    & (2)      \\
+{\tt Mushroom}      & {\bf 100}&{\bf(2)}& 99.99    & (0)    & 99.98    & (0)    & 100      &{\bf(2)}& 99.99    & (0)    &{\bf 100} &{\bf(2)}          &{\bf100}  & {\bf(2)} \\
+{\tt KDD98}-2       & 80.47    & (0)    & 81       & (3)    & 80.74    & (1)    & 81.16    & (4)    & 80.51    & (0)    &{\bf81.25}&{\bf(5)}          & 80.47    & (0)      \\
+%{\tt KDD98}-3       & 63.77    &        & 63.8     &        & 64.37    &        & 63.75    &        &{\bf64.54}&        &          &                  &          &          \\
+%{\tt KDD98}-5       & 48.02    &        & 46.79    &        &{\bf48.59}&        & 46.77    &        & 48.58    &        &          &                  &          &          \\
+{\tt KDD98}-9       & 40.35    & (2)    & 38.13    & (0)    & 40.93    &{\bf(5)}& 38.15    & (0)    &{\bf 41 } &{\bf(5)}& 40.27    & (2)              & 40.14    & (2)      \\
+{\tt Nursery}       & 88.25    &{\bf(3)}& 88.03    & (0)    & 88.2     & (0)    &{\bf88.33}&{\bf(3)}& 88.2     & (0)    & 88.25    &{\bf(3)}          & 88.25    & {\bf(3)} \\
+{\tt Nursery-Ext}   &{\bf93.82}&{\bf(4)}& 90.95    & (0)    & 93.02    & (2)    & 90.75    & (0)    & 93.13    & (2)    & 93.81    &{\bf(4)}          & 93.81    & {\bf(4)} \\
+{\tt Cars}          & 86.53    & (1)    & 85.39    & (0)    & 86.37    & (1)    &{\bf87.93}&{\bf(6)}& 86.42    & (1)    & 86.5     & (1)              & 86.5     & (1)      \\
+{\tt Cars-Ext}      & 90.3     & (0)    & 90.82    & (3)    & 91.57    & (5)    & 90.84    & (3)    &{\bf 91.9}&{\bf(6)}& 90.32    & (0)              & 90.32    & (0)      \\
+{\tt Contracep}     & 43.77    & (0)    & 43.96    & (0)    &{\bf44.04}&{\bf(2)}& 43.89    & (0)    & 44       & (0)    & 43.59    & (0)              & 43.62    & (0)      \\
+{\tt Contracep-Ext} & 43.17    & (0)    & 44.32    &{\bf(5)}& 43.44    & (0)    &{\bf44.35}&{\bf(5)}& 43.7     & (0)    & 43.77    & (2)              & 43.36    & (0)      \\
+{\tt CoverType}     & 52.97    & (2)    & 55.05    & (3)    & 51.07    & (0)    & 55.05    & (3)    & 51.07    & (0)    &{\bf58.12}&{\bf(5)}          &{\bf58.12}& {\bf(5)} \\
+{\tt CoverType-Ext} & 64.48    & (4)    & 64.12    & (2)    & 57.73    & (0)    & 64.23    & (3)    & 59.95    & (1)    &{\bf64.71}&{\bf(6)}          & 64.54    & (5)      \\
+{\tt Poker }        & 51.9     & (4)    & 50.28    & (1)    & 51.77    & (2)    & 49.94    & (0)    &{\bf51.92}&{\bf(5)}& 51.7     & (2)              & 51.69    & (2)      \\
+{\tt Shelter-15}    & 48.01    & (3)    & ---      & (0)    & ---      & (0)    & 45.31    & (2)    &{\bf48.13}&{\bf(4)}& 48.07    & (3)              & 48.05    & (3)      \\  
+{\tt S.F. Crime-15} &{\bf22.1} &{\bf(2)}& 21.32    & (1)    & 22.09    &{\bf(2)}& 21.23    & (0)    & 22.09    &{\bf(2)}& 22.09    &{\bf(2)}          & 22.09    & {\bf(2)} \\
+{\tt Phonemes}      &{\bf30.92}&{\bf(6)}& ---      & (0)    & ---      & (0)    & 30.29    & (4)    & 29.47    & (2)    & 30.59    & (5)              & 29.92    & (3)      \\
 \hline
-Average (Sum)       &     63.7 & (33)   & 66.81*   & (16)   & 66.66*   & (19)   & 63.33    & (30)   & 63.36    & (27)   & 64.08    & (43)            & 63.94    & ()
+Average (Sum)       &  63.7    & (35)   & 66.8*    & (19)   & 66.66*   & (22)   & 63.33    & (35)   & 63.36    & (30)   & 64.08    & (48)             & 63.94    & (34)
 
 \end{tabular}
-\caption{Average accuracy and statistical tests  for  decision trees 
-with depth at most 5 using only nominal attributes. The best accuracy for each dataset is bold-faced. Experiments that did not finish in reasonable time are considered statistically worse than the others. These criteria have a * mark besides their average accuracies, since they are calculated only on the experiments that finished.}
+\caption{Average accuracy and statistical tests  for  decision trees with depth at most 5 using only nominal attributes. The best accuracy for each dataset is bold-faced. Experiments that did not finish in reasonable time are considered statistically worse than the others. These criteria have a * mark besides their average accuracies, since they are calculated only on the experiments that finished.}
 \label{tab:nominal-5}
 \normalsize
 \end{sidewaystable*}
 
 
-The results of  Table \ref{tab:nominal-5} also
-provide evidence of  the potential
-of considering aggregated attributes. 
-The accuracy obtained for the extended versions of datasets
-{\tt Nursery}, {\tt Cars} and {\tt CoverType} are considerably higher than those obtained for 
-the original versions. For {\tt Contracep}, the effect is not clear.
+The results of  Table \ref{tab:nominal-5} also provide evidence of  the potential of considering aggregated attributes. The accuracy obtained for the extended versions of datasets
+{\tt Nursery}, {\tt Cars} and {\tt CoverType} are considerably higher than those obtained for the original versions. For {\tt Contracep}, the effect is not clear.
 
-Another key aspect to discuss is the computational cost of the proposed criteria. Table \ref{tab:time-5} shows the running time of each criterion in the experiment of Table \ref{tab:nominal-5}. Twoing is the fastest method when the number of classes is small and the GL-based methods  and PC-ext become competitive and eventually the
-fastest ones when the number of classes gets larger. As the number of classes increases, the GL-based methods and PC-ext become much faster than Twoing, with the turning point being around $k=7$. For datasets with 15 classes our GL criteria are 15-300 times faster. The same can be seen for PC-ext, which is 15-600 times faster. We also ran experiments using all the classes available in both the {\tt S.F. Crime} and {\tt Shelter} datasets (39 and 22, respectively). Twoing and the GW criteria can not be executed in a reasonable time with that many classes, while GLSG and GL$\chi^2$ ran in approximately 100 seconds on the {\tt S.F. Crime} dataset and  300 seconds on the {\tt Shelter} dataset (PC-ext ran in 75 and 32 seconds, respectively). This behavior for the Twoing criterion is not surprising, since its running time has an exponential dependence of the number of classes $k$. Nonetheless, since the execution time for our criteria in this experiment grew in an approximately linear fashion with $k$, it suggests that they can also be used with datasets that have a much larger number of classes. It is also interesting to note that the aggregated attributes usually appeared at or near the root of the decision trees. Lastly, the running time for the GW-based criteria were usually one or two orders of magnitude larger than the others. The only clear exception was in the CoverType dataset, where the number of samples is very large while the attributes’ number of values is much smaller. Hypercube Cover behaves very similarly to the Twoing criterion, but it is a bit slower because the impurity calculation with $k$ classes is slower than with $2$ classes.
+Another key aspect to discuss is the computational cost of the proposed criteria. Table \ref{tab:time-5} shows the running time of each criterion in the experiment of Table \ref{tab:nominal-5}. Twoing is the fastest method when the number of classes is small and the GL-based methods  and PC-ext become competitive and eventually the fastest ones when the number of classes gets larger. As the number of classes increases, the GL-based methods and PC-ext become much faster than Twoing, with the turning point being around $k=7$. For datasets with 15 classes our GL criteria are 15-300 times faster. The same can be seen for PC-ext, which is 15-600 times faster. We also ran experiments using all the classes available in both the {\tt S.F. Crime} and {\tt Shelter} datasets (39 and 22, respectively). Twoing and the GW criteria can not be executed in a reasonable time with that many classes, while GLSG and GL$\chi^2$ ran in approximately 100 seconds on the {\tt S.F. Crime} dataset and  300 seconds on the {\tt Shelter} dataset (PC-ext ran in 75 and 32 seconds, respectively). This behavior for the Twoing criterion is not surprising, since its running time has an exponential dependence of the number of classes $k$. Nonetheless, since the execution time for our criteria in this experiment grew in an approximately linear fashion with $k$, it suggests that they can also be used with datasets that have a much larger number of classes. It is also interesting to note that the aggregated attributes usually appeared at or near the root of the decision trees. Lastly, the running time for the GW-based criteria were usually one or two orders of magnitude larger than the others. The only clear exception was in the CoverType dataset, where the number of samples is very large while the attributes’ number of values is much smaller. Hypercube Cover behaves very similarly to the Twoing criterion, but it is a bit slower because the impurity calculation with $k$ classes is slower than with $2$ classes.
 
 Since the GW-criteria performe much worse in terms of execution time and yield comparable or worse accuracy than the other criteria, they were not used in any of the experiments that follow.
 
@@ -392,25 +372,25 @@ Since the GW-criteria performe much worse in terms of execution time and yield c
 \small
 \centering
 \begin{tabular}{c|c|c|c|c|c|c|c|c}
-Dataset             & k  & Twoing     & GWSG  & GW$\chi^2$  & GLSG      & GL$\chi^2$ & PC-ext     & HcC        \\ \hline
-{\tt Adult}         & 2  & {\bf  2.7} & 41    & 88          & 3         & 4          & 2.8        & 3.7        \\
-{\tt Mushroom}      & 2  & {\bf 0.6}  & 6.9   & 8.6         & 0.9       & 1          & 0.7        & 0.9        \\
-{\tt KDD98}-2       & 2  & {\bf 4}    & 2162  & 3579        & 44        & 44         & 5.2        & 5.8        \\
-{\tt Contracep}     & 3  & {\bf 0.1}  & 0.6   & 1           & 0.1       & 0.1        & 0.1        & 0.1        \\
-{\tt Contracep-Ext} & 3  & {\bf 0.1}  & 3.3   & 13          & 0.2       & 0.2        & 0.2        & 0.2        \\
-%{\tt KDD98}-3       & 3  & {\bf 5.2}  & 2289  & 4342        & 60        & 56         &            &            \\
-{\tt Cars}          & 4  & {\bf 0.1}  & 2.5   & 2.4         & 0.1       & 0.1        & 0.1        & 0.2        \\
-{\tt Cars-Ext}      & 4  & 0.2        & 7.7   & 11          & 0.3       & 0.3        & {\bf 0.2}  & 0.4        \\
-{\tt Nursery}       & 5  & {\bf 0.8}  & 4.7   & 5           & 1         & 0.9        & 0.9        & 1.2        \\
-{\tt Nursery-Ext}   & 5  & {\bf 1.1}  & 76    & 148         & 3.3       & 2.6        & 1.4        & 1.7        \\
-%{\tt KDD98}-5       & 5  & {\bf 11}   & 2469  & 4956        & 81        & 63         &            &            \\
-{\tt CoverType}     & 7  & 349        & 265   & {\bf 179}   & 245       & 308        & 271.4      & 338        \\
-{\tt CoverType-Ext} & 7  & 213        & 341   & 213         & {\bf 182} & 296        & 196.5      & 259        \\
-{\tt KDD98}-9       & 9  & 132        & 3410  & 5899        & 97        & 74         & {\bf 14.7 }& 298        \\ 
-{\tt Poker}         & 10 & 7.4        & 6.5   & 11.2        & 2.2       & {\bf 2.1}  & 2.5        & 13.3       \\
-{\tt Shelter-15}    & 15 & 3599       & ---   & ---         & 149.9     & 166.3      & {\bf 14.1 }& 7968       \\   
-{\tt S.F. Crime-15} & 15 & 638.2      & 605.2 & 823.7       & 40.7      & {\bf 40.2} & 41.7       & 1224       \\ 
-{\tt Phonemes}      & 15 & 1343       & ---   & ---         & 4.4       & 5.5        & {\bf 2.2 } & 2187
+Dataset             & k  & Twoing     & GWSG       & GW$\chi^2$  & GLSG      & GL$\chi^2$ & PC-ext     & HcC        \\ \hline
+{\tt Adult}         & 2  & {\bf 2.7}  & 88.2       & 41.3        & 3         & 4          & 2.8        & 3.8        \\
+{\tt Mushroom}      & 2  & {\bf 0.6}  & 8.6        & 6.9         & 0.9       & 1          & 0.7        & 0.9        \\
+{\tt KDD98}-2       & 2  & {\bf 4}    & 3579.3     & 2162        & 43.5      & 44         & 5.2        & 5.8        \\
+{\tt Contracep}     & 3  & {\bf 0.1}  & 1          & 0.6         & 0.1       & 0.1        & 0.1        & 0.1        \\
+{\tt Contracep-Ext} & 3  & {\bf 0.1}  & 12.7       & 3.3         & 0.2       & 0.2        & 0.2        & 0.2        \\
+%{\tt KDD98}-3       & 3  & {\bf 5.2}  &            &             & 60        & 56         &            &            \\
+{\tt Cars}          & 4  & {\bf 0.1}  & 2.4        & 2.5         & 0.1       & 0.1        & 0.1        & 0.2        \\
+{\tt Cars-Ext}      & 4  & {\bf 0.2}  & 11.3       & 7.7         & 0.3       & 0.3        & 0.2        & 0.4        \\
+{\tt Nursery}       & 5  & {\bf 0.8}  & 5          & 4.7         & 1         & 0.9        & 0.9        & 1.2        \\
+{\tt Nursery-Ext}   & 5  & {\bf 1.1}  & 147.9      & 75.8        & 3.3       & 2.6        & 1.4        & 1.7        \\
+%{\tt KDD98}-5       & 5  & {\bf 11}   &            &             & 81        & 63         &            &            \\
+{\tt CoverType}     & 7  & 348.5      & {\bf 179.2}&  265.4      & 245.2     & 307.8      & 271.4      & 338.5      \\
+{\tt CoverType-Ext} & 7  & 213        & 212.5      & 340.8       &{\bf 182.5}& 295.7      & 196.5      & 258.9      \\
+{\tt KDD98}-9       & 9  & 132        & 5898.8     & 3410.1      & 97.2      & 73.9       & {\bf 14.7 }& 297.5      \\ 
+{\tt Poker}         & 10 & 7.4        & 11.2       & 6.4         & 2.2       & {\bf 2.1}  & 2.5        & 13.3       \\
+{\tt Shelter-15}    & 15 & 3599       & ---        & ---         & 149.9     & 166.3      & {\bf 14.1 }& 7968       \\   
+{\tt S.F. Crime-15} & 15 & 638.2      & 605.2      & 823.7       & 40.7      & {\bf 40.2} & 41.7       & 1223.9     \\ 
+{\tt Phonemes}      & 15 & 1343.3     & ---        & ---         & 4.4       & 5.5        & {\bf 2.2 } & 2187.4
 \end{tabular}
 \caption{Average time in seconds of a 3-fold cross validation for building decision trees with depth at most 5. The fastest method for each dataset is bold faced.}
 \label{tab:time-5}
@@ -421,7 +401,7 @@ Dataset             & k  & Twoing     & GWSG  & GW$\chi^2$  & GLSG      & GL$\ch
 Table \ref{tab:ctree-5} presents the 
 comparison between our GL methods, Twoing, Hypercube Cover and PC-ext in another scenario,
 where we use $c_{quad}$, one of the bias-free criterion proposed in \cite{Hothorn:2006:URP}, to select the attribute at each node of the tree. 
-Then, both Twoing, Hypercube Cover, PC-ext and our methods are  used only for splitting the chosen attribute, which allows for a  more direct comparison of their splitting ability. Once again we observed a balance between the different criteria, with an advantage towards GL-$\chi^2$. Perhaps surprisingly, the bias free approach had significantly worse results for the datasets with extended attributes. Another surprise was that the PC-ext criterion behaved much more poorly than in the previous experiment. This suggests that its advantage lies in comparing different attributes, and not necessarily finding the best split. This experiment also showed that it is not possible to run $c_{quad}$ in reasonable time for the {\tt Shelter-15} dataset. This happens because it calculates a pseudoinverse of a matrix whose dimension grows with the number of values and classes, which is infeasible for large $n$ and $k$.
+Then, both Twoing, Hypercube Cover, PC-ext and our methods are  used only for splitting the chosen attribute, which allows for a  more direct comparison of their splitting ability. Once again we observed a balance between most of the criteria, with a significant advantage towards GL-$\chi^2$ and, perhaps surprisingly, a very poor performance by PC-ext. the bias free approach had significantly worse results for the datasets with extended attributes. This suggests that its advantage lies in comparing different attributes, and not necessarily finding the best split. This experiment also showed that it is not possible to run $c_{quad}$ in reasonable time for the {\tt Shelter-15} dataset. This happens because it calculates a pseudoinverse of a matrix whose dimension grows with the number of values and classes, which is infeasible for large $n$ and $k$.
 
 
 \begin{table*}
@@ -430,26 +410,26 @@ Then, both Twoing, Hypercube Cover, PC-ext and our methods are  used only for sp
 \begin{tabular}{c|cc|cc|cc|cc|cc} 
 Dataset  &   \multicolumn{2}{c|}{CI-Twoing} &   \multicolumn{2}{c|}{CI-GLSG} & \multicolumn{2}{c|}{CI-GL$\chi^2$}& \multicolumn{2}{c|}{CI-PC-ext}& \multicolumn{2}{c}{CI-HcC} \\  \hline   
 % Dataset          &        CI-Twoing       &        CI-GLSG          &      CI-GL$\chi^2$      &       CI-PC-ext         &       CI-HcC
-{\tt Adult}        &{\bf 81.96} &{\bf  (3)} & 81.61       & (1)       & 81.77       & (2)       & 79.98       & (0)       & {\bf 81.96} &           \\
-{\tt Mushroom}     &86.97       & (1)       &{\bf  94.79 }& {\bf (3)} & 90.15       & (2)       & 86.77       & (0)       & 86.97       &           \\
-{\tt KDD98}-2      &81.29       & (0)       & {\bf 82.34 }& {\bf (3) }& 81.68       & (2)       & 81.35       & (0)       & 81.29       &           \\
-%{\tt KDD98}-3      &65.28       & (0)       & {\bf 65.8  }& {\bf (2) }& 65.07       & (0)       &             &           &             &           \\
-%{\tt KDD98}-5      &49.23       & (0)       & {\bf 49.58} & {\bf (2)} & 49.27       & (0)       &             &           &             &           \\
-{\tt KDD98}-9      &41.84       & (0)       & 42          & (0)       & {\bf 42.26} & {\bf (2)} & 41.73       & (0)       & 41.95       &           \\
-{\tt Nursery}      &{\bf 88.48} & {\bf (1)} & 88.3        & (0)       & 88.47       & {\bf (1)} &{\bf 88.48 } & {\bf (1)} & {\bf 88.48} &           \\
-{\tt Nursery-Ext}  &{\bf 88.48} & {\bf (1)} & 88.26       & (0)       & 88.47       & {\bf (1)} &{\bf 88.48 } & {\bf (1)} & {\bf 88.48} &           \\
-{\tt Cars}         &86.51       & {\bf (1)} & 85.02       & (0)       & {\bf 86.57} & {\bf (1)} & 86.48       & {\bf (1)} & 86.48       &           \\
-{\tt Cars-Ext}     &88.27       & {\bf (1) }& 88.27       & (0)       & {\bf 88.32} & {\bf (1)} & 88.26       & {\bf (1)} & 88.26       &           \\
-{\tt Contracep}    &43.83       & (0)       & {\bf 44.12} & {\bf (2)} & 43.87       & (0)       & 43.63       & (0)       & 43.69       &           \\
-{\tt Contracep-Ext}&43.39       & (0)       & {\bf 43.81} & {\bf (2)} & 43.76       & {\bf (2)} & 43.21       & (0)       & 43.32       &           \\
-{\tt CoverType}    &54.1        & (0)       & 54.1        & (0)       & 54.1        & (0)       & 54.1        & (0)       & 54.1        & (0)       \\
-{\tt CoverType-Ext}&54.1        & (0)       & 54.1        & (0)       & 54.1        & (0)       & 54.1        & (0)       & 54.1        & (0)       \\
-{\tt Poker}        &{\bf 51.05} & {\bf (2)} & 50.56       & (0)       & 50.91       & (1)       & 50.8        & (1)       & 50.79       &           \\  
-{\tt Shelter-15}   & 48.03      & (0)       & 48.03       & (0)       & {\bf 48.22} & {\bf (2)} & 48.22       & {\bf (2)} &             &           \\   
-{\tt S.F. Crime-15}&{\bf 21.59} & {\bf (3)} & 20.53       & (0)       & 21.49       & (1)       & 21.52       & (1)       & 21.52       &           \\ 
-{\tt Phonemes}     & 23.12      & (2)       & 22.52       & (1)       & {\bf 23.8 } & {\bf (3)} & 21.3        & (0)       & 22.11       &           \\ 
+{\tt Adult}        &{\bf 81.96} &{\bf  (3)} & 81.61       & (1)       & 81.77       & (2)       & 79.98       & (0)       & {\bf 81.96} & {\bf  (3)}  \\
+{\tt Mushroom}     &86.97       & (1)       &{\bf  94.79 }& {\bf (4)} & 90.15       & (3)       & 86.77       & (0)       & 86.97       & (1)         \\
+{\tt KDD98}-2      &81.29       & (0)       & {\bf 82.34 }& {\bf (4)} & 81.68       & (3)       & 81.35       & (0)       & 81.29       & (0)         \\
+%{\tt KDD98}-3      &65.28       &           & {\bf 65.8  }&           & 65.07       &           &             &           &             &             \\
+%{\tt KDD98}-5      &49.23       &           & {\bf 49.58} &           & 49.27       &           &             &           &             &             \\
+{\tt KDD98}-9      &41.84       & (0)       & 42          & (0)       & {\bf 42.26} & {\bf (3)} & 41.73       & (0)       & 41.95       &  (1)        \\
+{\tt Nursery}      &{\bf 88.48} & {\bf (1)} & 88.3        & (0)       & 88.47       & {\bf (1)} &{\bf 88.48 } & {\bf (1)} & {\bf 88.48} & {\bf (1)}   \\
+{\tt Nursery-Ext}  &{\bf 88.48} & {\bf (1)} & 88.26       & (0)       & 88.47       & {\bf (1)} &{\bf 88.48 } & {\bf (1)} & {\bf 88.48} & {\bf (1)}   \\
+{\tt Cars}         &86.51       & {\bf (1)} & 85.02       & (0)       & {\bf 86.57} & {\bf (1)} & 86.48       & {\bf (1)} & 86.48       & {\bf (1)}   \\
+{\tt Cars-Ext}     &88.27       & {\bf (1)} & 85.51       & (0)       & {\bf 88.32} & {\bf (1)} & 88.26       & {\bf (1)} & 88.26       & {\bf (1)}   \\
+{\tt Contracep}    &43.83       & (0)       & {\bf 44.12} & {\bf (3)} & 43.87       & (0)       & 43.63       & (0)       & 43.69       & (0)         \\
+{\tt Contracep-Ext}&43.39       & (0)       & {\bf 43.81} & {\bf (3)} & 43.76       & {\bf (3)} & 43.21       & (0)       & 43.32       & (0)         \\
+{\tt CoverType}    &54.1        & (0)       & 54.1        & (0)       & 54.1        & (0)       & 54.1        & (0)       & 54.1        & (0)         \\
+{\tt CoverType-Ext}&54.1        & (0)       & 54.1        & (0)       & 54.1        & (0)       & 54.1        & (0)       & 54.1        & (0)         \\
+{\tt Poker}        &{\bf 51.05} & {\bf (3)} & 50.56       & (0)       & 50.91       & (1)       & 50.8        & (1)       & 50.79       & (1)         \\  
+{\tt Shelter-15}   & 48.03      & (0)       & 48.03       & (0)       & {\bf 48.22} & {\bf (2)} & 48.22       & {\bf (2)} & 48.2        & {\bf (2)}   \\   
+{\tt S.F. Crime-15}&{\bf 21.59} & {\bf (4)} & 20.53       & (0)       & 21.49       & (1)       & 21.52       & (1)       & 21.52       & (1)         \\ 
+{\tt Phonemes}     & 23.12      & (3)       & 22.52       & (2)       & {\bf 23.8 } & {\bf (4)} & 21.3        & (0)       & 22.11       & (1)         \\ 
 \hline
-Average (Sum)      & 61.44      & (15)      & 61.77       & (12)      & 61.75       & (21)      & 61.15       & (8)       &             &    
+Average (Sum)      & 61.44      & (18)      & 61.6        & (17)      & 61.75       & (26)      & 61.15       & (8)       & 61.36       & (14)   
        \end{tabular}
     \caption{Average accuracy and statistical tests  for  Conditional Inference trees 
 with depth at most 5 using only nominal attributes. The best accuracy for each dataset is bold-faced.}
@@ -457,28 +437,27 @@ with depth at most 5 using only nominal attributes. The best accuracy for each d
 \end{table*}
 
 
-Table \ref{exp:numeric-5} shows experiments  similar to those presented at Table \ref{tab:nominal-5}, but now
-using also the numeric attributes. We observed a significant gain in terms of accuracy for all datasets except for KDD98-2. 
-Also note that GLSG was much inferior to the other criteria. Other than that, the comparison results were very similar to the ones found in table \ref{tab:nominal-5}.
+Table \ref{exp:numeric-5} shows experiments  similar to those presented at Table \ref{tab:nominal-5}, but now using also the numeric attributes. We observed a significant gain in terms of accuracy for all datasets except for KDD98-2. Also note that GLSG was much inferior to the other criteria. Other than that, the comparison results were very similar to the ones found in table \ref{tab:nominal-5}, with a slight better performance by Hypercube Cover and GL-$\chi^2$ and slightly worse by Twoing.
 
 \begin{table}
 \small
 \centering
 \begin{tabular}{c|cc|cc|cc|cc|cc} 
-Dataset            &\multicolumn{2}{c|}{Twoing} & \multicolumn{2}{c|}{GLSG} & \multicolumn{2}{c|}{GL$\chi^2$} & \multicolumn{2}{c|}{PC-ext}& \multicolumn{2}{c}{HcC}\\  \hline   
-{\tt Adult}        & 84.2           & (1)       & 82.4       & (0)          &  84.2       & (1)               & {\bf 84.4 } & {\bf (3) }  & {\bf 84.4 } &           \\
-{\tt KDD98}-2      & 80.9           & (0)       & 81.9       & {\bf (1)}    & {\bf 81.9 } & {\bf (1) }        & 81.9        & {\bf (1) }  & {\bf 81.9 } &           \\ 
-%{\tt KDD98}-3      & {\bf 69.5 }    &{\bf  (2)} & 67.9       & (0)          & 69.1        & (1)               &             &             &             &           \\ 
-%{\tt KDD98}-5      & 54.6           &  (0)      & 54.5       &  (0)         & {\bf 55.3 } & {\bf  (2) }       &             &             &             &           \\ 
-{\tt KDD98}-9      & 45.7           & (1)       & 45.3       &  (0)         & {\bf 48.7 } & {\bf (3) }        &  47.4       & (2)         & 47.0        &           \\ 
-{\tt Contracep}    & 54.1           & (1)       & 52.9       &  (0)         & 54          & (1)               & {\bf 55.1 } & {\bf (3) }  & 55.0        &           \\  
-{\tt Contracep-Ext}& 51.7           & (0)       & 52.3       &  (0)         & 53.3        & {\bf (2) }        & {\bf 53.3 } & {\bf (2) }  & 52.8        &           \\ 
-{\tt CoverType}    &  {\bf 70.3 }   & {\bf (2)} & 68.5       &  (0)         & 69.2        & (1)               &  70.2       & {\bf (2) }  & 70.2        &           \\  
-{\tt CoverType-Ext}& 70.9           & (2)       & 70.3       &  (1)         & 69.2        & (0)               & {\bf 71.7 } & {\bf (3) }  & 71.2        &           \\ 
-{\tt Shelter-15}   & 53.7           & (1)       & 51.9       &  (0)         & 54.6        & (2)               & {\bf 54.8 } & {\bf (3) }  & 54.6        &           \\   
-{\tt S.F. Crime-15}& 23.5           & (2)       & 23.2       &  (0)         & {\bf 23.6 } & {\bf (3) }        & 23.5        & (1)         & 23.5        &           \\ 
+Dataset            &\multicolumn{2}{c|}{Twoing} & \multicolumn{2}{c|}{GLSG} & \multicolumn{2}{c|}{GL$\chi^2$} & \multicolumn{2}{c|}{PC-ext}& \multicolumn{2}{c}{HcC} \\
+\hline   
+{\tt Adult}        & 84.19          & (1)       & 82.36      & (0)          &  84.15      &  (1)              & 84.4        & {\bf (3)}    & {\bf 84.4 } & {\bf (3)} \\
+{\tt KDD98}-2      & 80.93          & (0)       & 81.92      & {\bf (1)}    & {\bf 81.93} &  {\bf (1)}        & 81.9        & {\bf (1)}    & 81.89       & {\bf (1)} \\ 
+%{\tt KDD98}-3      & {\bf 69.5 }    &           & 67.9       &              & 69.1        &                   &             &              &             &           \\ 
+%{\tt KDD98}-5      & 54.6           &           & 54.5       &              & {\bf 55.3 } &                   &             &              &             &           \\ 
+{\tt KDD98}-9      & 45.68          & (1)       & 45.32      & (0)          & {\bf 48.73} & {\bf (4)}         &  47.38      & (3)          & 47.04       & (2)       \\ 
+{\tt Contracep}    & 54.13          & (1)       & 52.85      & (0)          & 53.99       & (1)               & {\bf 55.11} & {\bf (3)}    & 55.04       & {\bf (3)} \\  
+{\tt Contracep-Ext}& 51.66          & (0)       & 52.27      & (0)          & 53.26       & (2)               & {\bf 53.31} & {\bf (3)}    & 52.75       & (2)       \\ 
+{\tt CoverType}    & {\bf 70.25}    & {\bf (2)} & 68.52      & (0)          & 69.23       & (1)               &  70.24      & {\bf (2)}    & 70.24       & {\bf (2)} \\  
+{\tt CoverType-Ext}& 70.88          & (2)       & 70.3       & (1)          & 69.23       & (0)               & {\bf 71.66} & {\bf (4)}    & 71.25       & (3)       \\ 
+{\tt Shelter-15}   & 53.72          & (1)       & 51.91      & (0)          & 54.57       & (2)               & {\bf 54.83} & {\bf (4)}    & 54.64       & (2)       \\   
+{\tt S.F. Crime-15}& 23.53          & (3)       & 23.18      & (0)          & {\bf 23.58} & {\bf (4)}         & 23.49       & (1)          & 23.49       & (1)       \\ 
 \hline
-Average (Sum)      & 59.44          & (10)      & 58.74      &  (2)         & 59.86       & (14)              & 60.3        & (20)        & 60.1        & 
+Average (Sum)      & 59.44          & (11)      & 58.74      & (2)          & 59.85       & (16)              & 60.26       & (24)         & 60.08       & (19)
 
 \end{tabular}
 \caption{Average accuracy and statistical test results for  Decision Trees using both nominal and numeric attributes.}
@@ -489,44 +468,41 @@ Average (Sum)      & 59.44          & (10)      & 58.74      &  (2)         & 59
 
 \subsection{Maximum Depth 16}
 
-
 In this subsection we explore the same experiments studied in the previous one, except now the maximum depth allowed is 16. This larger depth is common in most random forest methods, thus the importance of this analysis.
 
-Table \ref{tab:nominal-16} presents the results of an experiment to
-compare the accuracy of  Decision Trees built by our GL-methods with those built by Twoing, Hypercube Cover and PC-ext, using just the nominal attributes of the datasets. Once again PC-ext had the best results, but this time by a smaller margin. This suggests the possibility that, for a larger depth, it might not have the best results. Moreover, there was a balance between Twoing, Hypercube Cover and GL$\chi^2$, with GLSG being significantly worse. This suggests that GLSG loses competitiveness as the tree depth increases.
+Table \ref{tab:nominal-16} presents the results of an experiment to compare the accuracy of  Decision Trees built by our GL-methods with those built by Twoing, Hypercube Cover and PC-ext, using just the nominal attributes of the datasets. Once again PC-ext had the best results, but this time by a smaller margin. This suggests the possibility that, for a larger depth, it might not have the best results. Moreover, there was a balance between Twoing, Hypercube Cover and GL$\chi^2$, with GLSG being significantly worse. This suggests that GLSG loses competitiveness as the tree depth increases.
 
-Table \ref{tab:ctree-16} presents the 
-comparison between the different methods in the scenario where we use $c_{quad}$ to select the attribute at each node of the tree, and the criteria are used only for splitting the chosen attribute. We observed an advantage for GL$\chi^2$, followed by Twoing and Hypercube Cover. Both PC-ext and GLSG had significantly worse results. Once again it was not possible to run $c_{quad}$ in reasonable time for the {\tt Shelter-15} dataset.
+Table \ref{tab:ctree-16} presents the comparison between the different methods in the scenario where we use $c_{quad}$ to select the attribute at each node of the tree, and the criteria are used only for splitting the chosen attribute. We observed a very strong advantage for GL$\chi^2$, followed by Twoing. Both Hypercube Cover and GLSG are competitive among themselves, while PC-ext had the worse results.
 
 \begin{table}
 \small
 \centering
 \begin{tabular}{c|cc|cc|cc|cc|cc} 
-Dataset             & \multicolumn{2}{c|}{Twoing} &  \multicolumn{2}{c|}{GLSG}  & \multicolumn{2}{c|}{GL$\chi^2$} & \multicolumn{2}{c|}{PC-ext}& \multicolumn{2}{c}{HcC}\\ \hline
-{\tt Adult}         &  {\bf 82.52} & {\bf (2)}    &  82.38       &  (0)         &  82.43       & (0)              & 82.51      & {\bf (2)}    & {\bf 82.52}&            \\
-{\tt Mushroom}      &  {\bf 100}   & {\bf (1)}    &  100         &  (0)         &  99.99       & (0)              & {\bf 100 } & {\bf (1)}    & {\bf 100}  &            \\
-{\tt KDD98}-2       &  79.41       & (0)          &  {\bf 80.65} & {\bf (3)}    &  79.73       & (0)              & 79.91      & (1)          & 79.41      &            \\
-%{\tt KDD98}-3       &  62.61       & (0)          &  63.33       & {\bf (1)}    &  {\bf 63.56} & {\bf (1)}        &            &              &            &            \\
-%{\tt KDD98}-5       &  46.46       & (0)          &  46.39       & (0)          &  {\bf 47.53} & {\bf (2)}        &            &              &            &            \\
-{\tt KDD98}-9       &  38.54       & (1)          &  37.97       & (0)          &  {\bf 39.68} & {\bf (3)}        & 38.55      & (1)          & 37.95      &            \\
-{\tt Nursery}       &  93.51       & (2)          &  92.39       & (0)          &  {\bf 93.74} & {\bf (3)}        & 93.5       & (1)          & 93.5       &            \\
-{\tt Nursery-ext}   &  95.83       & (1)          &  94.79       & (0)          &  {\bf 96.02} & {\bf (3)}        & 95.83      & (1)          & 95.83      &            \\
-{\tt Cars}          &  92.82       & {\bf (1)}    &  90.51       & (0)          &  {\bf 92.88} & {\bf (1)}        & 92.69      & {\bf (1)}    & 92.69      &            \\
-{\tt Cars-ext}      &  96.49       & {\bf (2)}    &  90.89       & (0)          &  94.44       & (1)              & 96.46      & {\bf (2)}    & {\bf 96.5} &            \\
-{\tt Contracep}     &  43.5        & (0)          &  43.83       & (0)          &  {\bf 43.85} & {\bf (1)}        & 43.53      & (0)          & 43.53      &            \\
-{\tt Contracep-ext} &  43.15       & (0)          &  {\bf 44.32} & {\bf (2)}    &  43.72       & (0)              & 43.75      & (1)          & 43.37      &            \\
-{\tt CoverType}     &  64.09       & (1)          &  64.59       & (2)          &  63.61       & (0)              &{\bf 64.66} & {\bf (3)}    & {\bf 64.66}&            \\
-{\tt CoverType-ext} &  {\bf 65.08} & {\bf (1)}    &  {\bf 65.08} & {\bf (1)}    &  65.05       & (0)              & 65.08      & {\bf (1)}    & {\bf 65.08}&            \\
-{\tt Poker}         &  {\bf 52.24} & {\bf (2)}    &  49.88       & (0)          &  51.83       & (1)              & 52.09      & {\bf (2)}    & 52.09      &            \\
-{\tt Shelter-15}    &  47.64       & (1)          &  46.52       & (0)          & {\bf 48.09}  & {\bf (3)}        & 47.71      & (1)          & 47.26      &            \\
-{\tt S.F. Crime-15} &  22.08       & {\bf (1)}    &  22.06       & (0)          & {\bf 22.08}  & {\bf (1)}        & 22.08      & {\bf (1)}    & 22.08      &            \\
-{\tt Phonemes}      &  37.13       & (2)          &  35.9        & (0)          & 35.75        & (0)              &{\bf 37.95} & {\bf (3)}    & 37.89      &            \\
+Dataset             & \multicolumn{2}{c|}{Twoing} &  \multicolumn{2}{c|}{GLSG}  & \multicolumn{2}{c|}{GL$\chi^2$} & \multicolumn{2}{c|}{PC-ext}& \multicolumn{2}{c}{HcC}\\
 \hline
-Average (Sum)       &  65.88       & (18)         &  65.11       & (8)          & 65.81        & (17)             &  66.02     & (22)         & 65.9       &    
+{\tt Adult}         &  {\bf 82.52} & {\bf (2)}    &  82.38       & (0)          &  82.43       & (0)              & 82.51      & {\bf (2)}    & {\bf 82.52}& {\bf (2)}  \\
+{\tt Mushroom}      &  {\bf 100}   & {\bf (1)}    &  100         & (0)          &  99.99       & (0)              & {\bf 100 } & {\bf (1)}    & {\bf 100}  & {\bf (1)}  \\
+{\tt KDD98}-2       &  79.41       & (0)          &  {\bf 80.65} & {\bf (4)}    &  79.73       & (0)              & 79.91      & (2)          & 79.41      & (0)        \\
+%{\tt KDD98}-3       &  62.61       &              &  63.33       &              &  {\bf 63.56} &                  &            &              &            &            \\
+%{\tt KDD98}-5       &  46.46       &              &  46.39       &              &  {\bf 47.53} &                  &            &              &            &            \\
+{\tt KDD98}-9       &  38.54       & (2)          &  37.97       & (0)          &  {\bf 39.68} & {\bf (4)}        & 38.55      & (2)          & 37.95      & (0)        \\
+{\tt Nursery}       &  93.51       & (2)          &  92.39       & (0)          &  {\bf 93.74} & {\bf (4)}        & 93.5       & (1)          & 93.5       & (1)        \\
+{\tt Nursery-ext}   &  95.83       & (1)          &  94.79       & (0)          &  {\bf 96.02} & {\bf (4)}        & 95.83      & (1)          & 95.83      & (1)        \\
+{\tt Cars}          &  92.82       & {\bf (1)}    &  90.51       & (0)          &  {\bf 92.88} & {\bf (1)}        & 92.69      & {\bf (1)}    & 92.69      & {\bf (1)}  \\
+{\tt Cars-ext}      &  96.49       & {\bf (2)}    &  90.89       & (0)          &  94.44       & (1)              & 96.46      & {\bf (2)}    & {\bf 96.5} & {\bf (2)}  \\
+{\tt Contracep}     &  43.5        & (0)          &  43.83       & (0)          &  {\bf 43.85} & {\bf (1)}        & 43.53      & (0)          & 43.53      & (0)        \\
+{\tt Contracep-ext} &  43.15       & (0)          &  {\bf 44.32} & {\bf (3)}    &  43.72       & (0)              & 43.75      & (2)          & 43.37      & (0)        \\
+{\tt CoverType}     &  64.09       & (1)          &  64.59       & (2)          &  63.61       & (0)              &{\bf 64.66} & {\bf (3)}    & {\bf 64.66}& {\bf (3)}  \\
+{\tt CoverType-ext} &  65.08       & {\bf (1)}    &  {\bf 65.08} & {\bf (1)}    &  65.05       & (0)              & 65.08      & {\bf (1)}    & 65.08      & {\bf (1)}  \\
+{\tt Poker}         &  {\bf 52.24} & {\bf (2)}    &  49.88       & (0)          &  51.83       & (1)              & 52.09      & {\bf (2)}    & 52.09      & {\bf (2)}  \\
+{\tt Shelter-15}    &  47.64       & (2)          &  46.52       & (0)          & {\bf 48.09}  & {\bf (4)}        & 47.71      & (2)          & 47.26      & (1)        \\
+{\tt S.F. Crime-15} &  22.08       & {\bf (1)}    &  22.06       & (0)          & {\bf 22.08}  & {\bf (1)}        & 22.08      & {\bf (1)}    & 22.08      & {\bf (1)}  \\
+{\tt Phonemes}      &  37.13       & (2)          &  35.9        & (0)          & 35.75        & (0)              &{\bf 37.95} & {\bf (3)}    & 37.89      & {\bf (3)}  \\
+\hline
+Average (Sum)       &  65.88       & (20)         &  65.11       & (10)         & 65.81        & (21)             &  66.02     & (26)         & 65.9       & (19)
 \end{tabular}
 \normalsize
-\caption{Average accuracy and statistical tests  for  decision trees 
-with depth at most 16 using only nominal attributes. The best accuracy for each dataset is bold-faced, even when multiple criteria have the same accuracy in the table because of rounding.}
+\caption{Average accuracy and statistical tests  for  decision trees with depth at most 16 using only nominal attributes. The best accuracy for each dataset is bold-faced, even when multiple criteria have the same accuracy in the table because of rounding.}
 \label{tab:nominal-16}
 \end{table}
 
@@ -535,27 +511,28 @@ with depth at most 16 using only nominal attributes. The best accuracy for each 
       \centering
 
 \begin{tabular}{c|cc|cc|cc|cc|cc} 
-Dataset             & \multicolumn{2}{c|}{CI-Twoing} &   \multicolumn{2}{c|}{CI-GLSG} & \multicolumn{2}{c|}{CI-GL$\chi^2$} & \multicolumn{2}{c|}{CI-PC-ext}& \multicolumn{2}{c}{CI-HcC}\\  \hline   
-{\tt Adult}         & 82.33      &  {\bf (2)}        &   82.18      & (0)             & {\bf 82.35} &  {\bf (2)}           & 82.28       & (1)             & 82.33       &             \\
-{\tt Mushroom}      & 99.55      &  (1)              &   99.6       & (1)             & {\bf 99.64} &  {\bf (2)}           & 99.4        & (0)             & 99.55       &             \\
-{\tt KDD98}-2       & 79.92      &  (1)              &  {\bf 81.53} & {\bf (3)}       &  80.65      &  (2)                 & 79.72       & (0)             & 79.92       &             \\
-%{\tt KDD98}-3       &63.72       &  (0)              &  {\bf 64.66} & {\bf (2)}       &  63.56      &  (0)                 &             &                 &             &             \\
-%{\tt KDD98}-5       &46.88       &  (0)              &  {\bf 48}    & {\bf (1)}       &  47.75      &  {\bf (1)}           &             &                 &             &            \\
-{\tt KDD98}-9       & 39.44      &  (1)              &  {\bf 40.65} & {\bf (3)}       &  40.01      &  (2)                 & 38.85       & (0)             & 39.07       &             \\
-{\tt Nursery}       & 93.55      &  {\bf (1)}        &   92.22      & (0)             & {\bf 93.56} &  {\bf (1)}           & 93.55       & {\bf (1)}       & 93.55       &             \\
-{\tt Nursery-ext}   & 93.64      &  {\bf (1)}        &   92.32      & (0)             & {\bf 93.65} &  {\bf (1)}           & 93.64       & {\bf (1)}       & 93.64       &             \\
-{\tt Cars}          & 92.74      &  (1)              &   87.19      & (0)             & {\bf 92.92} &  {\bf (3)}           & 92.67       & (1)             & 92.67       &             \\
-{\tt Cars-ext}      & 93.12      &  (1)              &   87.38      & (0)             & {\bf 93.34} &  {\bf (3)}           & 93.08       & (1)             & 93.08       &             \\
-{\tt Contracep}     & 43.82      &  {\bf (1)}        &   {\bf 44.05}& {\bf (1)}       &  43.81      &  (0)                 & 43.59       & (0)             & 43.6        &             \\
-{\tt Contracep-ext} & 43.21      &  (0)              &   {\bf 43.78}& {\bf (2)}       &  43.72      &  {\bf (2)}           & 43.07       & (0)             & 43.12       &             \\
+Dataset             & \multicolumn{2}{c|}{CI-Twoing} &   \multicolumn{2}{c|}{CI-GLSG} & \multicolumn{2}{c|}{CI-GL$\chi^2$} & \multicolumn{2}{c|}{CI-PC-ext}& \multicolumn{2}{c}{CI-HcC}\\
+\hline   
+{\tt Adult}         & 82.33      &  {\bf (2)}        &   82.18      & (0)             & {\bf 82.35} &  {\bf (2)}           & 82.28       & (1)             & 82.33       & {\bf (2)}   \\
+{\tt Mushroom}      & 99.55      &  (1)              &   99.6       & (1)             & {\bf 99.64} &  {\bf (3)}           & 99.4        & (0)             & 99.55       & (1)         \\
+{\tt KDD98}-2       & 79.92      &  (1)              &  {\bf 81.53} & {\bf (4)}       &  80.65      &  (3)                 & 79.72       & (0)             & 79.92       & (1)         \\
+%{\tt KDD98}-3       &63.72       &                   &  {\bf 64.66} &                 &  63.56      &                      &             &                 &             &             \\
+%{\tt KDD98}-5       &46.88       &                   &  {\bf 48}    &                 &  47.75      &                      &             &                 &             &            \\
+{\tt KDD98}-9       & 39.44      &  (2)              &  {\bf 40.65} & {\bf (4)}       &  40.01      &  (3)                 & 38.85       & (0)             & 39.07       & (0)         \\
+{\tt Nursery}       & 93.55      &  {\bf (1)}        &   92.22      & (0)             & {\bf 93.56} &  {\bf (1)}           & 93.55       & {\bf (1)}       & 93.55       & {\bf (1)}   \\
+{\tt Nursery-ext}   & 93.64      &  {\bf (1)}        &   92.32      & (0)             & {\bf 93.65} &  {\bf (1)}           & 93.64       & {\bf (1)}       & 93.64       & {\bf (1)}   \\
+{\tt Cars}          & 92.74      &  (1)              &   87.19      & (0)             & {\bf 92.92} &  {\bf (4)}           & 92.67       & (1)             & 92.67       & (1)         \\
+{\tt Cars-ext}      & 93.12      &  (1)              &   87.38      & (0)             & {\bf 93.34} &  {\bf (4)}           & 93.08       & (1)             & 93.08       & (1)         \\
+{\tt Contracep}     & 43.82      &  {\bf (2)}        &   {\bf 44.05}& {\bf (2)}       &  43.81      &  (0)                 & 43.59       & (0)             & 43.6        & (1)         \\
+{\tt Contracep-ext} & 43.21      &  (0)              &   {\bf 43.78}& {\bf (3)}       &  43.72      &  {\bf (3)}           & 43.07       & (0)             & 43.12       & (0)         \\
 {\tt CoverType}     & 61.88      &  (0)              &   61.88      & (0)             &  61.88      &  (0)                 & 61.88       & (0)             & 61.88       & (0)         \\
 {\tt CoverType-ext} & 61.88      &  (0)              &   61.88      & (0)             &  61.88      &  (0)                 & 61.88       & (0)             & 61.88       & (0)         \\
-{\tt Poker}         & {\bf 51.4} &  {\bf (3)}        &   50.67      & (0)             &  50.84      &  (1)                 & 51.04       & (1)             & 51.03       &             \\
-{\tt Shelter-15}    & 47.66      &  (1)              &   47.32      & (0)             & {\bf 48.14} &  {\bf (3)}           & 47.82       & (2)             &             &             \\
-{\tt S.F. Crime-15} & 22.07      &  (0)              &   22.07      & (0)             & {\bf 22.07} &  {\bf (1)}           & 22.07       & (0)             & {\bf 22.07} &             \\
-{\tt Phonemes}      & 33.91      &  {\bf (2)}        &   31.26      & (0)             &  33.32      &  (1)                 & 34.08       & {\bf (2)}       & {\bf 34.77} &             \\
+{\tt Poker}         & {\bf 51.4} &  {\bf (4)}        &   50.67      & (0)             &  50.84      &  (1)                 & 51.04       & (1)             & 51.03       & (1)         \\
+{\tt Shelter-15}    & 47.66      &                   &   47.32      &                 & {\bf 48.14} &                      & 47.82       &                 &             &             \\
+{\tt S.F. Crime-15} & 22.07      &  (0)              &   22.07      & (0)             & {\bf 22.07} &  {\bf (1)}           & 22.07       & (0)             & 22.07       & (0)         \\
+{\tt Phonemes}      & 33.91      &  (2)              &   31.26      & (0)             &  33.32      &  (1)                 & 34.08       & (2)             & {\bf 34.77} & {\bf (4)}   \\
 \hline
-Average (Sum)       & 66.16      &  (16)             &   65.24      & (10)            &  66.24      &  (24)                & 64.91       & (10)            &             &
+Average (Sum)       & 65.01      &  (  )             &   64.12      & (  )            &  65.11      &  (  )                & 64.91       & (  )            &             &
        \end{tabular}
         \caption{Average accuracy and statistical tests  for  conditional inference trees 
 with depth at most 16 using only nominal attributes. The best accuracy for each dataset is bold-faced, even when multiple criteria have the same accuracy in the table because of rounding.}
@@ -565,31 +542,34 @@ with depth at most 16 using only nominal attributes. The best accuracy for each 
 
 
 Table \ref{tab:time-16} shows the running time of each criteria when used for both selecting and splitting purposes (the experiment of Table \ref{tab:nominal-16}).
-When the number of classes is small all the criteria have very similar execution time. As the number of classes increases, both PC-ext and the GL-based methods become much faster than Twoing and Hypercube Cover, with the turning point being once again around $k=7$. For datasets with 15 classes our criteria are 30-400 times faster than Twoing, while PC-ext is 50-600 times faster. We also ran experiments using all the classes available in both the {\tt S.F. Crime} and {\tt Shelter} datasets (39 and 22, respectively). Twoing cannot be executed in a reasonable time with that many classes, while GLSG and GL$\chi^2$ ran in approximately 100 seconds on the {\tt S.F. Crime} dataset and  300 seconds on the {\tt Shelter} dataset (PC-ext ran in 110 and 33 seconds, respectively). Since the execution time for our criteria in this experiment grew onde again in an approximately linear fashion with $k$, it suggests that they can also be used with datasets that have a much larger number of classes. It is also interesting to note that the aggregated attributes usually appeared at or near the root of the decision trees.
+When the number of classes is small all the criteria have very similar execution time. After running this experiments a few times, we have realized there is a variation of about 2-3 seconds in the execution time. This explains why Hypercube Cover is sometimes faster than Twoing.
+
+As the number of classes increases, both PC-ext and the GL-based methods become much faster than Twoing and Hypercube Cover, with the turning point being once again around $k=7$. For datasets with 15 classes our criteria are 30-400 times faster than Twoing, while PC-ext is 50-600 times faster. We also ran experiments using all the classes available in both the {\tt S.F. Crime} and {\tt Shelter} datasets (39 and 22, respectively). Twoing cannot be executed in a reasonable time with that many classes, while GLSG and GL$\chi^2$ ran in approximately 100 seconds on the {\tt S.F. Crime} dataset and  300 seconds on the {\tt Shelter} dataset (PC-ext ran in 110 and 33 seconds, respectively). Since the execution time for our criteria in this experiment grew onde again in an approximately linear fashion with $k$, it suggests that they can also be used with datasets that have a much larger number of classes. It is also interesting to note that the aggregated attributes usually appeared at or near the root of the decision trees.
 
 \begin{table}[]
 \small
 \centering
 \begin{tabular}{c|c|c|c|c|c|c}
-Dataset             & k  & Twoing        & GLSG      & GL$\chi^2$  & PC-ext    & HcC     \\ \hline
-{\tt Adult}         & 2  & 4.3           & 4.3       & 7.1         &{\bf 4}    & 5.8     \\
-{\tt Mushroom}      & 2  & 0.7           & {\bf 0.6} & 0.9         & 0.6       & 1       \\
-{\tt KDD98}-2       & 2  & 10.8          & 57.8      & 60.8        &{\bf 8.3}  & 10.4    \\
-{\tt Contracep}     & 3  & 0.2           & 0.2       & 0.1         &{\bf 0.1}  & 0.1     \\
-{\tt Contracep-Ext} & 3  & 0.2           & 0.3       & 0.3         &{\bf 0.2}  & 0.3     \\
+Dataset             & k  & Twoing        & GLSG      & GL$\chi^2$  & PC-ext    & HcC    \\
+\hline
+{\tt Adult}         & 2  & 4.1           & 4.6       & 5.7         &{\bf 4}    & 5.8    \\
+{\tt Mushroom}      & 2  & 1.7           & 1.5       & 2.3         &{\bf 0.6}  & 1      \\
+{\tt KDD98}-2       & 2  & 9.1           & 50.9      & 53.4        &{\bf 8.3}  & 10.4   \\
+{\tt Contracep}     & 3  & 0.2           & 0.2       & 0.2         &{\bf 0.1}  & 0.1    \\
+{\tt Contracep-Ext} & 3  & 0.2           & 0.3       & 0.4         &{\bf 0.2}  & 0.3    \\
 %{\tt KDD98}-3       & 3  & {\bf 12.5}    & 73.3      & 82.4        &           &        \\
-{\tt Cars}          & 4  & 0.3           & 0.2       & 0.2         &{\bf 0.2}  & 0.3    \\
-{\tt Cars-Ext}      & 4  & 0.3           & 0.4       & 0.4         &{\bf 0.2}  & 0.3    \\
-{\tt Nursery}       & 5  & 1.6           & 1.4       & 1.4         &{\bf 1.3}  & 1.9    \\
-{\tt Nursery-Ext}   & 5  & 1.7           & 3.9       & 3.6         &{\bf 1.4}  & 2.3    \\
+{\tt Cars}          & 4  & 0.3           & 0.3       & 0.2         &{\bf 0.2}  & 0.3    \\
+{\tt Cars-Ext}      & 4  & 0.3           & 0.5       & 0.4         &{\bf 0.2}  & 0.3    \\
+{\tt Nursery}       & 5  & 4.1           & 3.9       & 3.7         &{\bf 1.3}  & 1.9    \\
+{\tt Nursery-Ext}   & 5  & 4.6           & 9.5       & 8.6         &{\bf 1.4}  & 2.3    \\
 %{\tt KDD98}-5       & 5  & {\bf 22.2}    & 100.8     & 82.6        &           &        \\
-{\tt CoverType}     & 7  & 846.8         &{\bf 373.4}& 969.6       & 472.4     & 669    \\
-{\tt CoverType-Ext} & 7  & 338.6         & 280.5     & 505.7       &{\bf 200.4}& 296    \\
-{\tt KDD98}-9       & 9  & 209.9         & 119.9     & 112.5       &{\bf 23.8} & 443    \\
-{\tt Poker}         & 10 & 10.7          & 3.9       & {\bf 3.7}   & 3.8       & 18     \\
-{\tt Shelter-15}    & 15 & 5183.3        & 155       & 165.7       &{\bf 18.6} & 7311.6 \\
-{\tt S.F. Crime-15} & 15 & 2667.9        & 94.2      & 79.6        &{\bf 50.5} & 3188.9 \\
-{\tt Phonemes}      & 15 & 3738.6        & 8.7       & 10.2        &{\bf 6.3}  & 5804.8
+{\tt CoverType}     & 7  & 612.7         &{\bf 294.7}& 700         & 472.4     & 668.9  \\
+{\tt CoverType-Ext} & 7  & 251.8         & 209.9     & 462.6       &{\bf 200.4}& 296.2  \\
+{\tt KDD98}-9       & 9  & 434.5         & 256.2     & 243.6       &{\bf 23.8} & 442.9  \\
+{\tt Poker}         & 10 & 25.2          & 10.8      & 9.2         &{\bf 3.8}  & 18     \\
+{\tt Shelter-15}    & 15 & 5397          & 181.9     & 191.2       &{\bf 18.6} & 7311.6 \\
+{\tt S.F. Crime-15} & 15 & 2731.2        & 95.9      & 81.8        &{\bf 50.5} & 3188.9 \\
+{\tt Phonemes}      & 15 & 3894.6        & 9.4       & 11          &{\bf 6.3}  & 5804.8
 \end{tabular}
 \caption{Average time in seconds of a 3-fold cross validation
 for building decision trees with depth at most 16.
@@ -598,27 +578,27 @@ The fastest method for each dataset is bold-faced.}
 \end{table}
 
 
-Table \ref{exp:numeric-16} shows experiments  similar to those presented at Table \ref{tab:nominal-16}, except now it also uses the numeric attributes. We observed a significant gain in terms of accuracy for almost all datasets. 
-The performance of GL$\chi^2$ was competitive competitive or better than the other criteria in almost all datasets, except for both CoverType, where curiously GLSG had the best results.
+Table \ref{exp:numeric-16} shows experiments  similar to those presented at Table \ref{tab:nominal-16}, except now it also uses the numeric attributes. We observed a significant gain in terms of accuracy for almost all datasets. This time Hypercube Cover has the best results, followed by PC-ext. The other 3 criteria have similar, but inferior, results.
 
 \begin{table}
 \small
 \centering
 \begin{tabular}{c|cc|cc|cc|cc|cc} 
-Dataset              &        \multicolumn{2}{c|}{Twoing} &   \multicolumn{2}{c|}{GLSG} &   \multicolumn{2}{c|}{GL$\chi^2$} & \multicolumn{2}{c|}{PC-ext}  & \multicolumn{2}{c}{HcC}  \\  \hline   
-{\tt Adult}          &  83            &  (1)              &  77.34      &  (0)          &  83.21       &  {\bf (2)}         & {\bf 83.28} & {\bf (2)}     & 83.25 &  \\
-{\tt KDD98}-2        &  76.67         &  (2)              &  76.36      &  (1)          &  76.04       &  (0)               & {\bf 77.87} & {\bf (3)}     & 77.14 &  \\
-%{\tt KDD98}-3        &  63.24         &  (1)              &  62.21      &  (0)          &  {\bf 63.94} &  {\bf (2)}         &             &              &        &  \\
-%{\tt KDD98}-5        &  47.5          &  (1)              &  46.35      &  (0)          &  {\bf 49.71} &  {\bf (2)}         &             &              &        &  \\
-{\tt KDD98}-9        &  37.73         &  (1)              &  37.49      &  (0)          &  {\bf 43.44} &  {\bf (3)}         &  39.88      & (2)           & 38.96  &   \\
-{\tt Contracep}      &  48.78         &  {\bf (1)}        &  48.01      &  (0)          &  48.66       &  {\bf (1)}         & {\bf 48.93} & {\bf (1)}     & 48.86  &   \\
-{\tt Contracep-Ext}  &  48.53         &  (0)              &  48.15      &  (0)          &  48.6        &  (0)               &  48.52      & (0)           & {\bf 49.31 } &    \\
-{\tt CoverType}      &  85.14         &  (1)              &  {\bf 90.32}&  {\bf (3)}    &  81.38       &  (0)               &  86.23      & (2)           & 86.23 &   \\
-{\tt CoverType-Ext}  &  89.1          &  (2)              &  {\bf 92.03}&  {\bf (3)}    &  82.46       &  (0)               &  88.32      & (1)           & 89.39 &    \\
-{\tt Shelter-15}     &  53.79         &  (1)              &  52         &  (0)          &  {\bf 54.4}  &  {\bf (3)}         &  53.82      & (1)           & 53.59 &   \\   
-{\tt S.F. Crime-15}  &  26.66         &  (0)              &  26.71      &  (1)          &  {\bf 27.13} &  {\bf (2)}         &  27.13      & {\bf (2)}     &       &   \\
+Dataset              &        \multicolumn{2}{c|}{Twoing} &   \multicolumn{2}{c|}{GLSG} &   \multicolumn{2}{c|}{GL$\chi^2$} & \multicolumn{2}{c|}{PC-ext}  & \multicolumn{2}{c}{HcC}  \\
+\hline   
+{\tt Adult}          &  83            &  (1)              &  77.34      &  (0)          &  83.21       &  {\bf (2)}         & {\bf 83.28} & {\bf (2)}      & 83.25        & {\bf (2)} \\
+{\tt KDD98}-2        &  76.67         &  (2)              &  76.36      &  (1)          &  76.04       &  (0)               & {\bf 77.87} & {\bf (4)}      & 77.14        & (3)       \\
+%{\tt KDD98}-3        &  63.24         &                   &  62.21      &               &  {\bf 63.94} &                    &             &                &              &           \\
+%{\tt KDD98}-5        &  47.5          &                   &  46.35      &               &  {\bf 49.71} &                    &             &                &              &           \\
+{\tt KDD98}-9        &  37.73         &  (1)              &  37.49      &  (0)          &  {\bf 43.45} &  {\bf (4)}         &  39.88      & (3)            & 38.96        & (2)       \\
+{\tt Contracep}      &  48.78         &  {\bf (1)}        &  48.01      &  (0)          &  48.66       &  {\bf (1)}         & {\bf 48.93} & {\bf (1)}      & 48.86        & {\bf (1)} \\
+{\tt Contracep-Ext}  &  48.53         &  (0)              &  48.15      &  (0)          &  48.6        &  (0)               &  48.52      & (0)            & {\bf 49.31 } & {\bf (4)} \\
+{\tt CoverType}      &  85.14         &  (1)              &  {\bf 90.32}&  {\bf (4)}    &  81.38       &  (0)               &  86.23      & (2)            & 86.23        & (2)       \\
+{\tt CoverType-Ext}  &  89.1          &  (2)              &  {\bf 92.03}&  {\bf (4)}    &  82.46       &  (0)               &  88.32      & (1)            & 89.39        & (3)       \\
+{\tt Shelter-15}     &  53.79         &  (2)              &  52         &  (0)          &  {\bf 54.4}  &  {\bf (4)}         &  53.82      & (2)            & 53.59        & (1)       \\   
+{\tt S.F. Crime-15}  &  26.66         &                   &  26.71      &               &  {\bf 27.13} &                    &  27.13      &                &              &           \\
 \hline
-Average (Sum)        &   61.04        &  (8)              & 60.93       &  (8)          &   60.59      &  (11)              &  61.55      & (14)          &       & 
+Average (Sum)        &  61.05         &  ( )              & 60.93       &  ( )          &   60.59      &  (  )              &  61.55      & (  )           &              & ( )
 
 \end{tabular}
 \caption{Average accuracy and statistical test results for  Decision Trees using both nominal and numeric attributes with depth at most 16.}
