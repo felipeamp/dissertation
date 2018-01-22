@@ -103,20 +103,14 @@ case the optimal  partition can be found quickly by testing all possible partiti
 
 In general, we observe an advantage for Hypercube Cover with both impurities, being more clear for the Entropy, followed by PC-ext. This suggests that the Largest Class Alone and List Scheduling heuristics are not competitive with them in terms of split impurity found.
 
-Comparing Hypercube Cover and PC-ext in terms of speed we can see, as expected, that Hypercube Cover was faster up to $k=7$, when PC-ext becomes faster.
-Another possible comparison between them is to see what happens when Hypercube Cover and PC-ext find different partitions. When Hypercube Cover's partition is better than PC-ext's, the maximum relative excess between the impurities was of $0.9\%$ for the Gini impurity and $1.4 \%$ for the Entropy impurity.
-When PC-ext's partition is better than Hypercube Cover's, the  maximum relative excess was of $3.48 \%$ for the Gini impurity and $6.23 \%$ for the Entropy impurity. 
+Another possible comparison between them is to see what happens when Hypercube Cover and PC-ext find different partitions. To measure this difference, let us define the relative excess (in percentage) of a partition P w.r.t. a partition Q as $100 \times (I(P)/I(Q) - 1)$. The results of this measurement are shown in tables \ref{} and \ref{}. When Hypercube Cover's partition is better than PC-ext's (table \ref{}), the maximum relative excess between the impurities was of $0.9\%$ for the Gini impurity and $1.4 \%$ for the Entropy impurity. When PC-ext's partition is better than Hypercube Cover's (table \ref{}), the  maximum relative excess was of $3.48 \%$ for the Gini impurity and $6.23 \%$ for the Entropy impurity. 
 
-Lastly, we note that, due to Largest Class Alone and List Scheduling running times, they might be used when both $n$ and $k$ are very large and
-speed is an  issue. When $n=200$ and $k=100$, using a single core, they are almost 50 times
-faster than PC-ext, with the latter using 8 cores. In addition, they could be  used together with PC-ext, incurring a negligible overhead, to guarantee that the ratio between the impurity of the partition found and the optimal one is bounded.
+TODO: insert tables for relative excess impurities comparing Twoing and PC-ext. Add refs to previous paragraph.
+
+Lastly, we note that, due to Largest Class Alone and List Scheduling running times, they might be used when both $n$ and $k$ are very large and speed is an  issue. When $n=200$ and $k=100$, using a single core, they are almost 50 times faster than PC-ext, with the latter using 8 cores. In addition, they could be  used together with PC-ext, incurring a negligible overhead, to guarantee that the ratio between the impurity of the partition found and the optimal one is bounded.
 
  
-Taking into account these  experiments, those reported in \cite{journals/datamine/CoppersmithHH99}
-and the  theoretical properties of the available algorithms, 
-Table  \ref{tab:guidelines}  suggests  guidelines on which criterion to use to solve the 
-problem of finding the binary partition of minimum impurity in practical situation.
-Of course small, medium and large depend on the available hardware and the time one accepts to wait for training/testing classification models. 
+Taking into account these  experiments, those reported in \cite{journals/datamine/CoppersmithHH99} and the  theoretical properties of the available algorithms, Table  \ref{tab:guidelines}  suggests  guidelines on which criterion to use to solve the problem of finding the binary partition of minimum impurity in practical situation. Of course small, medium and large depend on the available hardware and the time one accepts to wait for training/testing classification models. 
 
 
 \begin{table}[htb]
