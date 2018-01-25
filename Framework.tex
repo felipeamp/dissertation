@@ -109,7 +109,7 @@ generated  by our framework
 is how the weights of the edges are set and what 
 method is employed to compute the cut on graph $G$.
 Here, we discuss two ways to set the weights:
-the first one yields to criteria that
+the first one yields to a criterion that
 are related with the Gini Gain, while the second 
 is built upon some given splitting  criterion that works well for binary attributes.
 
@@ -223,7 +223,10 @@ set the weights.
 
 \subsection{Example}
 
-Let's assume the are using the Squared Gini criterion on a dataset with a single attribute (the marital status) and we try to predict whether it's a male or female. The contingency table and associated Squared Gini graph are given in figure \ref{fig:cut-example}.
+Let's assume we are using the Squared Gini criterion on a dataset with a single attribute (the marital status) and we try to predict whether it's a male or female. The contingency table and associated Squared Gini graph are given in figure \ref{fig:cut-example}.
+
+As an illustration of the calculation of the edges' weights, we show below how they are done for the Single-Married edge. We number the values and classes in the order shown in the contingency table in Figure \ref{fig:cut-example}. In particular, Single and Married are values number 1 and 2, respectively; while Male and Female are classes number 1 and 2 respectively. Thus
+$$w_{12} = \frac{2}{N^2}\sum_{ x,y \in C \atop x \ne y }A_{1x}A_{2y} = \frac{2}{(237)^2}(18 \cdot 30 + 20 \cdot 29) = 0.0399$$
 
 Since this example is small (there are only $7$ non-empty distinct cuts), we can run through all the possible cuts and see that the one shown in red is actually the maximum one. In larger examples we need to use approximated algorithms such as the one mentioned before, since the number of possible cuts grows exponentially with the number of nodes/values.
 
