@@ -70,8 +70,7 @@ In general, the main drawback of using heuristics is the lack of a theoretical g
 
 Given this scenario,  in chapter \ref{chap:framework} we propose
 a framework for designing criteria, with nice theoretical properties, for evaluating the quality of 
- multi-valued nominal attributes.
-Criteria generated according to this framework
+ multi-valued nominal attributes. In general, finding the best binary partition according to an impurity measure has been proved to be NP-complete in \cite{icml2018}. Nonetheless, criteria generated according to our framework
 run in polynomial time in both the number of values and classes and
 have a theoretical guarantee that they are close to optimal.
 The key idea consists of formulating the problem
@@ -93,6 +92,8 @@ After discussing these criteria, we show how to extend them to handle
 numeric attributes.
 
 We also  present a number of experiments that suggest that one of our criteria is competitive with the Twoing method, which is -- as far as we know -- the only well-established criterion with binary splits that can be optimally computed for large $n$ when $k > 2$. However, in contrast with our methods, Twoing cannot handle datasets that also have a large number of classes. Some criteria based on heuristics, such as the PC-ext and Hypercube Cover, are also part of the comparison. In addition, the experiments also  provide evidence of the potential of aggregating  attributes for improving the accuracy of decision trees.
+
+TODO: falar no paragrafo acima um pouco mais da comparacao com outros metodos.
 
 \section{Related Work}
 \label{chap:relatedwork}
@@ -117,7 +118,7 @@ and show necessary conditions that are satisfied by optimal partitions for a cer
 These conditions, though useful to restrict the set of partitions
 that need to be considered, do not yield  a method that
 is efficient (polynomial time) for large values of $n$ and $k$. These papers also  present  heuristics, without approximation guarantee, to obtain good splits.
-Another related result is a theorem from \cite{journals/datamine/CoppersmithHH99} that guarantees that the optimum split can be found by separating the class probability vectors by a hyperplane. This motivated the creation of the PC criterion, as will be shown in the next chapter. Two other existing heuristics are the SLIQ (\cite{mehta1996sliq} and the FlipFlop criterion (\cite{nadas1991iterative}). While they execute in polynomial time, they have no approximation guarantee in terms of the impurity of the optimal partition. Moreover, it usually finds worse partitions than the PC criterion, as shown in the experiments section of \cite{journals/datamine/CoppersmithHH99}.
+Another related result is a theorem from \cite{journals/datamine/CoppersmithHH99} that guarantees that the optimum split can be found by separating the class probability vectors by a hyperplane. This motivated the creation of the PC criterion, as will be shown in the next chapter. Two other existing heuristics are the SLIQ (\cite{mehta1996sliq} and the FlipFlop criterion (\cite{nadas1991iterative}). While they execute in polynomial time, they have no approximation guarantee in terms of the impurity of the optimal partition. Moreover, they usually finds worse partitions than the PC criterion, as shown in the experiments section of \cite{journals/datamine/CoppersmithHH99}. Lastly, \cite{icml2018} presents two heuristics that have approximation guarantees: the Hypercube Cover and the Largest Class Alone. The first has exponential running time on the number of classes and is similar to the Twoing criterion, but has an approximation guarantee of 2 for every impurity measure as defined in the paper. The second one, Largest Class Alone, runs in quasilinear time on the number of values and linear time on the number of classes. This criterion has an approximation guarantee of 2 for the Gini impurity and 3 for the Entropy impurity. 
 
 Other proposals to  speed up the attribute selection phase
  include  \cite{MolaSiciliano1997,Shih2001}. 
@@ -139,9 +140,9 @@ This topic, though relevant, is not the focus of this dissertation.
 
 \section{Organization}
 \label{sec:organization}
-In chapter \ref{chap:background} we explain how decision trees are used for classification problems and how they are constructed. We also present the main impurity measures and splitting criteria used in the literature, together with their execution-time complexity.
+In Chapter \ref{chap:background} we explain how decision trees are used for classification problems and how they are constructed. We also present the main impurity measures and splitting criteria used in the literature, together with their execution-time complexity.
 
 Chapter \ref{chap:framework} contains the framework for generating splitting criteria that run in polynomial time. Its relation with the Max-Cut problem and its approximation algorithms are explained and some criteria obtained from this framework are presented.
 
-Later, in chapters \ref{chap:experiments-splits} and \ref{chap:experiments-datasets}, we compare the criteria and see how they perform in practice. In chapter \ref{chap:experiments-splits} we explore how the many heuristics used to find splits with optimal impurity compare among themselves. This suggests a couple of criteria that perform better and can be used when the number of values and classes are large. In chapter \ref{chap:experiments-datasets} we analyze these methods on real datasets that contain attributes with large number of values and classes. This analysis is done using different maximum depth allowed for the decision tree, which is allows us to see the the advantages and shortcomings of each criterion. Lastly, in chapter \ref{chap:conclusions} we present our study conclusions.
+Later, in Chapters \ref{chap:experiments-splits} and \ref{chap:experiments-datasets}, we compare the proposed criteria and see how they perform in practice. In Chapter \ref{chap:experiments-splits} we explore how the many heuristics used to find splits with optimal impurity compare among themselves. This suggests a couple of criteria that perform better and can be used when the number of values and classes are large. In Chapter \ref{chap:experiments-datasets} we analyze these methods on real datasets that contain attributes with large number of values and classes. This analysis is done using different maximum depth allowed for the decision tree, which is allows us to see the the advantages and shortcomings of each criterion. Lastly, in Chapter \ref{chap:conclusions} we present our study conclusions.
 

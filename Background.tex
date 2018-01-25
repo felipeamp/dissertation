@@ -7,7 +7,7 @@
 
 Decision trees are trees where each internal node is associated with an attribute and each of the edges leading out from it are associated with a subset of this attribute's values. The leaf nodes are associated with a class. In order to classify a sample, we start at the root of the tree and follow the edges given by the sample attributes' values. Once we get to a leaf node, we've found the class prediction for this sample.
 
-As an example, let's look at the Titanic Survival dataset (\cite{Titanic}). The picture \ref{fig:titanic-dataset} shows the first 10 samples from the training dataset, where we are trying to predict the value for the Survived field.
+As an example, let's look at the Titanic Survival dataset (\cite{Titanic}). The Figure \ref{fig:titanic-dataset} shows the first 10 samples from the training dataset, where we are trying to predict the value for the Survived field.
 
 \begin{figure}[h]
 \includegraphics[width=\textwidth]{titanic}
@@ -15,7 +15,7 @@ As an example, let's look at the Titanic Survival dataset (\cite{Titanic}). The 
 \label{fig:titanic-dataset}
 \end{figure}
 
-A possible decision tree is the one given in the figure \ref{fig:titanic-tree}. This tree correctly classifies all the first 10 samples. For instance, since the passanger with Id 1 is male and older than 9.5 years, the decision tree predicts him as someone who did not survive.
+A possible decision tree is the one given in the Figure \ref{fig:titanic-tree}. This tree correctly classifies all the first 10 samples. For instance, since the passanger with Id 1 is male and older than 9.5 years, the decision tree predicts him as someone who did not survive.
 
 \begin{figure}[h]
 \centering
@@ -43,34 +43,42 @@ Given a partition $(L, R)$ of the values $V$ of an attribute $A$, we use $S_L$ a
 to denote the set of samples in $S$ that takes values in $L$ and $R$, respectively, in attribute $A$.
 Furthermore, we let $p_j = S_j /N$ and $p_{ij}= Pr[C=c_j | A = v_i]$.
 We observe that the estimator of maximum likelihood for $p_{ij} $ is
-$A_{ij} / N_i$.  
+$A_{ij} / N_i$.
 
-TODO: definir $S_L$ e $S_R$
 
-\section{Impurity Measures}
-Many of the decision tree inducers follow the structure of algorithm \ref{alg:create-tree}.
+\subsection{A Typical Algorithm for Inducing Decision Trees}
+
+Many of the decision tree inducers follow the structure of Algorithm \ref{alg:create-tree}. This algorithm has a few under-specified parts, namely the stopping and splitting criteria.
 
 \begin{algorithm}[tb]
-   \caption{CreateTree($S$: set of samples, $List\_A$: list of attributes information, $I$: split impurity measure)}
+   \caption{CreateTree($S$: set of samples, $List\_A$: list of attributes information)}
    \label{alg:create-tree}
 \begin{algorithmic}
 \IF{$S$ does not meet the stopping criterion}
 \FOR{attribute $A$ in $List\_A$}
-\STATE $s_A = $ split of $A$ with smallest impurity as measured by $I$
+\STATE $s_A = $ split of $A$ given by a splitting criterion using $I$
 \ENDFOR
-\STATE $(L, R) = s_{A^*}$ such that $I(s_{A^*}) \leq I(s_A) $ for any $A$
+\STATE $(L, R) = s_{A^*}$  that is best among all $ I(s_A) $, according to the splitting criterion
 \STATE CreateTree($L$)
 \STATE CreateTree($R$)
 \ENDIF
 \end{algorithmic}
 \end{algorithm}
 
-It is important to note that most impurity calculations on a nominal attribute are done based on what's called a contingency table. It consists of an $n\times k$ matrix where the $ij$-th entry corresponds to the number of samples that have value $i$ and belong to class $k$. We'll assume that every decision tree node has the contingency table pre-calculated for all nominal attributes, which takes $O(N)$ time for each attribute and cannot be avoided\footnote{The only exception is the attribute used to split the parent node, which can be calculated in $O(n\times k)$.}. Therefore, whenever we mention the time complexity for a decision tree constructing algorithm/criterion, this cost will not be mentioned since it does not affect their comparison.
+The stopping criterion is used to avoid over-fitting the decision tree. Stopping criteria usually involve stopping when every sample has the same class or when the number of samples is small. Another possibility sometimes used is to skip an attribute when a statistical test indicates its contingency table has almost no information---i.e., it is not statistically different from a randomly generated one---, or in the obvious case where all the samples have the same value. Finally, the splitting criteria will be the object of our studies in the rest of this chapter.
 
-The only thing left is to define what we mean by an impurity measure. \cite{Breiman84} defines a class of imurity measures that are natural in this context.
 
-\begin{definition}
- A function $\phi(p)$ is an impurity measure iff 
+\section{Impurity Measures}
+
+\cite{Breiman84} suggests that a natural family of splitting criteria are the ones that select splits which have the smallest impurity according to a certaing impurity measure. Therefore we will make impurity measures our main object of study in this section, while splitting criteria will be studied in the Section \ref{sec:splitting-criteria}.
+
+First, it is important to note that most impurity calculations on a nominal attribute are done based on what's called a contingency table. It consists of a $n\times k$ matrix where the $ij$-th entry corresponds to the number of samples that have value $i$ and belong to class $j$. We'll assume that every decision tree node has the contingency table pre-calculated for all nominal attributes, which takes $O(N)$ time for each attribute and cannot be avoided\footnote{The only exception is the attribute used to split the parent node, which can be calculated in $O(n\times k)$.}. Therefore, whenever we mention the time complexity for a decision tree constructing algorithm/criterion, this cost will not be mentioned since it does not affect their comparison.
+
+The only thing left is to define what we mean by an impurity measure. \cite{Breiman84} defines a class of impurity measures that are natural in this context.
+
+\begin{definition}[Impurity Measure Function]
+
+ A function $\phi(p)$ is a node impurity function iff 
  \begin{enumerate}
   \item $\phi: [0, 1] \rightarrow \mathbb{R}_+$;
   \item $\phi$ has continous second derivatires;
@@ -80,12 +88,32 @@ The only thing left is to define what we mean by an impurity measure. \cite{Brei
  \end{enumerate}
 \end{definition}
 
+
+\begin{definition}[Node Impurity Measure]
+
+ A node impurity measure $I$ is a function $I: [0,1]^k \to \mathbb{R}$. It is given by
+ $$I(\mathbf{p}) = \sum_{j=1}^{k}\phi(p_j)$$
+ where $\phi$ is a node impurity function.
+ 
+ The node impurity measure is frequently denoted by $I(S)$, where $S$ is a set of samples. This indicates the impurity measure calculated on the vector $\mathbf{p} = (c_1/N, \ldots, c_k/N)$.
+\end{definition}
+
+\begin{definition}[Split Impurity Measure]
+
+A split impurity measure is the impurity difference between the original node and its child nodes, weighted by the fraction of samples in each node. For a binary partition $V=(L,R)$,
+
+$$\Delta I(L, R) = I(S) - p_L \cdot I(S_L) - p_R \cdot I(S_R)$$
+
+where $p_L$ and $p_R$ are equal to the ratio of the samples in $L$ and $R$, respectively.
+\end{definition}
+
 These impurity measures have the nice property that splitting $V$ into $(L, R)$ always decreases the impurity, as also shown in \cite{Breiman84}.
 
 \begin{theorem}
 Given an impurity measure $I$ and any partition of values $V$ into $(L, R)$, we always have
-$$I(S) - p_L \cdot I(S_L) - p_R \cdot I(S_R) \geq 0 $$
-where $p_L$ and $p_R$ are equal to the ratio of the samples in $L$ and $R$, respectively. Equality happens iff the contingency table in both sides have the same frequency distribution.
+$$\Delta I(L, R) \geq 0 $$
+
+Equality happens iff the contingency table in both sides have the same frequency distribution.
 \end{theorem}
 
 Another interesting result proven in \cite{Breiman84} is that, when there are only 2 classes, we can find the partition with best impurity in linear time after sorting.
@@ -100,15 +128,15 @@ $$R = \{v_i : p_{i1} > v\}$$
 for some value $v$.
 \end{theorem}
 
-The result above is used by many splitting criteria, as will be mentioned in section \ref{sec:splitting-criteria}.
+The result above is used by many splitting criteria, as will be mentioned in Section \ref{sec:splitting-criteria}.
 
 Now let's present the two most common impurity measures found in the literature. Both can be used to generate binary splits and, as a consequence, binary decision trees.
 
 \begin{definition}
 \label{def:Gini}
-The Gini Index for a set of samples $S$ is given by 
+The Gini impurity for a set of samples $S$ is given by 
 \begin{equation}
- Gini(S) =  1- \sum_{i=1}^k (p_i)^2 .
+ Gini(S) =  \sum_{i=1}^k p_i(1 - p_i) = 1 - \sum_{i=1}^k (p_i)^2
 \label{eq:gini}
 \end{equation}
 \end{definition}
@@ -116,7 +144,7 @@ The Gini Index for a set of samples $S$ is given by
 \begin{definition}
 The Entropy for a set of samples $S$ is given by 
 \begin{equation}
- Entropy(S) =  - \sum_{i=1}^k p_i \log p_i
+ Entropy(S) = \sum_{i=1}^k p_i \log\left(\frac{1}{p_i}\right)  = - \sum_{i=1}^k p_i \log(p_i)
 \label{eq:entropy}
 \end{equation}
 \end{definition}
@@ -125,10 +153,10 @@ The Entropy for a set of samples $S$ is given by
 \label{sec:splitting-criteria}
 In this section we recall some well-known splitting criteria.
 
-First note that, for numeric attributes, all criteria follow the same algorithm to choose the best split: the values are ordered and the valid splits have the form 
+First note that, for numeric attributes, most criteria follow the same algorithm to choose the best split: the values are ordered and the valid splits have the form 
 $$L = \{v_i : v_i \leq v\}$$
 $$R = \{v_i : v_i > v\}$$
-for some chosen value $v$. This is because all the acceptable splits should preserve and use the order structure.
+for some chosen value $v$. This is because all the reasonable splits should preserve and use the order structure.
 
 The criteria evaluate the impurity of these splits and chooses the one with the smallest impurity. Since we only have to evaluate at a single value $v$ between each pair of consecutive values $v_i$ and $v_{i+1}$, it takes $O(n \log n)$ time. Since this is polynomial and quite fast, its complexity is largely ignored throughout this dissertation.
 
@@ -144,10 +172,10 @@ where $S_L= \{ s \in S | A(s) \in L \}$, $S_R= \{ s \in S | A(s) \in R \}$,
  $p_L=|S_L| /N $
 and $p_R=|S_R| /N$. Therefore, the largest the Gini Gain is, the better the partition.
 
-This criterion generates all $2^n$ binary values' split and the partition with maximum Gini Gain shall be selected.
-For the two-class problem this optimal partition can be computed  in $O(n \log n)$ time by using theorem \ref{thm:two-class-trick}. Since we only need to test a single value of $v$ that is between each pair of consecutive values $v_i$, $v_{i+1}$, the time complexity follows.
+To generate the partition with the largest gain, one can consider all $2^n$ binary values' split and select the partition with maximum Gini Gain.
+For the two-class problem this optimal partition can be computed  in $O(n \log n)$ time by using Theorem \ref{thm:two-class-trick}. Since we only need to test a single value of $v$ that is between each pair of consecutive values $v_i$, $v_{i+1}$, the time complexity follows.
 
-For problems with more than two classes, however, there is no efficient procedure with theoretical approximation guarantee to compute the Gini Gain in subexponential time in $n$.
+For problems with more than two classes, however, there is no efficient procedure with theoretical approximation guarantee to compute the Gini Gain in subexponential time in $n$. Heuristics and approximation algorithms are discussed in Section \ref{sec:heuristics}.
 
 \subsection{Twoing}
 The Twoing criterion
@@ -162,9 +190,7 @@ $$ p_R^i= \frac{|\{s \in S_R: s \mbox{ belongs to class } c_i\} |}{ |S_R|} $$
 
 When the Twoing criterion is used to generate binary decision trees, the binary partition with maximum twoing shall be selected at each node. 
 
-By using theorem \ref{thm:two-class-trick}, the best partition can be found in $O(\min \{ n (k + \log n) 2^k, 2^n \} )$
-time by considering all possibilities of partitioning the classes into two superclasses
-and applying the Gini Gain criterion on each of them. We shall remark that, for the two-class problem, the Twoing criterion and the Gini Gain compute the same binary partitions.
+In \cite{Breiman84} there is a theorem that states that the optimal partition of Twoing can be found in a different way: by considering all possibilities of partitioning the classes into two superclasses and solving the 2-class problem with Gini impurity on each of them, picking the best partition overall. Therefore, by using Theorem \ref{thm:two-class-trick}, the best partition can be found in $O(\min \{ n (k + \log n) 2^k, 2^n \} )$ time. Lastly, we shall remark that, for the two-class problem, the Twoing criterion and the Gini Gain compute the same binary partitions.
 
 \subsection{Information Gain}
 
@@ -184,7 +210,7 @@ A related criterion is the Gain Ratio, where the Information Gain of an attribut
 
 
 \subsection{$\chi^2$-criterion}
-The $\chi^2$ is a popular criterion that was  used in \cite{Mingers.87}. It is also the first one shown here not based on impurity measures, and it only generates k-ary (instead of binary) splits. Is is mentioned here because of its relation to the framework that will be presented in chapter \ref{chap:framework}.
+The $\chi^2$ is a popular criterion that was  used in \cite{Mingers.87}. It is also the first one shown here not based on impurity measures, and it generates k-ary (instead of binary) splits. Is is mentioned here because of its relation to the framework that will be presented in Chapter \ref{chap:framework}.
 
 The $\chi^2$-criterion chooses the attribute $A$ that maximizes
 \begin{equation}
@@ -195,7 +221,7 @@ where $E[A_{ij}]=N_i p_j$.
 
 
 \subsection{Conditional Inference Trees}
-Conditional Inference Trees are actually a framework for creating criteria that are bias-free when it comes to the number of values in an attribute. It was published by \cite{Hothorn:2006:URP} and still is the only known method of obtaining criteria that do not have any bias towards attributes with larger number of values.
+Conditional Inference Trees are actually a framework for creating criteria that are free of bias on the number of values in an attribute. It was published by \cite{Hothorn:2006:URP} and is a method of obtaining criteria that do not have any bias towards attributes with larger number of values.
 
 It works by first choosing the best attribute to split at the current node and then evaluating all possible binary splits using any given impurity measure, picking the best one found.
 
@@ -206,48 +232,87 @@ To choose the attribute in which to split, first one has to calculate the permut
 c_{quad}(t, \mu, \Sigma) = (t-\mu)\Sigma^+(t-\mu)\top
 \end{equation}
 
-This method, although very complicated and quite slow, is employed by the data mining community when accuracy counts for more than time spent training\footnote{Since this method does not have any bias when choosing which attribute to split, the accuracy of these trees tend to be higher than the trees obtained by biased criteria.}. Thus this criterion will be used in our experiments in chapter \ref{chap:experiments-datasets} to compare the different accuracies obtained when changing the splitting criterion used to choose the attribute's values split.
+This method, although very complicated and quite slow, is employed by the data mining community when accuracy counts for more than time spent training\footnote{Since this method does not have any bias when choosing which attribute to split, the accuracy of these trees tend to be higher than the trees obtained by biased criteria.}. Thus this criterion will be used in our experiments in Chapter \ref{chap:experiments-datasets} to compare the different accuracies obtained when changing the splitting criterion used to choose the attribute's values split.
 
 \section{Heuristics for Splitting Decision Tree Nodes}
-As seen in the previous section, calculating the optimal binary split takes exponential time in the number of values or classes. Therefore many heuristics were created to construct decision trees in this situation. The most used ones are listed below. All of them work with any impurity measure (e.g.: Gini or Entropy), but some of them work best with just one of them. When this is the case, it will be mentioned.
-
-\subsection{Hypercube Cover}
-
-The Hypercube cover criterion works exactly the same as the Twoing criterion except when it comes to the split impurity calculation. Instead of calculating the impurity based on the two superclasses, Hypercube Cover calculates it using the original $k$ classes. This guarantees, for instance, that the split impurity, when measured with respect to the original classes, is never worse than that of Twoing. This method was first suggested in \cite{icml2018}, together with its approximation guarantee of 2 for both the Gini and Entropy impurities.
-
-
-%\subsection{SLIQ and SLIQ-ext}
-%SLIQ was presented in \cite{mehta1996sliq} and it's a very simple greedy heuristic. Given an attribute, one starts with all the values going to the left split, and none on the right split. We then choose a value to go from the left to the right split. This value is the one that, when changing from the left to the right sides, decreases the impurity (increases the impurity gain) the most. This is repeated until there is no way of moving a value from the left to the right and decreasing the impurity.
-%
-%SLIQ-ext is a simple extension, where we keep changing values from the left to the right until the left side is empty (that is, we move from the left to the right even if that increases the impurity). Once again the value to move is chosen in a greedy fashion. SLIQ-ext returns the values' split seen that had the lowest impurity.
-
+\label{sec:heuristics}
+As seen in the previous section, calculating the optimal binary split takes exponential time in the number of values or classes. Therefore many heuristics were created to construct decision trees in this situation. Some of the most used ones as well as 
+some recent ones proposed by \cite{icml2018} are listed below. All of them work with any impurity measure (e.g.: Gini or Entropy), but some of them work best with just one of them. When this is the case, it will be mentioned.
 
 \subsection{PC and PC-ext}
-These heuristics are based on the Principal Component of the contingency table and were presented in \cite{journals/datamine/CoppersmithHH99}.
-They are based on a theorem that states that the optimal partition of values can be found by separating the class probability vectors by a hyperplane.
+These heuristics are based on the Principal Component of the contingency table and were presented in \cite{journals/datamine/CoppersmithHH99}. They are based on a theorem that states that the optimal partition of values can be found by separating the class probability vectors $\pi(\mathbf{v})$ by a hyperplane, where the vector $\mathbf{v}$ denotes the row associated with the value $v$ in the contingency table and $\pi(\mathbf{v}) = \mathbf{v} / \lVert \mathbf{v} \rVert_1$.
 
 \begin{theorem}{Hyperplanes lemma}
- Let $I$ be an impurity measure. If $(L, R)$ is an optimal partition for the values $V$ then there is a vector $d \in \mathbb{R}^k$ such that
+ Let $I$ be an impurity measure. If $(L, R)$ is an optimal partition for the values $V$ then there is a vector $\mathbf{d} \in \mathbb{R}^k$ such that
  
- $$d\cdot\pi(v) < 0, \forall v \in L$$
- $$d\cdot\pi(v) > 0, \forall v \in R$$
+ $$\mathbf{d} \cdot \pi(\mathbf{v}) < 0, \forall v \in L$$
+ $$\mathbf{d} \cdot \pi(\mathbf{v}) > 0, \forall v \in R$$
  
- where $\pi(v) = v / \lVert v \rVert_1$.
+ where $\pi(\mathbf{v}) = \mathbf{v} / \lVert \mathbf{v} \rVert_1$.
 \end{theorem}
 
 
-In other words, in order to find the optimal partition we just need to choose the right hyperplane. This motivates the PC criterion, which look at the hyperplanes in $\mathbb{R}^k$ whose normal vector is the principal direction of the attribute's contingency table.
+In other words, in order to find the optimal partition we just need to choose the right hyperplane. This motivates the PC criterion, which look at the hyperplanes in $\mathbb{R}^k$ whose normal vector is the principal direction of the attribute's normalized contingency table.
 
-In more details, one first calculates the class probability distribution of every value, which is done by normalizing the contingency table rows to measure 1 in the sum norm. Then the values are grouped into ``supervalues'' where all values in the same supervalue have the same class probability distribution. Now the first principal component of these sypervalues' contingency table is calculated. One then calculates the inner product of each class probability vector of the supervalues  with the principal component and sort the supervalues by it. Denote by $v_1,\ldots,v_{n^*}$ the $n^*$ supervalues sorted in this manner and denote by $p$ the first principal component. We then calculate the impurity gain of all the supervalues' splits of the form
+In more details, one first calculates the class probability distribution of every value, which is done by normalizing the contingency table rows to measure 1 in the sum norm. Then the values are grouped into ``supervalues'' where all values in the same supervalue have the same class probability distribution. Now the first principal component of these supervalues' contingency table is calculated. One then calculates the inner product of each class probability vector of the supervalues  with the principal component and sort the supervalues by it. Denote by $v_1,\ldots,v_{n^*}$ the $n^*$ supervalues sorted in this manner and denote by $\mathbf{p}$ the first principal component. We then calculate the impurity gain of all the supervalues' splits of the form
 
-$$L = \{v_i | v_i \cdot p \leq t\}$$
-$$R = \{v_i | v_i \cdot p > t\}$$
+$$L = \{v_i | \mathbf{v_i} \cdot \mathbf{p} \leq t\}$$
+$$R = \{v_i | \mathbf{v_i} \cdot \mathbf{p} > t\}$$
 
 where $t$ is a chosen threshold. Once we find the supervalues split with the largest impurity gain among them, we choose it and translate the supervalues into original values to obtain a valid partition.
 
 PC-ext is a simple extension of this algorithm, where instead of only testing the supervalues splits given by the equations above, we also test the splits given by  exchanging the last supervalue on the left with the first supervalue on the right (where first and last are given by the order after calculating the inner product).
 
 These procedures require $O(k^3)$ operations to find the principal component and $O(n)$ impurity calculations and inner products in the class probability space.
+
+
+\subsection{SLIQ and SLIQ-ext}
+SLIQ was presented in \cite{mehta1996sliq} and it's a very simple greedy heuristic. Given an attribute, one starts with all the values going to the left split, and none on the right split. We then choose a value to go from the left to the right split. This value is the one that, when changing from the left to the right sides, decreases the impurity (increases the impurity gain) the most. This is repeated until there is no way of moving a value from the left to the right and decreasing the impurity.
+
+SLIQ-ext is a simple extension, where we keep changing values from the left to the right until the left side is empty (that is, we move from the left to the right even if that increases the impurity). Once again the value to move is chosen in a greedy fashion. SLIQ-ext returns the values' split seen that had the lowest impurity.
+
+Since \cite{journals/datamine/CoppersmithHH99} has experimental results that shows that PC obtains better partitions than SLIQ in general, we will not use this criterion in our experimental studies.
+
+
+\subsection{FlipFlop}
+
+The FlipFlop criterion, proposed in \cite{nadas1991iterative}, uses the superclass trick from Twoing iteratively in the classes and values, until it converges to a solution. In order to explain in more detail, we first need to define the dual binary partition problem.
+
+\begin{definition}{[Dual partition problem]}
+
+Given a binary partition problem and its contingency table, the dual partition problem is a problem where we want to find a (binary) partition of the classes that has the smallest impurity. This makes sense, since the impurity is calculated from the samples' split. 
+
+Mathematically, we just solve a binary partition problem in the transposed contingency table, treating the original values as the classes and the original classes as the values.
+\end{definition} 
+
+
+The FlipFlop is shown in Algorithm \ref{alg:flipflop}. Using Theorem \ref{thm:two-class-trick}, we see that each iteration inside the FlipFlop algorithm is fast. Nonetheless, there is no guarantee that the number of iterations is small. We only know, as proved in \cite{nadas1991iterative}, that the values partition eventually converges. There is also no guarantee that the partition found is close to optimal.
+
+\begin{algorithm}[tb]
+\caption{FlipFlop}
+\label{alg:flipflop}
+\begin{algorithmic}
+\STATE Choose a random binary partition of values $V = (L_V, R_V)$
+\WHILE{True}
+\STATE Calculate the supervalues contingency table by grouping the values that are in the same partition side of $(L_V, R_V)$;
+\STATE
+\STATE Solve the dual binary partition problem on the supervalues contingency table, finding the best partition of classes $C = (L_C, R_C)$;
+\STATE
+\STATE Calculate the superclasses contingency table by grouping the classes that are in the same partition side of $(L_C, R_C)$;
+\STATE
+\STATE Solve the binary partition problem on the superclasses contingency table, finding the best partition of values $V = (L_V, R_V)$. If the new partition is the same as the previous one, return it.
+\ENDWHILE
+\end{algorithmic}
+\end{algorithm}
+
+
+Similarly to the SLIQ criterion, FlipFlop obtains worse results than PC in practice, as shown in \cite{journals/datamine/CoppersmithHH99}. Thus, we will not use this criterion in our experimental studies. It is just shown here for completeness.
+
+
+\subsection{Hypercube Cover}
+
+The Hypercube cover criterion works exactly the same as the Twoing criterion except when it comes to the split impurity calculation. Instead of calculating the impurity based on the two superclasses, Hypercube Cover calculates it using the original $k$ classes. This guarantees, for instance, that the split impurity, when measured with respect to the original classes, is never worse than that of Twoing. This method was first suggested in \cite{icml2018}, together with its approximation guarantee of 2 for both the Gini and Entropy impurities.
+
 
 \subsection{Largest Class Alone}
 
