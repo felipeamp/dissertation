@@ -276,37 +276,38 @@ Since \cite{journals/datamine/CoppersmithHH99} has experimental results that sho
 
 \subsection{FlipFlop}
 
-The FlipFlop criterion, proposed in \cite{nadas1991iterative}, uses the superclass trick from Twoing iteratively in the classes and values, until it converges to a solution. In order to explain in more detail, we first need to define the dual binary partition problem.
+The FlipFlop criterion, proposed in \cite{nadas1991iterative}, uses the superclass trick from Twoing iteratively in the classes and values, until it converges to a solution.
+%In order to explain in more detail, we first need to define the dual binary partition problem.
+% 
+% \begin{definition}{[Dual partition problem]}
+% 
+% Given a binary partition problem and its contingency table, the dual partition problem is a problem where we want to find a (binary) partition of the classes that has the smallest impurity. This makes sense, since the impurity is calculated from the samples' split. 
+% 
+% Mathematically, we just solve a binary partition problem in the transposed contingency table, treating the original values as the classes and the original classes as the values.
+% \end{definition} 
+% 
+% 
+% The FlipFlop is shown in Algorithm \ref{alg:flipflop}. Using Theorem \ref{thm:two-class-trick}, we see that each iteration inside the FlipFlop algorithm is fast. Nonetheless, there is no guarantee that the number of iterations is small. We only know, as proved in \cite{nadas1991iterative}, that the values partition eventually converges. There is also no guarantee that the partition found is close to optimal.
+% 
+% \begin{algorithm}[tb]
+% \caption{FlipFlop}
+% \label{alg:flipflop}
+% \begin{algorithmic}
+% \STATE Choose a random binary partition of values $V = (L_V, R_V)$
+% \WHILE{True}
+% \STATE Calculate the supervalues contingency table by grouping the values that are in the same partition side of $(L_V, R_V)$;
+% \STATE
+% \STATE Solve the dual binary partition problem on the supervalues contingency table, finding the best partition of classes $C = (L_C, R_C)$;
+% \STATE
+% \STATE Calculate the superclasses contingency table by grouping the classes that are in the same partition side of $(L_C, R_C)$;
+% \STATE
+% \STATE Solve the binary partition problem on the superclasses contingency table, finding the best partition of values $V = (L_V, R_V)$. If the new partition is the same as the previous one, return it.
+% \ENDWHILE
+% \end{algorithmic}
+% \end{algorithm}
 
-\begin{definition}{[Dual partition problem]}
 
-Given a binary partition problem and its contingency table, the dual partition problem is a problem where we want to find a (binary) partition of the classes that has the smallest impurity. This makes sense, since the impurity is calculated from the samples' split. 
-
-Mathematically, we just solve a binary partition problem in the transposed contingency table, treating the original values as the classes and the original classes as the values.
-\end{definition} 
-
-
-The FlipFlop is shown in Algorithm \ref{alg:flipflop}. Using Theorem \ref{thm:two-class-trick}, we see that each iteration inside the FlipFlop algorithm is fast. Nonetheless, there is no guarantee that the number of iterations is small. We only know, as proved in \cite{nadas1991iterative}, that the values partition eventually converges. There is also no guarantee that the partition found is close to optimal.
-
-\begin{algorithm}[tb]
-\caption{FlipFlop}
-\label{alg:flipflop}
-\begin{algorithmic}
-\STATE Choose a random binary partition of values $V = (L_V, R_V)$
-\WHILE{True}
-\STATE Calculate the supervalues contingency table by grouping the values that are in the same partition side of $(L_V, R_V)$;
-\STATE
-\STATE Solve the dual binary partition problem on the supervalues contingency table, finding the best partition of classes $C = (L_C, R_C)$;
-\STATE
-\STATE Calculate the superclasses contingency table by grouping the classes that are in the same partition side of $(L_C, R_C)$;
-\STATE
-\STATE Solve the binary partition problem on the superclasses contingency table, finding the best partition of values $V = (L_V, R_V)$. If the new partition is the same as the previous one, return it.
-\ENDWHILE
-\end{algorithmic}
-\end{algorithm}
-
-
-Similarly to the SLIQ criterion, FlipFlop obtains worse results than PC in practice, as shown in \cite{journals/datamine/CoppersmithHH99}. Thus, we will not use this criterion in our experimental studies. It is just shown here for completeness.
+Similarly to the SLIQ criterion, FlipFlop obtains worse results than PC in practice, as shown in \cite{journals/datamine/CoppersmithHH99}. Thus, we will not use this criterion in our experimental studies. It is just mentioned here for completeness.
 
 
 \subsection{Hypercube Cover}
