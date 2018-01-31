@@ -160,7 +160,7 @@ Another possible comparison between them is to see what happens when Hypercube C
 Lastly, we note that, due to Largest Class Alone and List Scheduling running times, they might be used when both $n$ and $k$ are very large and speed is an  issue. When $n=200$ and $k=100$, using a single core, they are almost 50 times faster than PC-ext, with the latter using 8 cores. In addition, they could be  used together with PC-ext, incurring a negligible overhead, to guarantee that the ratio between the impurity of the partition found and the optimal one is bounded.
 
  
-Taking into account these  experiments, those reported in \cite{journals/datamine/CoppersmithHH99} and the  theoretical properties of the available algorithms, Table \ref{tab:guidelines}  suggests  guidelines on which criterion to use to solve the problem of finding the binary partition of minimum impurity in practical situation. Of course small, medium and large depend on the available hardware and the time one accepts to wait for training/testing classification models. 
+Taking into account these  experiments, those reported in \cite{journals/datamine/CoppersmithHH99} and the  theoretical properties of the available algorithms, Table \ref{tab:guidelines}  suggests  guidelines on which criterion to use to solve the problem of finding the binary partition of minimum impurity in practical situation. Of course small, medium and large depend on the available hardware and the time one accepts to wait for training/testing classification models. In the next chapter we will analyze if this behavior is consistent with what we see in practice.
 
 
 \begin{table}[htb]
