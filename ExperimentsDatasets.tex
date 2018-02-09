@@ -345,7 +345,7 @@ Dataset & \multicolumn{2}{c|}{Twoing} &  \multicolumn{2}{c|}{GWSG}
 {\tt CoverType}     & 52.97    & (2)    & 55.05    & (3)    & 51.07    & (0)    & 55.05    & (3)    & 51.07    & (0)    &{\bf58.12}&{\bf(5)}          &{\bf58.12}& {\bf(5)} &{\bf58.12}& {\bf(5)} \\
 {\tt CoverType-Ext} & 64.48    & (4)    & 64.12    & (2)    & 57.73    & (0)    & 64.23    & (3)    & 59.95    & (1)    & 64.71    & (6)              & 64.54    & (5)      &{\bf64.81}& {\bf(7)} \\
 {\tt Poker }        & 51.9     & (5)    & 50.28    & (1)    & 51.77    & (3)    & 49.94    & (0)    &{\bf51.92}&{\bf(6)}& 51.7     & (3)              & 51.69    & (3)      & 51.57    & (2)      \\
-{\tt Shelter-15}    & 48.01    & (3)    & ---      & (0)    & ---      & (0)    & 45.31    & (2)    & 48.13    & (4)    & 48.07    & (3)              & 48.05    & (3)      &{\bf48.26}& {\bf(7)} \\  
+{\tt Shelter-15}    & 48.01    & (3)    & ---      & (0)    & ---      & (0)    & 45.31    & (2)    & 48.13    & (4)    & 48.07    & (3)              & 48.05    & (3)      &{\bf48.27}& {\bf(7)} \\  
 {\tt S.F. Crime-15} &{\bf22.1} &{\bf(3)}& 21.32    & (1)    & 22.09    & (2)    & 21.23    & (0)    & 22.09    & (2)    & 22.09    &{\bf(3)}          & 22.09    & (2)      & 22.09    & (2)      \\
 {\tt Phonemes}      &{\bf30.92}&{\bf(7)}& ---      & (0)    & ---      & (0)    & 30.29    & (5)    & 29.47    & (3)    & 30.59    & (6)              & 29.92    & (4)      & 28.97    & (2)      \\
 \hline
@@ -361,9 +361,9 @@ Average (Sum)       &  63.7    & (40)   & 66.8*    & (23)   & 66.66*   & (26)   
 The results of  Table \ref{tab:nominal-5} also provide evidence of  the potential of considering aggregated attributes. The accuracy obtained for the extended versions of datasets
 {\tt Nursery}, {\tt Cars} and {\tt CoverType} are considerably higher than those obtained for the original versions. For {\tt Contracep}, the effect is not clear.
 
-TODO: add LCA time analysis below.
+Another key aspect to discuss is the computational cost of the proposed criteria. Table \ref{tab:time-5} shows the running time of each criterion in the experiment of Table \ref{tab:nominal-5}. Twoing is the fastest method when the number of classes is small and the GL-based methods, PC-ext and LCA become competitive and eventually the fastest ones when the number of classes gets larger. As the number of classes increases, the GL-based methods and PC-ext become much faster than Twoing, with the turning point being around $k=7$. The  running time of Largest Class Alone is very similar to the fastest criterion on every dataset. Also, it is much faster for the {\tt Shelter} dataset, which is one of the slowest experiments. For datasets with 15 classes our GL criteria are 15-300 times faster than Twoing, while PC-ext and LCA are 15-600 and 15-1100 times faster, respectively. Moreover, Hypercube Cover behaves very similarly to the Twoing criterion, but it is a bit slower because the impurity calculation with $k$ classes is slower than with $2$ classes. Lastly, the running time for the GW-based criteria were usually one or two orders of magnitude larger than the others. The only clear exception was in the CoverType dataset, where the number of samples is very large while the attributes’ number of values is much smaller. 
 
-Another key aspect to discuss is the computational cost of the proposed criteria. Table \ref{tab:time-5} shows the running time of each criterion in the experiment of Table \ref{tab:nominal-5}. Twoing is the fastest method when the number of classes is small and the GL-based methods  and PC-ext become competitive and eventually the fastest ones when the number of classes gets larger. As the number of classes increases, the GL-based methods and PC-ext become much faster than Twoing, with the turning point being around $k=7$. For datasets with 15 classes our GL criteria are 15-300 times faster. The same can be seen for PC-ext, which is 15-600 times faster. We also ran experiments using all the classes available in both the {\tt S.F. Crime} and {\tt Shelter} datasets (39 and 22, respectively). Twoing and the GW criteria can not be executed in a reasonable time with that many classes, while GLSG and GL$\chi^2$ ran in approximately 100 seconds on the {\tt S.F. Crime} dataset and  300 seconds on the {\tt Shelter} dataset (PC-ext ran in 75 and 32 seconds, respectively). This behavior for the Twoing criterion is not surprising, since its running time has an exponential dependence of the number of classes $k$. Nonetheless, since the execution time for our GL criteria in this experiment grew in an approximately linear fashion with $k$, it suggests that they can also be used with datasets that have a much larger number of classes. It is also interesting to note that the aggregated attributes usually appeared at or near the root of the decision trees. Lastly, the running time for the GW-based criteria were usually one or two orders of magnitude larger than the others. The only clear exception was in the CoverType dataset, where the number of samples is very large while the attributes’ number of values is much smaller. Hypercube Cover behaves very similarly to the Twoing criterion, but it is a bit slower because the impurity calculation with $k$ classes is slower than with $2$ classes.
+We also ran experiments using all the classes available in both the {\tt S.F. Crime} and {\tt Shelter} datasets (39 and 22, respectively). Twoing, Hypercube Cover and the GW criteria cannot be executed in a reasonable time with that many classes. This behavior for the Twoing criterion is not surprising, since its running time has an exponential dependence of the number of classes $k$. Nonetheless, GLSG and GL$\chi^2$ ran in approximately 100 seconds on the {\tt S.F. Crime} dataset and  300 seconds on the {\tt Shelter} dataset (PC-ext ran in 75 and 32 seconds, respectively). Since the execution time for our GL criteria in this experiment grew in an approximately linear fashion with $k$, it suggests that they can also be used with datasets that have a much larger number of classes. It is also interesting to note that the aggregated attributes usually appeared at or near the root of the decision trees. Moreover, Largest Class Alone ran in these datasets in 48 and 4 seconds, respectively. This illustrates how the running time of LCA stays very low even then the number of classes is very large. Therefore, whenever running time is the main issue for training decision trees, one can always rely on LCA running in reasonable time. 
 
 Since the GW-criteria performe much worse in terms of execution time and yield comparable or worse accuracy than the other criteria, they were not used in any other experiments.
 
@@ -373,24 +373,24 @@ Since the GW-criteria performe much worse in terms of execution time and yield c
 \begin{tabular}{c|c|c|c|c|c|c|c|c|c}
 Dataset             & k  & Twoing     & GWSG       & GW$\chi^2$  & GLSG      & GL$\chi^2$ & PC-ext     & HcC        & LCA        \\
 \hline
-{\tt Adult}         & 2  & {\bf 2.7}  & 88.2       & 41.3        & 3         & 4          & 2.8        & 3.8        &            \\
-{\tt Mushroom}      & 2  & {\bf 0.6}  & 8.6        & 6.9         & 0.9       & 1          & 0.7        & 0.9        &            \\
-{\tt KDD98}-2       & 2  & {\bf 4}    & 3579.3     & 2162        & 43.5      & 44         & 5.2        & 5.8        &            \\
-{\tt Contracep}     & 3  & {\bf 0.1}  & 1          & 0.6         & 0.1       & 0.1        & 0.1        & 0.1        &            \\
-{\tt Contracep-Ext} & 3  & {\bf 0.1}  & 12.7       & 3.3         & 0.2       & 0.2        & 0.2        & 0.2        &            \\
+{\tt Adult}         & 2  & {\bf 2.7}  & 88.2       & 41.3        & 3         & 4          & 2.8        & 3.8        & 3.8        \\
+{\tt Mushroom}      & 2  & {\bf 0.6}  & 8.6        & 6.9         & 0.9       & 1          & 0.7        & 0.9        & 0.7        \\
+{\tt KDD98}-2       & 2  & {\bf 4}    & 3579.3     & 2162        & 43.5      & 44         & 5.2        & 5.8        & 4.5        \\
+{\tt Contracep}     & 3  & {\bf 0.1}  & 1          & 0.6         & 0.1       & 0.1        & 0.1        & 0.1        & 0.1        \\
+{\tt Contracep-Ext} & 3  & {\bf 0.1}  & 12.7       & 3.3         & 0.2       & 0.2        & 0.2        & 0.2        & 0.2        \\
 %{\tt KDD98}-3       & 3  & {\bf 5.2}  &            &             & 60        & 56         &            &            &            \\
-{\tt Cars}          & 4  & {\bf 0.1}  & 2.4        & 2.5         & 0.1       & 0.1        & 0.1        & 0.2        &            \\
-{\tt Cars-Ext}      & 4  & {\bf 0.2}  & 11.3       & 7.7         & 0.3       & 0.3        & 0.2        & 0.4        &            \\
-{\tt Nursery}       & 5  & {\bf 0.8}  & 5          & 4.7         & 1         & 0.9        & 0.9        & 1.2        &            \\
-{\tt Nursery-Ext}   & 5  & {\bf 1.1}  & 147.9      & 75.8        & 3.3       & 2.6        & 1.4        & 1.7        &            \\
+{\tt Cars}          & 4  & 0.1        & 2.4        & 2.5         & 0.1       & 0.1        & 0.1        & 0.2        & {\bf 0.1}  \\
+{\tt Cars-Ext}      & 4  & 0.2        & 11.3       & 7.7         & 0.3       & 0.3        & 0.2        & 0.4        & {\bf 0.1}  \\
+{\tt Nursery}       & 5  & {\bf 0.8}  & 5          & 4.7         & 1         & 0.9        & 0.9        & 1.2        & 1          \\
+{\tt Nursery-Ext}   & 5  & {\bf 1.1}  & 147.9      & 75.8        & 3.3       & 2.6        & 1.4        & 1.7        & 1.3        \\
 %{\tt KDD98}-5       & 5  & {\bf 11}   &            &             & 81        & 63         &            &            &            \\
-{\tt CoverType}     & 7  & 348.5      & {\bf 179.2}&  265.4      & 245.2     & 307.8      & 271.4      & 338.5      &            \\
-{\tt CoverType-Ext} & 7  & 213        & 212.5      & 340.8       &{\bf 182.5}& 295.7      & 196.5      & 258.9      &            \\
-{\tt KDD98}-9       & 9  & 132        & 5898.8     & 3410.1      & 97.2      & 73.9       & {\bf 14.7 }& 297.5      &            \\ 
-{\tt Poker}         & 10 & 7.4        & 11.2       & 6.4         & 2.2       & {\bf 2.1}  & 2.5        & 13.3       &            \\
-{\tt Shelter-15}    & 15 & 3599       & ---        & ---         & 149.9     & 166.3      & {\bf 14.1 }& 7968       &            \\   
-{\tt S.F. Crime-15} & 15 & 638.2      & 605.2      & 823.7       & 40.7      & {\bf 40.2} & 41.7       & 1223.9     &            \\ 
-{\tt Phonemes}      & 15 & 1343.3     & ---        & ---         & 4.4       & 5.5        & {\bf 2.2 } & 2187.4     &
+{\tt CoverType}     & 7  & 348.5      & {\bf 179.2}&  265.4      & 245.2     & 307.8      & 271.4      & 338.5      & 367.3      \\
+{\tt CoverType-Ext} & 7  & 213        & 212.5      & 340.8       &{\bf 182.5}& 295.7      & 196.5      & 258.9      & 208.3      \\
+{\tt KDD98}-9       & 9  & 132        & 5898.8     & 3410.1      & 97.2      & 73.9       & 14.7       & 297.5      & {\bf 6.6}  \\ 
+{\tt Poker}         & 10 & 7.4        & 11.2       & 6.4         & 2.2       & {\bf 2.1}  & 2.5        & 13.3       & 2.6        \\
+{\tt Shelter-15}    & 15 & 3599       & ---        & ---         & 149.9     & 166.3      & 14.1       & 7968       & {\bf 3.3}  \\   
+{\tt S.F. Crime-15} & 15 & 638.2      & 605.2      & 823.7       & 40.7      & {\bf 40.2} & 41.7       & 1223.9     & 47.1       \\ 
+{\tt Phonemes}      & 15 & 1343.3     & ---        & ---         & 4.4       & 5.5        & 2.2        & 2187.4     & {\bf 0.7}
 \end{tabular}
 \caption{Average time in seconds of a 3-fold cross validation for building decision trees with depth at most 5. The fastest method for each dataset is bold faced.}
 \label{tab:time-5}
@@ -424,14 +424,13 @@ Dataset  &   \multicolumn{2}{c|}{CI-Twoing} &   \multicolumn{2}{c|}{CI-GLSG} & \
 {\tt CoverType}    &54.1        & (0)       & 54.1        & (0)       & 54.1        & (0)       & 54.1        & (0)       & 54.1        & (0)         & 54.1        & (0)         \\
 {\tt CoverType-Ext}&54.1        & (0)       & 54.1        & (0)       & 54.1        & (0)       & 54.1        & (0)       & 54.1        & (0)         & 54.1        & (0)         \\
 {\tt Poker}        &{\bf 51.05} & {\bf (4)} & 50.56       & (0)       & 50.91       & (1)       & 50.8        & (1)       & 50.79       & (1)         & 50.73       & (1)         \\  
-{\tt Shelter-15}   & 48.03      &           & 48.03       &           & {\bf 48.22} &           & 48.22       &           & 48.2        &             &             &             \\   
+{\tt Shelter-15}   & 48.03      & (0)       & 48.03       & (0)       & 48.22       & (2)       & 48.22       & (2)       & 48.2        & (2)         & {\bf 48.29} & (4)         \\   
 {\tt S.F. Crime-15}&{\bf 21.59} & {\bf (5)} & 20.53       & (0)       & 21.49       & (2)       & 21.52       & (2)       & 21.52       & (2)         & 21.34       & (1)         \\ 
 {\tt Phonemes}     & 23.12      & (4)       & 22.52       & (3)       & {\bf 23.8 } & {\bf (5)} & 21.3        & (1)       & 22.11       & (2)         & 20.4        & (0)         \\ 
 \hline
-Average (Sum)      & 61.44      & (26)+     & 61.6        & (22)+     & 61.75       & (34)+     & 61.15       & (12)+     & 61.36       & (20)        &             & (8)+
+Average (Sum)      & 61.44      & (26)      & 61.6        & (22)      & 61.75       & (36)      & 61.15       & (14)      & 61.36       & (22)        & 61.15       & (12)
        \end{tabular}
-    \caption{Average accuracy and statistical tests  for  Conditional Inference trees 
-with depth at most 5 using only nominal attributes. The best accuracy for each dataset is bold-faced.}
+    \caption{Average accuracy and statistical tests  for  Conditional Inference trees with depth at most 5 using only nominal attributes. The best accuracy for each dataset is bold-faced.}
 \label{tab:ctree-5}
 \end{table}
 
@@ -527,14 +526,14 @@ Dataset             & \multicolumn{2}{c|}{CI-Twoing} &   \multicolumn{2}{c|}{CI-
 {\tt CoverType}     & 61.88      &  (0)              &   61.88      & (0)             &  61.88      &  (0)                 & 61.88       & (0)             & 61.88       & (0)         & 61.88       & (0)         \\
 {\tt CoverType-ext} & 61.88      &  (0)              &   61.88      & (0)             &  61.88      &  (0)                 & 61.88       & (0)             & 61.88       & (0)         & 61.88       & (0)         \\
 {\tt Poker}         & {\bf 51.4} &  {\bf (5)}        &   50.67      & (0)             &  50.84      &  (1)                 & 51.04       & (1)             & 51.03       & (1)         & 50.98       & (1)         \\
-{\tt Shelter-15}    & 47.66      &                   &   47.32      &                 & {\bf 48.14} &                      & 47.82       &                 &             &             &             &             \\
+{\tt Shelter-15}    & 47.66      &  (2)              &   47.32      & (1)             & {\bf 48.14} &  {\bf (5)}           & 47.82       & (3)             & ---         & (0)         & 47.74       & (2)         \\
 {\tt S.F. Crime-15} & 22.07      &  (0)              &   22.07      & (0)             & {\bf 22.07} &  {\bf (1)}           & 22.07       & (0)             & 22.07       & (0)         & 22.07       & {\bf (1)}   \\
 {\tt Phonemes}      & 33.91      &  (3)              &   31.26      & (0)             &  33.32      &  (2)                 & 34.08       & (3)             & {\bf 34.77} & {\bf (5)}   & 32.62       & (1)         \\
 \hline
-Average (Sum)       & 65.01      &  (27)+            &   64.12      & (17)+           &  65.11      &  (34)+               & 64.91       & (13)+           &             & (20)+       &             & (11)+
+Average (Sum)       & 65.01      &  (29)             &   64.12      & (18)            &  65.11      &  (39)                & 64.91       & (16)            & 66.14*      & (20)        & 64.81       & (13)
        \end{tabular}
         \caption{Average accuracy and statistical tests  for  conditional inference trees 
-with depth at most 16 using only nominal attributes. The best accuracy for each dataset is bold-faced, even when multiple criteria have the same accuracy in the table because of rounding.}
+with depth at most 16 using only nominal attributes. Any experiment that did not finish in reasonable time is considered statistically worse than the others. Hypercube Cover has a * mark besides its average accuracy since it is calculated only on the experiments that finished. The best accuracy for each dataset is bold-faced, even when multiple criteria have the same accuracy in the table because of rounding.}
 \label{tab:ctree-16}
 \normalsize
 \end{table}
@@ -543,35 +542,34 @@ with depth at most 16 using only nominal attributes. The best accuracy for each 
 Table \ref{tab:time-16} shows the running time of each criteria when used for both selecting and splitting purposes (the experiment of Table \ref{tab:nominal-16}).
 When the number of classes is small all the criteria have very similar execution time. After running this experiments a few times, we have realized there is a variation of about 2-3 seconds in the execution time. This explains why Hypercube Cover is sometimes faster than Twoing.
 
+Once again, as the number of classes increases, both PC-ext, LCA and the GL-based methods become much faster than Twoing and Hypercube Cover, with the turning point being once again around $k=7$. Moreover, LCA is always the fastest or very close to the fastest criterion. For datasets with 15 classes our GL criteria are 30-400 times faster than Twoing, while PC-ext and LCA are 50-600 and 50-1950 times faster, respectively.
 
-TODO: add analysis of timing results for LCA (below).
-
-As the number of classes increases, both PC-ext and the GL-based methods become much faster than Twoing and Hypercube Cover, with the turning point being once again around $k=7$. For datasets with 15 classes our criteria are 30-400 times faster than Twoing, while PC-ext is 50-600 times faster. We also ran experiments using all the classes available in both the {\tt S.F. Crime} and {\tt Shelter} datasets (39 and 22, respectively). Twoing cannot be executed in a reasonable time with that many classes, while GLSG and GL$\chi^2$ ran in approximately 100 seconds on the {\tt S.F. Crime} dataset and  300 seconds on the {\tt Shelter} dataset (PC-ext ran in 110 and 33 seconds, respectively). Since the execution time for our criteria in this experiment grew onde again in an approximately linear fashion with $k$, it suggests that they can also be used with datasets that have a much larger number of classes. It is also interesting to note that the aggregated attributes usually appeared at or near the root of the decision trees.
+We also ran experiments using all the classes available in both the {\tt S.F. Crime} and {\tt Shelter} datasets (39 and 22, respectively). Twoing cannot be executed in a reasonable time with that many classes, while GLSG and GL$\chi^2$ ran in approximately 100 seconds on the {\tt S.F. Crime} dataset and  300 seconds on the {\tt Shelter} dataset. PC-ext ran in 110 and 33 seconds, respectively, while Largest Class Alone took 55 and 7 seconds, respectively. Once again, LCA shows itself as very fast for very large number of classes, and should be the default choice when the running time of the other criteria is prohibitive.
 
 \begin{table}[]
 \scriptsize
 \centering
 \begin{tabular}{c|c|c|c|c|c|c|c}
-Dataset             & k  & Twoing        & GLSG      & GL$\chi^2$  & PC-ext    & HcC    & LCA    \\
+Dataset             & k  & Twoing        & GLSG      & GL$\chi^2$  & PC-ext    & HcC    & LCA        \\
 \hline
-{\tt Adult}         & 2  & 4.1           & 4.6       & 5.7         &{\bf 4}    & 5.8    &        \\
-{\tt Mushroom}      & 2  & 1.7           & 1.5       & 2.3         &{\bf 0.6}  & 1      &        \\
-{\tt KDD98}-2       & 2  & 9.1           & 50.9      & 53.4        &{\bf 8.3}  & 10.4   &        \\
-{\tt Contracep}     & 3  & 0.2           & 0.2       & 0.2         &{\bf 0.1}  & 0.1    &        \\
-{\tt Contracep-Ext} & 3  & 0.2           & 0.3       & 0.4         &{\bf 0.2}  & 0.3    &        \\
-%{\tt KDD98}-3       & 3  & {\bf 12.5}    & 73.3      & 82.4        &           &        &        \\
-{\tt Cars}          & 4  & 0.3           & 0.3       & 0.2         &{\bf 0.2}  & 0.3    &        \\
-{\tt Cars-Ext}      & 4  & 0.3           & 0.5       & 0.4         &{\bf 0.2}  & 0.3    &        \\
-{\tt Nursery}       & 5  & 4.1           & 3.9       & 3.7         &{\bf 1.3}  & 1.9    &        \\
-{\tt Nursery-Ext}   & 5  & 4.6           & 9.5       & 8.6         &{\bf 1.4}  & 2.3    &        \\
-%{\tt KDD98}-5       & 5  & {\bf 22.2}    & 100.8     & 82.6        &           &        &        \\
-{\tt CoverType}     & 7  & 612.7         &{\bf 294.7}& 700         & 472.4     & 668.9  &        \\
-{\tt CoverType-Ext} & 7  & 251.8         & 209.9     & 462.6       &{\bf 200.4}& 296.2  &        \\
-{\tt KDD98}-9       & 9  & 434.5         & 256.2     & 243.6       &{\bf 23.8} & 442.9  &        \\
-{\tt Poker}         & 10 & 25.2          & 10.8      & 9.2         &{\bf 3.8}  & 18     &        \\
-{\tt Shelter-15}    & 15 & 5397          & 181.9     & 191.2       &{\bf 18.6} & 7311.6 &        \\
-{\tt S.F. Crime-15} & 15 & 2731.2        & 95.9      & 81.8        &{\bf 50.5} & 3188.9 &        \\
-{\tt Phonemes}      & 15 & 3894.6        & 9.4       & 11          &{\bf 6.3}  & 5804.8
+{\tt Adult}         & 2  & 4.1           & 4.6       & 5.7         &{\bf 4}    & 5.8    & 5.4        \\
+{\tt Mushroom}      & 2  & 1.7           & 1.5       & 2.3         &{\bf 0.6}  & 1      & 0.6        \\
+{\tt KDD98}-2       & 2  & 9.1           & 50.9      & 53.4        & 8.3       & 10.4   & {\bf 7}    \\
+{\tt Contracep}     & 3  & 0.2           & 0.2       & 0.2         &{\bf 0.1}  & 0.1    & 0.1        \\
+{\tt Contracep-Ext} & 3  & 0.2           & 0.3       & 0.4         &{\bf 0.2}  & 0.3    & 0.2        \\
+%{\tt KDD98}-3       & 3  & {\bf 12.5}    & 73.3      & 82.4        &           &        &            \\
+{\tt Cars}          & 4  & 0.3           & 0.3       & 0.2         &{\bf 0.2}  & 0.3    & 0.2        \\
+{\tt Cars-Ext}      & 4  & 0.3           & 0.5       & 0.4         &{\bf 0.2}  & 0.3    & 0.2        \\
+{\tt Nursery}       & 5  & 4.1           & 3.9       & 3.7         &{\bf 1.3}  & 1.9    & {\bf 1.2}  \\
+{\tt Nursery-Ext}   & 5  & 4.6           & 9.5       & 8.6         &{\bf 1.4}  & 2.3    & {\bf 1.3}  \\
+%{\tt KDD98}-5       & 5  & {\bf 22.2}    & 100.8     & 82.6        &           &        &            \\
+{\tt CoverType}     & 7  & 612.7         &{\bf 294.7}& 700         & 472.4     & 668.9  & 649.9      \\
+{\tt CoverType-Ext} & 7  & 251.8         & 209.9     & 462.6       & 200.4     & 296.2  & {\bf 192.7}\\
+{\tt KDD98}-9       & 9  & 434.5         & 256.2     & 243.6       & 23.8      & 442.9  & {\bf 11.6} \\
+{\tt Poker}         & 10 & 25.2          & 10.8      & 9.2         & 3.8       & 18     & {\bf 3.6}  \\
+{\tt Shelter-15}    & 15 & 5397          & 181.9     & 191.2       & 18.6      & 7311.6 & {\bf 6.1}  \\
+{\tt S.F. Crime-15} & 15 & 2731.2        & 95.9      & 81.8        &{\bf 50.5} & 3188.9 & 53.1       \\
+{\tt Phonemes}      & 15 & 3894.6        & 9.4       & 11          & 6.3       & 5804.8 & {\bf 2 }
 \end{tabular}
 \caption{Average time in seconds of a 3-fold cross validation
 for building decision trees with depth at most 16.
@@ -605,6 +603,5 @@ Average (Sum)        &                &  (17)+            & 60.93       &  (11)+
 \end{tabular}
 \caption{Average accuracy and statistical test results for  Decision Trees using both nominal and numeric attributes with depth at most 16.}
 \label{exp:numeric-16}
-\normalsize
 \end{table}
 
