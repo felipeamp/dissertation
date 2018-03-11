@@ -5,7 +5,7 @@
 
 \section{Decision Trees}
 
-Decision trees are trees where each internal node is associated with an attribute and each of the edges leading out from it are associated with a subset of this attribute's values. The leaf nodes are associated with a class. In order to classify a sample, we start at the root of the tree and follow the edges given by the sample attributes' values. Once we get to a leaf node, we've found the class prediction for this sample.
+Decision trees are trees where each internal node is associated with an attribute and each of the edges leading out from it are associated with a subset of this attribute's values. Each leaf node is associated with a class. In order to classify a sample, we start at the root of the tree and follow the edges given by the sample attributes' values. Once we get to a leaf node, we have found the class prediction for this sample.
 
 As an example, let's look at the Titanic Survival dataset (\cite{Titanic}). The Figure \ref{fig:titanic-dataset} shows the first 10 samples from the training dataset, where we are trying to predict the value for the Survived field.
 
@@ -41,9 +41,8 @@ from class $c_j$ for which  $A$ takes value $v_i$;
 and $S_j$ for the number of samples from class $c_j$.
 Given a partition $(L, R)$ of the values $V$ of an attribute $A$, we use $S_L$ and $S_R$
 to denote the set of samples in $S$ that takes values in $L$ and $R$, respectively, in attribute $A$.
-Furthermore, we let $p_j = S_j /N$ and $p_{ij}= Pr[C=c_j | A = v_i]$.
-We observe that the estimator of maximum likelihood for $p_{ij} $ is
-$A_{ij} / N_i$.
+Furthermore, we let $p_j = S_j/N$ and $p_{ij}= Pr[C=c_j | A = v_i]$.
+We observe that, assuming a multinomial distribution for the samples classes with value $v_i$, the estimator of maximum likelihood for $p_{ij}$ is $A_{ij} / N_i$.
 
 
 \subsection{A Typical Algorithm for Inducing Decision Trees}
@@ -72,7 +71,7 @@ The stopping criterion is used to avoid over-fitting the decision tree. Stopping
 
 \cite{Breiman84} suggests that a natural family of splitting criteria are the ones that select splits which have the smallest impurity according to a certaing impurity measure. Therefore we will make impurity measures our main object of study in this section, while splitting criteria will be studied in the Section \ref{sec:splitting-criteria}.
 
-First, it is important to note that most impurity calculations on a nominal attribute are done based on what's called a contingency table. It consists of a $n\times k$ matrix where the $ij$-th entry corresponds to the number of samples that have value $i$ and belong to class $j$. We'll assume that every decision tree node has the contingency table pre-calculated for all nominal attributes, which takes $O(N)$ time for each attribute and cannot be avoided\footnote{The only exception is the attribute used to split the parent node, which can be calculated in $O(n\times k)$.}. Therefore, whenever we mention the time complexity for a decision tree constructing algorithm/criterion, this cost will not be mentioned since it does not affect their comparison.
+First, it is important to note that most impurity calculations on a nominal attribute are done based on what is called a contingency table. It consists of a $n\times k$ matrix where the $ij$-th entry corresponds to the number of samples that have value $i$ and belong to class $j$. We will assume that every decision tree node has the contingency table pre-calculated for all nominal attributes, which takes $O(N)$ time for each attribute and cannot be avoided\footnote{The only exception is the attribute used to split the parent node, which can be calculated in $O(n\times k)$.}. Therefore, whenever we mention the time complexity for a decision tree constructing algorithm/criterion, this cost will not be mentioned since it does not affect their comparison.
 
 The only thing left is to define what we mean by an impurity measure. \cite{Breiman84} defines a class of impurity measures that are natural in this context.
 
@@ -91,8 +90,8 @@ The only thing left is to define what we mean by an impurity measure. \cite{Brei
 
 \begin{definition}[Node Impurity Measure]
 
- A node impurity measure $I$ is a function $I: [0,1]^k \to \mathbb{R}$. It is given by
- $$I(\mathbf{p}) = \sum_{j=1}^{k}\phi(p_j)$$
+ A node impurity measure $I$ is a function $I: [0,1]^k \to \mathbb{R}$ given by
+ $$I(\mathbf{p}) = \sum_{j=1}^{k}\phi(p_j)$$,
  where $\phi$ is a node impurity function.
  
  The node impurity measure is frequently denoted by $I(S)$, where $S$ is a set of samples. This indicates the impurity measure calculated on the vector $\mathbf{p} = (c_1/N, \ldots, c_k/N)$.
@@ -100,10 +99,9 @@ The only thing left is to define what we mean by an impurity measure. \cite{Brei
 
 \begin{definition}[Split Impurity Measure]
 
-A split impurity measure is the impurity difference between the original node and its child nodes, weighted by the fraction of samples in each node. For a binary partition $V=(L,R)$,
+A split impurity measure is the impurity difference between the original node and its child nodes, weighted by the fraction of samples in each node. For a binary partition $(L,R)$ of the values $V$ of an attribute,
 
 $$\Delta I(L, R) = I(S) - p_L \cdot I(S_L) - p_R \cdot I(S_R)$$
-
 where $p_L$ and $p_R$ are equal to the ratio of the samples in $L$ and $R$, respectively.
 \end{definition}
 
@@ -113,18 +111,19 @@ These impurity measures have the nice property that splitting $V$ into $(L, R)$ 
 Given an impurity measure $I$ and any partition of values $V$ into $(L, R)$, we always have
 $$\Delta I(L, R) \geq 0 $$
 
-Equality happens iff the contingency table in both sides have the same frequency distribution.
+Moreover, equality happens iff the contingency table in both sides have the same frequency distribution.
 \end{theorem}
+
+Most splitting criteria are based on choosing the split with maximum $\Delta I(L, R)$.
 
 Another interesting result proven in \cite{Breiman84} is that, when there are only 2 classes, we can find the partition with best impurity in linear time after sorting.
 
 \begin{theorem}
 \label{thm:two-class-trick}
-Let $I$ be an impurity measure and suppose we only have two classes $c_1$ and $c_2$. The best partition of the values $V$ has the form
+Let $I$ be an impurity measure and suppose we only have two classes $c_1$ and $c_2$. The best partition of the values $V$ (that is, the one with largest $\Delta I(L, R)$) has the form
 
 $$L = \{v_i : p_{i1} \leq v\}$$
-$$R = \{v_i : p_{i1} > v\}$$
-
+$$R = \{v_i : p_{i1} > v\}$$,
 for some value $v$.
 \end{theorem}
 
@@ -158,7 +157,7 @@ $$L = \{v_i : v_i \leq v\}$$
 $$R = \{v_i : v_i > v\}$$
 for some chosen value $v$. This is because all the reasonable splits should preserve and use the order structure.
 
-The criteria evaluate the impurity of these splits and chooses the one with the smallest impurity. Since we only have to evaluate at a single value $v$ between each pair of consecutive values $v_i$ and $v_{i+1}$, it takes $O(n \log n)$ time. Since this is polynomial and quite fast, its complexity is largely ignored throughout this dissertation.
+The criteria evaluate the impurity of these splits and chooses the one with the smallest impurity (equivalently, the one with the largest impurity gain $\Delta I$). Since we only have to evaluate at a single value $v$ between each pair of consecutive values $v_i$ and $v_{i+1}$, this procedure takes $O(n \log n)$ time. Since this is polynomial and quite fast, its complexity is largely ignored throughout this dissertation.
 
 \subsection{Gini Gain}
 
@@ -180,7 +179,7 @@ For problems with more than two classes, however, there is no efficient procedur
 \subsection{Twoing}
 The Twoing criterion
 for a  binary partition $(L,R)$ 
-of the set of values $V$ is given by
+of the set of values $V$ chooses the following impurity measure, which it tries to maximize:
 $$ 0.25 \cdot p_L \cdot p_R  \cdot \left ( \sum_{i=1}^k | p_L^i - p_R^i | \right )^2$$
 where
 
@@ -221,16 +220,15 @@ where $E[A_{ij}]=N_i p_j$.
 
 
 \subsection{Conditional Inference Trees}
-Conditional Inference Trees are actually a framework for creating criteria that are free of bias on the number of values in an attribute. It was published by \cite{Hothorn:2006:URP} and is a method of obtaining criteria that do not have any bias towards attributes with larger number of values.
+Conditional Inference Trees, by \cite{Hothorn:2006:URP}, is actually a framework for creating criteria that are free of bias on the number of values in an attribute, particularly relevant for attributes with larger number of values.
 
 It works by first choosing the best attribute to split at the current node and then evaluating all possible binary splits using any given impurity measure, picking the best one found.
 
-To choose the attribute in which to split, first one has to calculate the permutation test's conditional expectation $\mu \in \mathbb{R}^{nk}$ and covariance $\Sigma \in \mathbb{R}^{nk\times nk}$ of every attribute\footnote{Since the formulae are very complicated and won't be used throughout this dissertation, they are ommited. The interested reader can obtain them in the section 3 of  \cite{Hothorn:2006:URP}.}. Then, in order to compare the attributes, we need to calculate the p-value of a univariate test statistics $c$ calculated on $\mu$ and $\Sigma$ of every attribute. The only exact form of doing this comparison is by using the quadratic form $c_{quad}$ (see equation \ref{eq:c_quad}), which follows an asymptotic $\chi^2$ distribution with degrees of freedom given by the rank of $\Sigma$. Since this involves the calculation of a pseudoinverse, which has cubic complexity on the dimension of $\Sigma$, this criterion can be very time consuming.
+To choose the attribute in which to split, first one has to calculate the permutation test's conditional expectation $\mu \in \mathbb{R}^{nk}$ and covariance $\Sigma \in \mathbb{R}^{nk\times nk}$ of every attribute\footnote{Since the formulae are very complicated and will not be used throughout this dissertation, they are ommited. The interested reader can obtain them in the section 3 of  \cite{Hothorn:2006:URP}.}. Then, in order to compare the attributes, we need to calculate the p-value of a univariate test statistics $c$ calculated on $\mu$ and $\Sigma$ of every attribute. The only exact form of doing this comparison is by using the quadratic form $c_{quad}$ 
 
-\begin{equation}
-\label{eq:c_quad}
-c_{quad}(t, \mu, \Sigma) = (t-\mu)\Sigma^+(t-\mu)\top
-\end{equation}
+$$c_{quad}(t, \mu, \Sigma) = (t-\mu)\Sigma^+(t-\mu)\top$$,
+which follows an asymptotic $\chi^2$ distribution with degrees of freedom given by the rank of $\Sigma$. Since this involves the calculation of a pseudoinverse, which has cubic complexity on the dimension of $\Sigma$, this criterion can be very time consuming.
+
 
 This method, although very complicated and quite slow, is employed by the data mining community when accuracy counts for more than time spent training\footnote{Since this method does not have any bias when choosing which attribute to split, the accuracy of these trees tend to be higher than the trees obtained by biased criteria.}. Thus this criterion will be used in our experiments in Chapter \ref{chap:experiments-datasets} to compare the different accuracies obtained when changing the splitting criterion used to choose the attribute's values split.
 
@@ -277,34 +275,7 @@ Since \cite{journals/datamine/CoppersmithHH99} has experimental results that sho
 \subsection{FlipFlop}
 
 The FlipFlop criterion, proposed in \cite{nadas1991iterative}, uses the superclass trick from Twoing iteratively in the classes and values, until it converges to a solution.
-%In order to explain in more detail, we first need to define the dual binary partition problem.
-% 
-% \begin{definition}{[Dual partition problem]}
-% 
-% Given a binary partition problem and its contingency table, the dual partition problem is a problem where we want to find a (binary) partition of the classes that has the smallest impurity. This makes sense, since the impurity is calculated from the samples' split. 
-% 
-% Mathematically, we just solve a binary partition problem in the transposed contingency table, treating the original values as the classes and the original classes as the values.
-% \end{definition} 
-% 
-% 
-% The FlipFlop is shown in Algorithm \ref{alg:flipflop}. Using Theorem \ref{thm:two-class-trick}, we see that each iteration inside the FlipFlop algorithm is fast. Nonetheless, there is no guarantee that the number of iterations is small. We only know, as proved in \cite{nadas1991iterative}, that the values partition eventually converges. There is also no guarantee that the partition found is close to optimal.
-% 
-% \begin{algorithm}[tb]
-% \caption{FlipFlop}
-% \label{alg:flipflop}
-% \begin{algorithmic}
-% \STATE Choose a random binary partition of values $V = (L_V, R_V)$
-% \WHILE{True}
-% \STATE Calculate the supervalues contingency table by grouping the values that are in the same partition side of $(L_V, R_V)$;
-% \STATE
-% \STATE Solve the dual binary partition problem on the supervalues contingency table, finding the best partition of classes $C = (L_C, R_C)$;
-% \STATE
-% \STATE Calculate the superclasses contingency table by grouping the classes that are in the same partition side of $(L_C, R_C)$;
-% \STATE
-% \STATE Solve the binary partition problem on the superclasses contingency table, finding the best partition of values $V = (L_V, R_V)$. If the new partition is the same as the previous one, return it.
-% \ENDWHILE
-% \end{algorithmic}
-% \end{algorithm}
+
 
 
 Similarly to the SLIQ criterion, FlipFlop obtains worse results than PC in practice, as shown in \cite{journals/datamine/CoppersmithHH99}. Thus, we will not use this criterion in our experimental studies. It is just mentioned here for completeness.
@@ -325,10 +296,10 @@ It can also be used with the Information Gain impurity, instead of Gini Gain, bu
 
 \subsection{List Scheduling}
 
-Similarly to the Largest Alone heuristic, List Scheduling is a criterion that has an approximation guarantee of 2 for the Informatio Gain criterion when using the Entropy impurity.
+This heuristic is very similarly to Largest Class Alone.
 
 First one calculates the frequency of every class. Then, one groups the classes into 2 superclasses as balanced as possible in terms of number of samples. Lastly the Information Gain criterion is applied on this two-class problem.
 
-Since finding the most balanced partition is NP-complete, we settle for a List Scheduling algorithm to find a partition with a 4/3-approximation guarantee to the optimal one. Since calculating the class frequencies can be done using the contingency table and the List Scheduling algorithm is linear in the number of classes, this takes $O(N + n k + n \log n)$ time in total. Note that, since we are not necessarily using the most balanced partition, there is no guarantee that we will be within a factor of 2 of the optimal impurity.
+Since finding the most balanced partition is NP-complete, we settle for a List Scheduling algorithm to find a partition with a 4/3-approximation guarantee to the optimal one. Since calculating the class frequencies can be done using the contingency table and the List Scheduling algorithm is linear in the number of classes, this takes $O(N + n k + n \log n)$ time in total.
 
 This criterion is based on a result proved in \cite{icml2018} which states that, for the entropy impurity, the best form of grouping classes into superclasses is by balancing them the most.

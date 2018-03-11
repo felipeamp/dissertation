@@ -4,15 +4,15 @@
 \label{chap:introduction}
 
 Decision Trees and Random Forests are among the most popular 
-methods for classification tasks. Decision Trees, specially small ones, are easy to interpret,
+models for classification tasks. Decision Trees, specially small ones, are easy to interpret,
 while Random Forests usually yield more accurate classifications. One of the key issues in these methods
 is how to select an attribute to associate with a node of the tree/forest. An important
-related issue is how to split the samples once the attribute is selected.
+related issue is how to split the attribute values once one is selected.
 
-There is a number of papers  discussing aspects related with 
+There is a number of papers  discussing aspects related to 
 attribute selection, such as:
 how to design criteria to evaluate the quality of different types of attributes;
-whether binary or multi-way splits shall be used and
+whether binary or multi-way splits shall be used; and
 how to remove bias from  splitting criteria.
 For recent surveys on this topic we refer to \cite{books/sp/datamining2005/RokachM05},
 \cite{Loh2014} and \cite{series/sbcs/BarrosCF15}.
@@ -22,9 +22,9 @@ the quality of different types of attributes, including
 continuous and categorical ones.  Among the most popular criteria,
 we have the Gini Gain and the Information Gain (\cite{Breiman84}, \cite{quinlan2014c4}).
 
-Despite the large body of work we believe  there are still questions to be answered.
+Despite the large body of work, we believe  there are still questions to be answered.
 One of them is to how to  properly handle nominal  attributes that may assume a large number of values.
-Before explaining the reason behind our  statement we would
+Before explaining the reason behind our  statement, we would
 like to remark that this kind of attribute
 appears naturally in some applications  (e.g.: states of a country or letters from some alphabet).
 In addition, they may arise as the result of aggregating
@@ -40,8 +40,7 @@ need 5 levels in the tree to be able to capture the relation between
 them and the target class, thus 
 incurring a large fragmentation of the set of samples.
 
-To properly face  multi-valued nominal attributes we have to deal with the computational time required to compute good splits.
-Our contribution, explained in the next section, is related with this issue. 
+To properly face  multi-valued nominal attributes we have to deal with the computational time required to compute good splits. Our contribution, explained in the next section, is related to this issue. 
  
 A brute force search to compute the best binary split 
 requires $\Omega(2^n)$ time, where $n$ is the number of distinct values the attribute may assume. The computational efficiency can be improved if a $n$-ary split is used rather than a binary one. However,  this may lead to a severe fragmentation of the sample space, which is not desirable: the number of samples available for each of the children of the split node 
@@ -55,7 +54,7 @@ The Twoing method, also from \cite{Breiman84},
 is an  interesting case since its running time is $O(2^{\min\{n,k\}})$ rather than $O( 2^ n)$ while being equivalent to
 Gini Gain when $k=2$.
 
-When both $n$ and $k$ are large, in the sense that an exhaustive search does not run in a reasonable time, one can rely on heuristics to compute the best binary split.
+When both $n$ and $k$ are large, in the sense that an exhaustive search does not run in a reasonable time, one can rely on heuristics to compute a good binary split.
 As an example, the GUIDE algorithm  \cite{Loh2009}, the  last
 of a series of algorithms/developments designed by Loh and its contributors, 
 deals with a nominal variable $X$
@@ -68,30 +67,27 @@ In general, the main drawback of using heuristics is the lack of a theoretical g
 \section{Our Contribution}
 \label{sec:contribution}
 
-Given this scenario,  in chapter \ref{chap:framework} we propose
-a framework for designing criteria, with nice theoretical properties, for evaluating the quality of 
- multi-valued nominal attributes. In general, finding the best binary partition according to an impurity measure has been proved to be NP-complete in \cite{icml2018}. Nonetheless, criteria generated according to our framework
-run in polynomial time in both the number of values and classes and
-have a theoretical guarantee that they are close to optimal.
+Given this scenario,  in Chapter \ref{chap:framework} we propose
+a framework for designing criteria with nice theoretical properties for evaluating the quality of 
+ multi-valued nominal attributes. In general, finding the best binary partition according to an impurity measure has been proved to be NP-complete in \cite{icml2018}. Nonetheless, for the criteria generated according to our framework, this can be done in polynomial time in both the number of values and classes and
+have a theoretical guarantee that the split obtained is close to optimal.
 The key idea consists of formulating the problem
 of finding the best binary partition for a given attribute $A$ as the  problem of finding a 
 cut with maximum weight  in a complete graph whose nodes are associated with the values that $A$ may assume and the edges' weights capture the benefit of putting
 values in different partitions. The  motivation behind the use of the max-cut problem is 
 the existence of efficient algorithms with 
 approximation guarantee, in particular 
-the one proposed  by \cite{GoeWil95}, with $0.878$ approximation,
-and  local search  algorithms with 0.5-approximation as shown in \cite{journals/corr/AngelBPW16}.
+the one proposed  by \cite{GoeWil95}, giving a $0.878$ approximation,
+and a simple greedy algorithm with 0.5-approximation, as shown in \cite{gonzalez2007handbook}.
 
 
 We discuss two criteria that are derived from this framework:
 the first one  can be seen as a natural variation of the
-Gini Gain, while the second criterion uses the $\chi^2$-test  to set the edges' weights. For that, each
-edge $e_{ij}$ between nodes  $v_i$ and $v_j$
-is thought as a binary attribute $A(i,j)$ with values $v_i$ and $v_j$.
+Gini Gain, while the second criterion uses the $\chi^2$-test  to set the edges' weights.
 After discussing these criteria, we show how to extend them to handle
 numeric attributes.
 
-We also  present a number of experiments that suggest that one of our criteria is competitive with the Twoing method, which is -- as far as we know -- the only well-established criterion with binary splits that can be optimally computed for large $n$ when $k > 2$. However, in contrast with our methods, Twoing cannot handle datasets that also have a large number of classes. Some criteria based on heuristics, such as the PC-ext, Largest Class Alone and Hypercube Cover, are also part of the comparison. In addition, the experiments also  provide evidence of the potential of aggregating  attributes for improving the accuracy of decision trees.
+We also  present a number of experiments that suggest that one of our criteria is competitive, in the sense that yield good decision trees, with the Twoing method, which is -- as far as we know -- the only well-established criterion with binary splits that can be optimally computed for large $n$ when $k > 2$. However, in contrast with our methods, Twoing cannot handle datasets that also have a large number of classes, since its time complexity is exponential in the number of classes. Some criteria based on heuristics, such as the PC-ext, Largest Class Alone and Hypercube Cover, are also part of the comparison. In addition, the experiments also  provide evidence of the potential of aggregating  attributes for improving the accuracy of decision trees.
 
 \section{Related Work}
 \label{chap:relatedwork}
@@ -110,21 +106,13 @@ For the 2-class problem,  \cite{Breiman84} proved a theorem which states that an
 binary partition, for a certain class of splitting criteria,
 can be determined in linear time on $n$, the number of distinct values of the attributes, after ordering.
 The Gini  Gain belongs to this class.
-The  other  three papers generalize
+Both \cite{Chou:91,BPKN:92,journals/datamine/CoppersmithHH99} generalize
 this theorem  in different directions 
 and show necessary conditions that are satisfied by optimal partitions for a certain class of splitting criteria. 
 These conditions, though useful to restrict the set of partitions
 that need to be considered, do not yield  a method that
 is efficient (polynomial time) for large values of $n$ and $k$. These papers also  present  heuristics, without approximation guarantee, to obtain good splits.
-Another related result is a theorem from \cite{journals/datamine/CoppersmithHH99} that guarantees that the optimum split can be found by separating the class probability vectors by a hyperplane. This motivated the creation of the PC criterion, as will be shown in the next chapter. Two other existing heuristics are the SLIQ (\cite{mehta1996sliq} and the FlipFlop criterion (\cite{nadas1991iterative}). While they execute in polynomial time, they have no approximation guarantee in terms of the impurity of the optimal partition. Moreover, they usually finds worse partitions than the PC criterion, as shown in the experiments section of \cite{journals/datamine/CoppersmithHH99}. Lastly, \cite{icml2018} presents two heuristics that have approximation guarantees: the Hypercube Cover and the Largest Class Alone. The first has exponential running time on the number of classes and is similar to the Twoing criterion, but has an approximation guarantee of 2 for every impurity measure as defined in the paper. The second one, Largest Class Alone, runs in quasilinear time on the number of values and linear time on the number of classes. This criterion has an approximation guarantee of 2 for the Gini impurity and 3 for the Entropy impurity. 
-
-Other proposals to  speed up the attribute selection phase
- include  \cite{MolaSiciliano1997,Shih2001}. 
-The first presents a simple  heuristic
-to reduce the number of binary splits considered to
-choose the best nominal variable among the $m$ available ones.
- The second   extends the method for another class
-of impurity measures.
+Another related result is a theorem from \cite{journals/datamine/CoppersmithHH99} that guarantees that the optimum split can be found by separating the class probability vectors by a hyperplane. This motivated the creation of the PC criterion, as will be shown in the next chapter. Two other existing heuristics are the SLIQ (\cite{mehta1996sliq} and the FlipFlop criterion (\cite{nadas1991iterative}). While they execute in polynomial time, they have no approximation guarantee in terms of the impurity of the optimal partition. Moreover, they usually finds worse partitions than the PC criterion, as shown in the experiments section of \cite{journals/datamine/CoppersmithHH99}. Lastly, \cite{icml2018} presents two heuristics that have approximation guarantees for a class of impurity measures: the Hypercube Cover and the Largest Class Alone. The first has exponential running time on the number of classes and is similar to the Twoing criterion, but has an approximation guarantee of 2 for every impurity measure as defined in the paper. The second one, Largest Class Alone, runs in quasilinear time on the number of values and linear time on the number of classes. This criterion has an approximation guarantee of 2 for the Gini impurity and 3 for the Entropy impurity. 
 
 In order to properly
 handle nominal attributes with a large number of values,

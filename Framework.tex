@@ -9,7 +9,7 @@ First we recall some definitions and results for the Max-Cut problem. These defi
 \label{sec:maxcutbackground}
 
 We  recall some definitions from graph theory. A cut  $X$ in  a weighted graph $G=(V,E)$ is
-a subset of vertexes of $V$. The weight of a cut $X$, denoted here by $w(X)$, is the sum of the weights
+a subset of vertices of $V$. The weight of a cut $X$, denoted here by $w(X)$, is the sum of the weights
 of the edges that have one endpoint in $X$ and the other one in $V-X$.
 
 The problem of computing the  cut $X^*$ with maximum weight in a graph with non-negative weights is NP-Hard.
@@ -48,8 +48,7 @@ moves a node from one group to
 the other while some improvement on the cut weight is possible.
 Although this algorithm is not polynomial  in the worst case,
 it has polynomial behavior in the smoothed analysis framework (see \cite{journals/corr/AngelBPW16}). In addition, it is always possible
-to set a limit on the number of moves.
-A more refined version  allows exchanging a pair of nodes
+to set a limit on the number of moves or only consider moves that improve the cut by a certain threshold $\epsilon$. A more refined version  allows exchanging a pair of nodes
 as long as the weight of the cut is improved.
 In our experiments this is the version we use, as presented in Algorithm \ref{alg:localsearch}.
 
@@ -129,7 +128,7 @@ for every partition $(L,R)$ of $V$.
 Note that the weight of the cut  $S_L$ in the above identity 
 is similar to the expression for the Gini Gain given by equation (\ref{eq:Ginigain}).
 The difference is that $p_L$ and $p_R$ are replaced with
-$p_L^2$ and $p_R^2$, respectively. Because of the squares, this new criterion tends to favor more balanced partitions. Another practical observation is that one can define the edges without the $2/N^2$ term in \ref{lem:squaredgini} and find the same maximum cut, since this constant appears in all edges weights.
+$p_L^2$ and $p_R^2$, respectively. Because of the squares, this new criterion tends to favor more balanced partitions.
 
 For the proof of Lemma \ref{lem:GiniSq}, recall that $A_{ix}$ is the number
 of samples of  class $x$ that have value $v_i$, and that $C$ is used to denote the set of classes.
@@ -167,6 +166,7 @@ we  establish
 the lemma.
 \end{proof}
 
+A practical observation is that one can define the edges without the $2/N^2$ term in equation \ref{eq:squaredgini} and find the same maximum cut, since this constant appears in all edges weights.
 
 It is worth mentioning that symmetric 
 misclassification costs can be easily introduced in this case.
@@ -188,10 +188,10 @@ Finding the maximum weighted cut in a complete graph whose weights are set by eq
  
  Recall that, in the PARTITION problem, we are given a multiset of integers and want to decide whether it can be partitioned into two multisets with the same sum of elements. Consider an instance given by a multiset $U = \{u_1, \ldots, u_k\}$ of integers. Create an instance of our decision tree problem as follows: for each $u_i \in U$ add a value $v_i$ whose row in the contingency table is given by $u_i e_i$. In other words, in this instance every value has a single class and every class appears for a single value.
  
- W.l.o.g. we can ignore the $2/N^2$ factors in \ref{eq:squaredgini}. Hence every edge $w_{ij}$ in the associated Squared Gini graph will have weight equal to $ij$. Therefore any cut partitioning $V$ into $(L, R)$ will have value equal to
+ Without loss of generality, we can ignore the $2/N^2$ factors in equation \ref{eq:squaredgini}. Hence every edge $w_{ij}$ in the associated Squared Gini graph will have weight equal to $u_i u_j$. Therefore any cut partitioning $V$ into $(L, R)$ will have value equal to
  $$cut(L, R) = \Big(\sum_{i|v_i \in L} u_i\Big) \cdot \Big(\sum_{i|v_i \in R} u_i\Big)$$
  
-Note that this formula is maximized when the two terms are as close as possible, i.e. the two partition sides are as balanced as possible. Thus, if we can find a polynomial time algorithm that finds the best partition of this instance's values, we can solve the associated PARTITION problem in polynomial time. This concludes the reduction.
+Note that this formula is maximized when the two terms are as close as possible, i.e., the two partition sides are as balanced as possible. Thus, if we can find a polynomial time algorithm that finds the best partition of this instance's values, we can solve the associated PARTITION problem in polynomial time. This concludes the reduction.
 \end{proof}
 
 \subsection{Setting weights according to other splitting criteria}
@@ -223,9 +223,9 @@ set the weights.
 
 \subsection{Example}
 
-Let's assume we are using the Squared Gini criterion on a dataset with a single attribute (the marital status) and we try to predict whether it's a male or female. The contingency table and associated Squared Gini graph are given in Figure \ref{fig:cut-example}.
+Let us assume we are using the Squared Gini criterion on a dataset with a single attribute (the marital status) and we try to predict the gender of a sample. The contingency table and associated Squared Gini graph are given in Figure \ref{fig:cut-example}.
 
-As an illustration of the calculation of the edges' weights, we show below how they are done for the Single-Married edge. We number the values and classes in the order shown in the contingency table in Figure \ref{fig:cut-example}. In particular, Single and Married are values number 1 and 2, respectively; while Male and Female are classes number 1 and 2 respectively. Thus
+As an illustration of the calculation of the edges weights, we show below how they are done for the Single-Married edge. We number the values and classes in the order shown in the contingency table in Figure \ref{fig:cut-example}. In particular, Single and Married are values number 1 and 2, respectively; while Male and Female are classes number 1 and 2 respectively. Thus
 $$w_{12} = \frac{2}{N^2}\sum_{ x,y \in C \atop x \ne y }A_{1x}A_{2y} = \frac{2}{(237)^2}(18 \cdot 30 + 20 \cdot 29) = 0.0399$$
 
 Since this example is small (there are only $7$ non-empty distinct cuts), we can run through all the possible cuts and see that the one shown in red is actually the maximum one. In larger examples we need to use approximated algorithms such as the one mentioned before, since the number of possible cuts grows exponentially with the number of nodes/values.

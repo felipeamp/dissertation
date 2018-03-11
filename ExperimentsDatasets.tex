@@ -10,7 +10,6 @@ employed and, then, we present our results. We will compare the performance betw
 All  experiments described in the following sections were executed on a machine with the following settings: Intel(R) Core(TM) i7-4790 CPU @ 3.60GHz with 32 GB of RAM. The code was developed using Python 3.6.1 with the libraries numpy, scipy, scikit-learn and cvxpy.
 The project can be accessed in {\tt github.com/felipeamp/dissertation-code}.
 
-TODO: tornar repositorio publico e adicionar os resultados agregados.
 
 \section{Datasets}
 We employed 11 datasets in total. Eight of them are from the UCI repository:
@@ -154,8 +153,8 @@ The GW algorithm  requires  the solution of a semidefinite program (SDP),
 which may be computationally expensive despite  its 
 polynomial time worst case  behavior.
 As an example, for an attribute with 100 distinct values, the solution of
-the corresponding SDP takes in average about 2 second in our machine.
-One the one hand, this is a tiny amount of time 
+the corresponding SDP takes on average about 2 second on our machine.
+On the one hand, this is a tiny amount of time 
 compared with that required to perform an exhaustive search on the $2^{100}$
 possible binary partitions. On the other hand, 
  faster alternatives are desirable, even
@@ -213,17 +212,15 @@ In general, there was a clear advantage towards PC-ext, followed closely by LCA 
 \begin{tabular}{c|cc|cc|cc|cc|cc|cc} 
 Dataset             & \multicolumn{2}{c|}{Twoing} &  \multicolumn{2}{c|}{GLSG}  & \multicolumn{2}{c|}{GL$\chi^2$} & \multicolumn{2}{c|}{PC-ext}& \multicolumn{2}{c|}{HcC} & \multicolumn{2}{c}{LCA} \\
 \hline
-{\tt Adult}         &  75.11       & (0)          &  75.11       & (0)          &  75.11       & (0)              & 75.11      & (0)           & 75.11      & (0)        & 75.11      & (0)        \\
-{\tt Mushroom}      &  98.44       & (0)          &  98.44       & (0)          &  98.44       & (0)              & 98.44      & (0)           & 98.44      & (0)        & 98.44      & (0)        \\
+{\tt Adult}         &  {\bf 75.11 }      & {\bf (0)    }      &  {\bf 75.11   }    & {\bf (0)   }       &  {\bf 75.11 }      &{\bf  (0)}              & {\bf 75.11 }     & {\bf (0) }          & {\bf 75.11  }    & {\bf (0) }       & {\bf 75.11 }     & {\bf (0) }       \\
+{\tt Mushroom}      &  {\bf 98.44 }      & {\bf (0)    }      &  {\bf 98.44 }      & {\bf (0) }         & {\bf  98.44 }      & {\bf (0) }             & {\bf 98.44}      & {\bf (0)  }         &{\bf  98.44  }    & {\bf (0)}        & {\bf 98.44 }     & {\bf (0) }       \\
 {\tt KDD98}-2       &  {\bf 83.61} & {\bf (1)}    &  83.3        & (0)          &  {\bf 83.61} & {\bf (1)}        &{\bf 83.61} & {\bf (1)}     & {\bf 83.61}& {\bf (1)}  & {\bf 83.61}& {\bf (1)}  \\
-%{\tt KDD98}-3       &  62.61       &              &  63.33       &              &  {\bf 63.56} &                  &            &               &            &            &             &           \\
-%{\tt KDD98}-5       &  46.46       &              &  46.39       &              &  {\bf 47.53} &                  &            &               &            &            &             &           \\
-{\tt KDD98}-9       &  31.66       & (0)          &  32.32       & {\bf (5)}    &  31.61       & (0)              & 31.74      & (2)           & 31.74      & (2)        & 31.74       & (2)       \\
-{\tt Nursery}       &  66.25       & (0)          &  66.25       & (0)          &  66.25       & (0)              & 66.25      & (0)           & 66.25      & (0)        & 66.25       & (0)       \\
-{\tt Nursery-ext}   &  66.25       & (0)          &  66.25       & (0)          &  66.25       & (0)              & 66.25      & (0)           & 66.25      & (0)        & 66.25       & (0)       \\
-{\tt Cars}          &  70.02       & (0)          &  70.02       & (0)          &  70.02       & (0)              & 70.02      & (0)           & 70.02      & (0)        & 70.02       & (0)       \\
-{\tt Cars-ext}      &  70.02       & (0)          &  70.02       & (0)          &  70.02       & (0)              & 70.02      & (0)           & 70.02      & (0)        & 70.02       & (0)       \\
-{\tt Contracep}     &  43.39       & {\bf (2)}    &  42.31       & (0)          &  42.23       & (0)              & 43.63      & {\bf (2)}     & 43.63      & {\bf (2)}  & 43.63       & {\bf (2)} \\
+{\tt KDD98}-9       &  31.66       & (0)          &  {\bf 32.32 }      & {\bf (5)}    &  31.61       & (0)              & 31.74      & (2)           & 31.74      & (2)        & 31.74       & (2)       \\
+{\tt Nursery}       & {\bf 66.25 }      & {\bf(0)}          &  {\bf 66.25 }      & {\bf(0)}          &  {\bf 66.25 }      & {\bf(0)}              & {\bf 66.25 }      & {\bf(0)}           & {\bf 66.25 }      & {\bf(0)}        & {\bf 66.25 }      & {\bf(0)}       \\
+{\tt Nursery-ext}   &  {\bf 66.25 }      & {\bf(0)}          &  {\bf 66.25 }      & {\bf(0)}          &  {\bf 66.25 }      & {\bf(0)}              & {\bf 66.25 }      & {\bf(0)}           & {\bf 66.25 }      & {\bf(0)}        & {\bf 66.25 }      & {\bf(0)}      \\
+{\tt Cars}          &  {\bf 70.02 }      & {\bf (0)}          &  {\bf 70.02 }      & {\bf (0)}          &  {\bf 70.02 }      & {\bf (0)}              & {\bf 70.02 }      & {\bf (0)}           & {\bf 70.02 }      & {\bf (0)}        & {\bf 70.02 }      & {\bf (0)}       \\
+{\tt Cars-ext}      &  {\bf 70.02 }      & {\bf (0)}          &  {\bf 70.02 }      & {\bf (0)}          &  {\bf 70.02 }      & {\bf (0)}              & {\bf 70.02 }      & {\bf (0)}           & {\bf 70.02 }      & {\bf (0)}        & {\bf 70.02 }      & {\bf (0)}       \\
+{\tt Contracep}     &  43.39       & {\bf (2)}    &  42.31       & (0)          &  42.23       & (0)              & {\bf 43.63 }     & {\bf (2)}     & {\bf 43.63 }     & {\bf (2)}  & {\bf 43.63 }      & {\bf (2)} \\
 {\tt Contracep-ext} &  42.58       & (1)          &  {\bf 44.29} & {\bf (5)}    &  42.23       & (0)              & 43.73      & (4)           & 43.38      & (2)        & 43.48       & (3)       \\
 {\tt CoverType}     &  {\bf 51.93} & {\bf (1)}    &  48.76       & (0)          & {\bf 51.93}  & {\bf (1)}        &{\bf 51.93} & {\bf (1)}     & {\bf 51.93}& {\bf (1)}  & {\bf 51.93} & {\bf (1)} \\
 {\tt CoverType-ext} &  51.54       & (0)          &  55.55       & (4)          &  51.93       & (2)              &{\bf 58.64} & {\bf (5)}     & 51.54      & (0)        & 55.53       & (3)       \\
@@ -255,21 +252,19 @@ Dataset  &   \multicolumn{2}{c|}{CI-Twoing} &   \multicolumn{2}{c|}{CI-GLSG} & \
 % Dataset          &        CI-Twoing       &        CI-GLSG          &      CI-GL$\chi^2$      &       CI-PC-ext         &       CI-HcC            &       CI-LCA
 {\tt Adult}        &{\bf 75.13} & {\bf (2)} & 75.11       & (0)       & 75.11       & (0)       & {\bf 75.13} & {\bf (2)} & {\bf 75.13} & {\bf (2)} & {\bf 75.13} & {\bf (2)} \\
 {\tt Mushroom}     &63.88       & (1)       &{\bf 68.03 } & {\bf (5)} & 66.5        & (4)       & 63.72       & (0)       & 63.88       & (1)       & 63.88       & (1)       \\
-{\tt KDD98}-2      &65.29       & (0)       & 65.29       & (0)       & 65.29       & (0)       & 65.29       & (0)       & 65.29       & (0)       & 65.29       & (0)       \\
-%{\tt KDD98}-3      &65.28       &           & {\bf 65.8  }&           & 65.07       &           &             &           &             &           &             &           \\
-%{\tt KDD98}-5      &49.23       &           & {\bf 49.58} &           & 49.27       &           &             &           &             &           &             &           \\
-{\tt KDD98}-9      &25.48       & (0)       & 25.48       & (0)       & 25.48       & (0)       & 25.48       & (0)       & 25.48       & (0)       & 25.48       & (0)       \\
+{\tt KDD98}-2      &{\bf 65.29}       & {\bf (0) }      & {\bf 65.29}       & {\bf (0) }       & {\bf 65.29}       & {\bf (0) }       & {\bf 65.29}       & {\bf (0) }       & {\bf 65.29}       & {\bf (0) }       & {\bf 65.29}       & {\bf (0) }       \\
+{\tt KDD98}-9      &{\bf25.48}       & {\bf(0)}       & {\bf25.48}       & {\bf(0)}       & {\bf25.48}       & {\bf(0)}       & {\bf25.48}       & {\bf(0)}       & {\bf25.48}       & {\bf(0)}       & {\bf25.48}       & {\bf(0)}       \\
 {\tt Nursery}      &{\bf 41.9}  & {\bf (2)} & 41.05       & (0)       & {\bf 41.9}  & {\bf (2)} & {\bf 41.9}  & {\bf (2)} & {\bf 41.9}  & {\bf (2)} & 41.45       & (1)       \\
 {\tt Nursery-Ext}  &{\bf 41.9}  & {\bf (2)} & 41.05       & (0)       & {\bf 41.9}  & {\bf (2)} & {\bf 41.9}  & {\bf (2)} & {\bf 41.9}  & {\bf (2)} & 41.45       & (1)       \\
-{\tt Cars}         &70.02       & (0)       & 70.02       & (0)       & 70.02       & (0)       & 70.02       & (0)       & 70.02       & (0)       & 70.02       & (0)       \\
-{\tt Cars-Ext}     &70.02       & (0)       & 70.02       & (0)       & 70.02       & (0)       & 70.02       & (0)       & 70.02       & (0)       & 70.02       & (0)       \\
+{\tt Cars}         &{\bf70.02}       & {\bf(0)}       & {\bf70.02}       & {\bf(0)}       & {\bf70.02}       & {\bf(0)}       & {\bf70.02}       & {\bf(0)}       & {\bf70.02}       & {\bf(0)}       & {\bf70.02}       & {\bf(0)}       \\
+{\tt Cars-Ext}     &{\bf70.02}       & {\bf(0)}       & {\bf70.02}       & {\bf(0)}       & {\bf70.02}       & {\bf(0)}       & {\bf70.02}       & {\bf(0)}       & {\bf70.02}       & {\bf(0)}       & {\bf70.02}       & {\bf(0)}       \\
 {\tt Contracep}    &43.39       & {\bf (2)} & 42.66       & (1)       & 42.23       & (0)       & {\bf 43.63} & {\bf (2)} & {\bf 43.63} & {\bf (2)} & {\bf 43.63} & {\bf (2)} \\
 {\tt Contracep-Ext}&43.39       & {\bf (2)} & 42.66       & (1)       & 42.23       & (0)       & {\bf 43.63} & {\bf (2)} & {\bf 43.63} & {\bf (2)} & {\bf 43.63} & {\bf (2)} \\
-{\tt CoverType}    &48.76       & (0)       & 48.76       & (0)       & 48.76       & (0)       & 48.76       & (0)       & 48.76       & (0)       & 48.76       & (0)       \\
-{\tt CoverType-Ext}&48.76       & (0)       & 48.76       & (0)       & 48.76       & (0)       & 48.76       & (0)       & 48.76       & (0)       & 48.76       & (0)       \\
-{\tt Poker}        &49.93       & (0)       & 49.95       & (0)       & 49.95       & (0)       & 49.93       & (0)       & 49.93       & (0)       & 49.93       & (0)       \\  
-{\tt Shelter-15}   &35.93       & (0)       & 35.93       & (0)       & 35.93       & (0)       & 35.93       & (0)       & 35.93       & (0)       & 35.93       & (0)       \\   
-{\tt S.F. Crime-15}&19.92       & (0)       & 19.92       & (0)       & 19.92       & (0)       & 19.92       & (0)       & 19.92       & (0)       & 19.92       & (0)       \\ 
+{\tt CoverType}    &{\bf48.76}       & {\bf(0)}       & {\bf48.76}       & {\bf(0)}       & {\bf48.76}       & {\bf(0)}       & {\bf48.76}       & {\bf(0)}       & {\bf48.76}       & {\bf(0)}       & {\bf48.76}       & {\bf(0)}       \\
+{\tt CoverType-Ext}&{\bf48.76}       & {\bf(0)}       & {\bf48.76}       & {\bf(0)}       & {\bf48.76}       & {\bf(0)}       & {\bf48.76}       & {\bf(0)}       & {\bf48.76}       & {\bf(0)}       & {\bf48.76}       & {\bf(0)}       \\
+{\tt Poker}        &{\bf49.93}       & {\bf(0)}       & {\bf49.93}       & {\bf(0)}       & {\bf49.93}       & {\bf(0)}       & {\bf49.93}       & {\bf(0)}       & {\bf49.93}       & {\bf(0)}       & {\bf49.93}       & {\bf(0)}       \\  
+{\tt Shelter-15}   &{\bf35.93}       & {\bf(0)}       & {\bf35.93}       & {\bf(0)}       & {\bf35.93}       & {\bf(0)}       & {\bf35.93}       & {\bf(0)}       & {\bf35.93}       & {\bf(0)}       & {\bf35.93}       & {\bf(0)}       \\   
+{\tt S.F. Crime-15}&{\bf19.92}       & {\bf(0)}       & {\bf19.92}       & {\bf(0)}       & {\bf19.92}       & {\bf(0)}       & {\bf19.92}       & {\bf(0)}       & {\bf19.92}       & {\bf(0)}       & {\bf19.92}       & {\bf(0)}      \\ 
 {\tt Phonemes}     &{\bf 15.7}  & {\bf (5)} & 15.34       & (0)       & 15.42       & (0)       & 15.46       & (2)       & 15.46       & (2)       & 15.36       & (0)       \\ 
 \hline
 Average (Sum)      & 47.46      & (16)      & 47.5        & (7)       & 47.46       & (8)       & 47.47       & (12)       & 47.48       & (13)      & 47.41      & (9)
@@ -421,8 +416,8 @@ Dataset  &   \multicolumn{2}{c|}{CI-Twoing} &   \multicolumn{2}{c|}{CI-GLSG} & \
 {\tt Cars-Ext}     &88.27       & {\bf (2)} & 85.51       & (0)       & {\bf 88.32} & {\bf (2)} & 88.26       & {\bf (2)} & 88.26       & {\bf (2)}   & 88.16       & (1)         \\
 {\tt Contracep}    &43.83       & (1)       & {\bf 44.12} & {\bf (4)} & 43.87       & (0)       & 43.63       & (0)       & 43.69       & (1)         & 43.58       & (0)         \\
 {\tt Contracep-Ext}&43.39       & (0)       & {\bf 43.81} & {\bf (4)} & 43.76       & {\bf (4)} & 43.21       & (0)       & 43.32       & (1)         & 43.21       & (0)         \\
-{\tt CoverType}    &54.1        & (0)       & 54.1        & (0)       & 54.1        & (0)       & 54.1        & (0)       & 54.1        & (0)         & 54.1        & (0)         \\
-{\tt CoverType-Ext}&54.1        & (0)       & 54.1        & (0)       & 54.1        & (0)       & 54.1        & (0)       & 54.1        & (0)         & 54.1        & (0)         \\
+{\tt CoverType}    &{\bf54.1}        & {\bf(0)}       & {\bf54.1}        & {\bf(0)}       & {\bf54.1}        & {\bf(0)}       & {\bf54.1}        & {\bf(0)}       & {\bf54.1}        & {\bf(0)}         & {\bf54.1}        & {\bf(0)}         \\
+{\tt CoverType-Ext}&{\bf54.1}        & {\bf(0)}       & {\bf54.1}        & {\bf(0)}       & {\bf54.1}        & {\bf(0)}       & {\bf54.1}        & {\bf(0)}       & {\bf54.1}        & {\bf(0)}         & {\bf54.1}        & {\bf(0)}         \\
 {\tt Poker}        &{\bf 51.05} & {\bf (4)} & 50.56       & (0)       & 50.91       & (1)       & 50.8        & (1)       & 50.79       & (1)         & 50.73       & (1)         \\  
 {\tt Shelter-15}   & 48.03      & (0)       & 48.03       & (0)       & 48.22       & (2)       & 48.22       & (2)       & 48.2        & (2)         & {\bf 48.29} & (4)         \\   
 {\tt S.F. Crime-15}&{\bf 21.59} & {\bf (5)} & 20.53       & (0)       & 21.49       & (2)       & 21.52       & (2)       & 21.52       & (2)         & 21.34       & (1)         \\ 
@@ -523,8 +518,8 @@ Dataset             & \multicolumn{2}{c|}{CI-Twoing} &   \multicolumn{2}{c|}{CI-
 {\tt Cars-ext}      & 93.12      &  (2)              &   87.38      & (0)             & {\bf 93.34} &  {\bf (5)}           & 93.08       & (2)             & 93.08       & (2)         & 92.85       & (1)         \\
 {\tt Contracep}     & 43.82      &  {\bf (3)}        &   {\bf 44.05}& {\bf (3)}       &  43.81      &  (0)                 & 43.59       & (0)             & 43.6        & (1)         & 43.57       & (0)         \\
 {\tt Contracep-ext} & 43.21      &  (1)              &   {\bf 43.78}& {\bf (4)}       &  43.72      &  {\bf (4)}           & 43.07       & (0)             & 43.12       & (1)         & 42.92       & (0)         \\
-{\tt CoverType}     & 61.88      &  (0)              &   61.88      & (0)             &  61.88      &  (0)                 & 61.88       & (0)             & 61.88       & (0)         & 61.88       & (0)         \\
-{\tt CoverType-ext} & 61.88      &  (0)              &   61.88      & (0)             &  61.88      &  (0)                 & 61.88       & (0)             & 61.88       & (0)         & 61.88       & (0)         \\
+{\tt CoverType}     & {\bf61.88}      &  {\bf(0)}              &   {\bf61.88}      &  {\bf(0)}             &  {\bf61.88}      &  {\bf(0)}                 & {\bf61.88}      &  {\bf(0)}             & {\bf61.88}      &  {\bf(0)}         & {\bf61.88}      &  {\bf(0)}         \\
+{\tt CoverType-ext} & {\bf61.88}      &  {\bf(0)}              &   {\bf61.88}      &  {\bf(0)}             &  {\bf61.88}      &  {\bf(0)}                 & {\bf61.88}      &  {\bf(0)}             & {\bf61.88}      &  {\bf(0)}         & {\bf61.88}      &  {\bf(0)}         \\
 {\tt Poker}         & {\bf 51.4} &  {\bf (5)}        &   50.67      & (0)             &  50.84      &  (1)                 & 51.04       & (1)             & 51.03       & (1)         & 50.98       & (1)         \\
 {\tt Shelter-15}    & 47.66      &  (2)              &   47.32      & (1)             & {\bf 48.14} &  {\bf (5)}           & 47.82       & (3)             & ---         & (0)         & 47.74       & (2)         \\
 {\tt S.F. Crime-15} & 22.07      &  (0)              &   22.07      & (0)             & {\bf 22.07} &  {\bf (1)}           & 22.07       & (0)             & 22.07       & (0)         & 22.07       & {\bf (1)}   \\

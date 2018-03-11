@@ -947,7 +947,7 @@
   \puc@leftmargin{\arial%
     \ifthenelse{\boolean{puc@phd}}%
       {Thesis presented to the Programa de Pós-Graduação em \puc@program\ of the Departamento de \puc@departmentbr, \puc@uni, as partial fulfillment of the requirements for the degree of Doutor em Ciências -- Informática.}%
-      {Thesis presented to the Programa de Pós-Graduação em \puc@program\ of the Departamento de \puc@departmentbr, \puc@uni, as partial fulfillment of the requirements for the degree of Mestre em \puc@programbr.}%
+      {Dissertation presented to the Programa de Pós-Graduação em \puc@program\ of the Departamento de \puc@departmentbr, of \puc@uni, in partial fulfillment of the requirements for the degree of Mestre em \puc@programbr.}%
   }%
   \vspace*{\stretch{1}}%
   \par%
